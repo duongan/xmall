@@ -1,0 +1,11 @@
+<?php
+	
+        $image=ImageCreate(80,25);
+        $while=ImageColorAllocate($image,231,231,231);
+        $black=ImageColorAllocate($image,0,80,247);
+        ImageFill($image,0,0,$while);
+        ImageString($image,7,15,4,$this->md5,$black);
+        header("Content-Type:image/jpeg");
+        ImageJpeg($image);
+        ImageDestroy($image);
+	?>

@@ -1,0 +1,96 @@
+<script type="text/javascript">
+		$(".breadcrumb").html("<li><i class='fa fa-dashboard'></i> <a href='"+base_url+"/admin'>Trang Chủ</a></li> <li><i class='fa fa-life-saver'></i><a href='"+base_url+"/admin/website'> Website</a></li> <li class='active'><i class='fa fa-list'></i> Menu Top</li>");
+	$("h1.page-header").text("Cập Nhật Menu Top");
+$(function(){
+		
+	$("#qlwebsite").parent().addClass("active").find("a").click();
+	$("#qlwebsite").find("li:eq(2)").addClass("active");
+	});
+</script>
+<?php 
+        $this->headTitle("Chỉnh Sửa MenuTop");
+        if(isset($_GET['id'])){
+        	$data=null;
+        	foreach ($this->data as $item) {
+        		if($item->id==$_GET['id']){
+        			$data=$item;
+        			break;
+        		}
+        	}
+?>
+<form method="post" action="" role="form">
+<div class="table-responsive">
+	<table class="table">
+		<tr>
+			<td width="30%"><b>Tên: </b></td>
+			<td>
+				<textarea name="text" class="form-control s1"><?php echo $data->text ?></textarea>
+			</td>
+		</tr>
+		<tr class="bordertop">
+			<td><b>Meta Description: </b></td>
+			<td>
+				<textarea name="desc" class="form-control s1"><?php echo $data->desc ?></textarea>
+			</td>
+		</tr>
+		<tr class="bordertop">
+			<td><b>Meta Keyworks: </b></td>
+			<td>
+				<textarea name="keys" class="form-control s1"><?php echo $data->keys ?></textarea>
+			</td>
+		</tr>
+		<tr class="bordertop">
+			<td><b>Title: </b></td>
+			<td>
+				<textarea name="t" class="form-control s1"><?php echo $data->t ?></textarea>
+			</td>
+		</tr>
+		<tr>
+				<td></td>
+				<td>
+					<input type="submit" class="btn btn-success btn-sm" value="Lưu Lại" />
+					<input type="button" class="btn btn-default btn-sm" value="Hủy Bỏ" onclick="window.location.href='../admin/website?a=menutop'" />
+				</td>
+			</tr>
+		<tr class="bordertop">
+			<td></td><td></td>
+		</tr>
+	</table>
+
+</div>
+</form>
+<?php } ?>
+<div class="table-responsive">
+<table class="table table-bordered">
+	<tr>
+		<th>Tên</th>
+		<th>Url</th>
+		<th>Meta Description</th>
+		<th>Meta Keyworks</th>
+		<th>Title</th>
+		<th></th>
+	</tr>
+	<?php foreach ($this->data as $item) {
+		echo '<tr>';
+		echo '<td width="30%">';
+		echo $item->text;
+		echo '</td>';
+		echo '<td>';
+		echo $item->path;
+		echo '</td>';
+		echo '<td>';
+		echo $item->desc;
+		echo '</td>';
+		echo '<td>';
+		echo $item->keys;
+		echo '</td>';
+		echo '<td>';
+		echo $item->t;
+		echo '</td>';
+		echo '<td>';
+		echo '<a href="'.$this->baseUrl().'/admin/website?a=menutop&id='.$item->id.'">Sửa</a>';
+		echo '</td>';
+		echo '</tr>';
+	} ?>
+</table>
+</div>

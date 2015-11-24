@@ -1,0 +1,182 @@
+ <!DOCTYPE html>
+ <html>
+ <head>
+ 	<title>Đơn hàng <?php echo $_GET['id'] ?></title>
+ 	<meta charset="utf-8" />
+ 	<link href="<?php echo $this->baseUrl() ?>/public/admin/style.css" rel="stylesheet" type="text/css" />
+ </head>
+ <body>
+ <div class="printshow" style="text-align:center;position:relative;margin-bottom:15px">
+            <h1>HÓA ĐƠN MUA HÀNG</h1>
+            <h3>Số Hóa Đơn: <?php echo $_GET['id'] ?></h3>
+            <h3><i>Ngày</i> <?php date_default_timezone_set('Asia/Ho_Chi_Minh');
+
+        $now=getdate(); echo $now["mday"]?> <i>Tháng</i> <?php echo $now["mon"] ?> <i>Năm</i> <?php echo $now["year"] ?></h3>
+        </div>
+        <hr class="printshow" />
+        <div class="ctprint printshow">
+           <p> Đơn Vị Bán Hàng: <b>SIÊU THỊ VIỄN THÔNG A</b></p>
+            <p> Điện Thoại: <b>0123 456 789</b></p>
+            <p> Địa Chỉ: <b>Biên Hòa, Đồng Nai</b></p>
+        </div>
+        <hr class="printshow" />
+        <div class="ctprint printshow">
+            <p> Họ Tên Khách Hàng: <b><?php echo $this->kh["TENKH"] ?></b></p>
+            <p> Điện Thoại: <b><?php echo $this->kh["DIENTHOAI"] ?></b></p>
+            <p> Địa Chỉ: <b><?php echo $this->kh["DIACHI"] ?></b></p>
+        </div>
+        <table class="table tableprint" >
+        <tbody><tr>
+            <th>STT</th>
+            <th>
+                Tên Sản Phẩm
+            </th>
+            <th class="stt" class="br">
+                Hình Ảnh
+            </th>
+            <th class="br">
+                Số Lượng
+            </th>
+            <th class="br">
+                Đơn Giá
+            </th>
+            <th class="br">
+                Thành Tiền
+            </th>
+        </tr>
+        <?php $count=0;$sum=0; foreach ($this->lct as $item) { ?>
+        <tr>
+            <td align="center" width="5%">
+                <?php echo ++$count; ?>
+            </td>
+            <td width="26%">
+                <?php echo $item["TENSP"] ?>
+            </td>
+            <td align="center" class="stt">
+                <img src="<?php echo $this->baseUrl().'/uploads/images/sp/'.$item["HINHANH"] ?>" alt="<?php echo $item["TENSP"] ?>" width="70" height="60">
+            </td>
+            <td align="center" width="15%">
+                <?php echo $item["SOLUONG"] ?>
+            </td>
+            <td align="center" width="22%">
+                <?php echo number_format($item["GIA"],0,',','.') ?> VNĐ
+            </td>
+            <td class="tt" align="center" width="22%">
+                <?php echo number_format($item["GIA"]*$item['SOLUONG'],0,',','.'); ?> VNĐ
+            </td>
+        </tr>
+        <?php $sum=$sum+($item['SOLUONG']*$item['GIA']);} ?>
+        <tr>
+        <td colspan="3" style="border:0 !important;border-left:1px solid #ddd !important">
+            </td>
+            <td colspan="2" style="border:0 !important">
+                Tổng Tiền:
+            </td>
+            <td align="right" style="border:0 !important;border-right:1px solid #ddd !important"> <b><?php echo number_format($sum,0,',','.') ?> VNĐ</b></td>
+        </tr>
+         <tr>
+         <td colspan="3" style="border-right:0 !important;border-left:1px solid #ddd !important">
+            </td>
+            <td colspan="2" style="border-right:0 !important;border-left:0 !important">
+                Tiền Thuế (VAT):
+            </td>
+            <td align="right" style="border-right:1px solid #ddd !important;border-left:0 !important"> <b>0 VNĐ</b></td>
+        </tr>
+        <tr>
+            <td colspan="3" style="border-right:0 !important;border-left:1px solid #ddd !important">
+            </td>
+            <td colspan="2" style="border-right:0 !important;border-left:0 !important">
+                Tổng Tiền Thanh Toán:
+            </td>
+            <td align="right" style="border-right:1px solid #ddd !important;border-left:0 !important"> <b><?php echo number_format($sum,0,',','.') ?> VNĐ</b></td>
+        </tr>
+    </tbody></table>
+    <div class="ctprint printshow">
+        <div class="left">
+            <div><b>Người bán hàng</b></div>
+            
+            <div style="text-align:center"><i style="font-style:italic">(Ghi rõ họ tên)</i></div>
+            <p style="text-align:center">
+                Viễn Thông A
+            </p>
+        </div>
+        <div class="right">
+            <div><b>Người mua hàng</b></div>
+            
+            <div style="text-align:center"><i style="font-style:italic">(Ghi rõ họ tên)</i></div>
+            <p style="text-align:center">
+            <?php echo $this->kh["TENKH"] ?>
+            </p>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <script type="text/javascript">
+    window.print();</script>
+    <style type="text/css">
+     
+    .tableprint,.printshow{
+    	display: none;
+    	}
+    	.left{
+    		float: left;
+    		}
+    		.right{
+    			float: right;
+    			}
+    			.clear{
+    				clear:both;
+    				}
+    				.clearleft{
+    					clear: left;
+    					}
+    					.clearright{
+    						clear:right;
+    						}</style>
+ <style type="text/css" media="print">
+        #page-wrapper,.container{
+            display: none;
+        }
+        .tableprint{
+            width: 90% !important;
+            margin: 5px auto;
+        }
+        .tableprint td,.tableprint th{
+        	 border:1px solid #ddd !important;
+             padding: 15px;
+        }
+        .tableprint td{
+        	vertical-align: middle !important; 
+        }
+        @page 
+        {
+            size: auto;   /* auto is the initial value */
+            margin: 3mm 1mm;  /* this affects the margin in the printer settings */
+        }
+        .printshow,.tableprint{
+            display: block;
+        }
+        h1{
+            font-size:20px;
+            font-weight: 600;
+        }
+        h3{
+            font-weight: normal;
+        }
+        h3 i{
+            font-style: italic;
+        }
+        hr{
+            width: 90%;
+            margin: 5px auto;
+        }
+        .ctprint{
+             width: 90%;
+             font-size: 15px;
+             margin:0px auto;
+        }
+        .ctprint b{
+            font-size: 17px;
+        }
+    </style>
+ </body>
+ </html>

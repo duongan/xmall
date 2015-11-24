@@ -1,0 +1,153 @@
+<script type="text/javascript">
+	$(function(){
+		$("h1.page-header").text("<?php if(isset($_GET['cap2'])) echo 'Cập Nhật Mật Khẩu Cấp 2'; else echo 'Cập Nhật Mật Khẩu'; ?>");
+		$(".breadcrumb").html("<li><i class='fa fa-dashboard'></i> <a href='"+base_url+"/admin'>Trang Chủ</a></li> <li class='active'><i class='fa fa-edit'></i> Đổi Mật Khẩu</li>");
+
+        $("#frm").kiemtra([
+            {
+                'name':'matkhaucu',
+                'trong':true
+            },
+            {
+                'name':'matkhaumoi',
+                'trong':true
+            }
+            ,
+            {
+                'name':'nhaplai',
+                'sosanhdoituong':true,
+                'name2':'matkhaumoi',
+                'message':'Nhập lại mật khẩu sai'
+            }
+        ]);
+
+        $("#frm2").kiemtra([
+            {
+                'name':'matkhaucu2',
+                'trong':true
+            },
+            {
+                'name':'matkhaumoi2',
+                'trong':true
+            }
+            ,
+            {
+                'name':'nhaplai2',
+                'sosanhdoituong':true,
+                'name2':'matkhaumoi2',
+                'message':'Nhập lại mật khẩu sai'
+            }
+        ]);
+	});
+</script>
+
+    
+                <div class="row">
+                    <?php if(!isset($_GET['cap2'])){ ?>
+                    <div class="col-lg-12">
+                        <?php if($this->message!=null){ ?>
+                            <div class="row">
+                                <div class="col-lg-12 col-xs-12 col-sm-12">
+                                    <div class="alert alert-danger">
+                                        <i class="fa fa-info-circle"></i>  <?php echo $this->message ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
+                        <form method="post" action="" role="form" id="frm">
+
+                            <div class="row">
+                                <div class="col-lg-2 col-sm-4 col-xs-4" style="padding-top:3px">
+                                    Mật Khẩu Cũ:
+                                </div>
+                                <div class="col-lg-4 col-sm-6 col-xs-6">
+                                    <input type="password" name="matkhaucu" class="form-control" />
+                                  
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-2 col-sm-4 col-xs-4" style="padding-top:3px">
+                                    Mật Khẩu Mới:
+                                </div>
+                                <div class="col-lg-4 col-sm-6 col-xs-6">
+                                    <input type="password" name="matkhaumoi" class="form-control" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-2 col-sm-4 col-xs-4" style="padding-top:3px">
+                                    Nhập Lại Mật Khẩu:
+                                </div>
+                                <div class="col-lg-4 col-sm-6 col-xs-6">
+                                    <input type="password" name="nhaplai" class="form-control" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-2 col-sm-4 col-xs-4" style="padding-top:3px">
+                                   
+                                </div>
+                                <div class="col-lg-4 col-sm-8 col-xs-8">
+                                    <input type="submit" value="Cập Nhật" class="btn btn-success" />
+                                    <input type="reset" value="Nhập Lại" class="btn btn-default" />
+                                    <input type="hidden" value="1" name="l" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <?php }else{ ?>
+                    <div class="col-lg-12">
+                        <?php if($this->message2!=null){ ?>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="alert alert-danger">
+                                        <i class="fa fa-info-circle"></i>  <?php echo $this->message2 ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
+                        <form method="post" action="" role="form" id="frm2">
+
+                            <div class="row">
+                                <div class="col-lg-2 col-sm-4 col-xs-4" style="padding-top:3px">
+                                    Mật Khẩu Cũ:
+                                </div>
+                                <div class="col-lg-4 col-sm-6 col-xs-6">
+                                    <input type="password" name="matkhaucu2" class="form-control" />
+                                  
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-2 col-sm-4 col-xs-4" style="padding-top:3px">
+                                    Mật Khẩu Mới:
+                                </div>
+                                <div class="col-lg-4 col-sm-6 col-xs-6">
+                                    <input type="password" name="matkhaumoi2" class="form-control" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-2 col-sm-4 col-xs-4" style="padding-top:3px">
+                                    Nhập Lại Mật Khẩu:
+                                </div>
+                                <div class="col-lg-4 col-sm-6 col-xs-6">
+                                    <input type="password" name="nhaplai2" class="form-control" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-2 col-sm-4 col-xs-4" style="padding-top:3px">
+                                   
+                                </div>
+                                <div class="col-lg-4 col-sm-8 col-xs-8">
+                                    <input type="submit" value="Cập Nhật" class="btn btn-success" />
+                                    <input type="reset" value="Nhập Lại" class="btn btn-default" />
+                                    <input type="hidden" value="2" name="l" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <?php } ?>
+                </div>

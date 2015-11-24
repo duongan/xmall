@@ -1,0 +1,19 @@
+.boxproduct .contentbox .item .afterhover .btn-buy:hover{
+	filter: alpha(opacity=80);
+}
+.boxproduct .contentbox .item .afterhover{
+	filter: alpha(opacity=0);
+}
+.boxproduct .contentbox .item:hover .afterhover{
+	filter: alpha(opacity=100);
+}
+a img{
+	border: 0;
+}
+#header #navtop_header #search input{
+	line-height: 30px;
+}
+.opa{
+	background-color: #000;
+	filter: alpha(opacity=50);
+}

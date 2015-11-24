@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<configdata>
+	<info>
+	  	<title>VienthongA - Si&#xEA;u th&#x1ECB; tr&#x1EF1;c tuy&#x1EBF;n b&#xE1;n &#x111;i&#x1EC7;n tho&#x1EA1;i, laptop, m&#xE1;y t&#xED;nh b&#x1EA3;ng. GIAO H&#xC0;NG TO&#xC0;N QU&#x1ED0;C</title>
+	  	<hotline>0987 654 321</hotline>
+	  	<metadesc>VienthongA - Si&#xEA;u th&#x1ECB; tr&#x1EF1;c tuy&#x1EBF;n chuy&#xEA;n b&#xE1;n c&#xE1;c s&#x1EA3;n ph&#x1EA9;m ch&#xED;nh h&#xE3;ng: &#x111;i&#x1EC7;n tho&#x1EA1;i, laptop, m&#xE1;y t&#xED;nh b&#x1EA3;ng, c&#xE1;c s&#x1EA3;n ph&#x1EA9;m k&#x1EF9; thu&#x1EAD;t s&#x1ED1; v&#xE0; n&#x1ED9;i dung s&#x1ED1;. MI&#x1EC4;N PH&#xCD; giao h&#xE0;ng t&#x1EAD;n n&#x1A1;i.</metadesc>
+	  	<metakeys>dien thoai, laptop, may tinh xach tay, may tinh bang, dien thoai di dong, mtxt, &#x111;i&#x1EC7;n tho&#x1EA1;i, m&#xE1;y t&#xED;nh x&#xE1;ch tay, m&#xE1;y t&#xED;nh b&#x1EA3;ng, tablet, nokia, samsung, LG, sony, htc</metakeys>
+		<bt>0</bt>
+	  	<menutop>
+	  		<item id="1">
+	  			<text>TRANG CH&#x1EE6;</text>
+	  			<path>/</path>
+	  			<desc/>
+	  			<keys/>
+	  			<t/>
+	  		</item>
+	  		<item id="2">
+	  			<text>TIN T&#x1EE8;C - KHUY&#x1EBE;N M&#xC3;I</text>
+	  			<path>/tin-tuc.html</path>
+	  			<desc>tin t&#x1EE9;c m&#x1EDB;i nh&#x1EA5;t</desc>
+	  			<keys>c&#xF4;ng nghe</keys>
+	  			<t>Tin t&#x1EE9;c c&#xF4;ng ngh&#x1EC7;</t>
+	  		</item>
+	  		<item id="3">
+	  			<text>&#x110;&#x1ED4;I TR&#x1EA2; - B&#x1EA2;O H&#xC0;NH</text>
+	  			<path>/bao-hanh.html</path>
+	  			<desc/>
+	  			<keys/>
+	  			<t>Quy &#x111;&#x1ECB;nh b&#x1EA3;o h&#xE0;nh</t>
+	  		</item>
+	  		<item id="4">
+	  			<text>H&#x1AF;&#x1EDA;NG D&#x1EAA;N MUA H&#xC0;NG</text>
+	  			<path>/huong-dan.html</path>
+	  			<desc/>
+	  			<keys/>
+	  			<t>H&#x1B0;&#x1EDB;ng d&#x1EAB;n mua h&#xE0;ng</t>
+	  		</item>
+	  		<item id="5">
+	  			<text>TUY&#x1EC2;N D&#x1EE4;NG</text>
+	  			<path>/tuyen-dung.html</path>
+	  			<desc/>
+	  			<keys/>
+	  			<t>Th&#xF4;ng tin tuy&#x1EC3;n d&#x1EE5;ng</t>
+	  		</item>
+	  		<item id="6">
+	  			<text>GI&#x1EDA;I THI&#x1EC6;U</text>
+	  			<path>/gioi-thieu.html</path>
+	  			<desc>gi&#x1EDB;i thi&#x1EC7;u v&#x1EC1; website</desc>
+	  			<keys/>
+	  			<t>Gi&#x1EDB;i thi&#x1EC7;u</t>
+	  		</item>
+	  	</menutop>
+	</info>
+</configdata>

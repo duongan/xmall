@@ -1,0 +1,162 @@
+<script type="text/javascript">
+	$(".breadcrumb").html("<li><i class='fa fa-dashboard'></i> <a href='"+base_url+"/admin'>Trang Chủ</a></li> <li><i class='fa fa-star'></i><a href='"+base_url+"/admin/nhom'> Nhóm</a></li> <li class='active'><i class='fa fa-plus'></i> Thêm Nhóm</li>");
+	$("h1.page-header").text("Thêm Nhóm Mới");
+$(function(){
+		
+	$("#qlnhom").parent().addClass("active").find("a").click();
+	$("#qlnhom").find("li:eq(1)").addClass("active");
+	});
+$(function(){
+$("form").kiemtra([
+		{
+			'name':'TENNHOM',
+			'trong':true
+		}
+	]);
+});
+	
+</script>
+<?php if($this->message!=null){ ?>
+	<div class="message">
+		<?php echo $this->message ?>
+	</div>
+<?php } ?>
+<form method="post" action="">
+	<table class="table">
+		<tr>
+			<td><b>Tên Nhóm: </b><span class="red">*</span></td>
+			<td>
+				<textarea name="TENNHOM" style="width:100%"></textarea>
+			</td>
+		</tr>
+		<tr class="bordertop">
+			<td><b>Phân Quyền: </b><span class="red">*</span></td>
+			<td>
+				<table class="table">
+					<tr style="font-weight: bold;border-bottom: 1px solid #ccc;">
+						<td colspan="4">SẢN PHẨM</td>
+					</tr>
+					<tr>
+						<td width="30%">Xem Danh Sách: </td>
+						<td width="5%"><input type="checkbox" name="XEMDSSP-boolean" value="1" /><input type="hidden" name="XEMDSSP-boolean" value="0" /></td>
+						<td width="30%" class="borderleft">Thêm: </td>
+						<td><input type="checkbox" name="THEMSP-boolean" value="1" /><input type="hidden" name="THEMSP-boolean" value="0" /></td>
+					</tr>
+					<tr>
+						<td width="30%">Sửa: </td>
+						<td width="5%"><input type="checkbox" name="SUASP-boolean" value="1" /><input type="hidden" name="SUASP-boolean" value="0" /></td>
+						<td width="30%" class="borderleft">Xóa: </td>
+						<td><input type="checkbox" name="XOASP-boolean" value="1" /><input type="hidden" name="XOASP-boolean" value="0" /></td>
+					</tr>
+					<tr style="font-weight: bold;border-bottom: 1px solid #ccc;">
+						<td colspan="4">TIN TỨC</td>
+					</tr>
+					<tr>
+						<td width="30%">Xem Danh Sách: </td>
+						<td width="5%"><input type="checkbox" name="XEMDSTT-boolean" value="1" /><input type="hidden" name="XEMDSTT-boolean" value="0" /></td>
+						<td width="30%" class="borderleft">Thêm: </td>
+						<td><input type="checkbox" name="THEMTT-boolean" value="1" /><input type="hidden" name="THEMTT-boolean" value="0" /></td>
+					</tr>
+					<tr>
+						<td width="30%">Xóa: </td>
+						<td width="5%"><input type="checkbox" name="XOATT-boolean" value="1" /><input type="hidden" name="XOATT-boolean" value="0" /></td>
+						<td width="30%" class="borderleft">Sửa: </td>
+						<td><input type="checkbox" name="SUATT-boolean" value="1" /><input type="hidden" name="SUATT-boolean" value="0" /></td>
+					</tr>
+					<tr style="font-weight: bold;border-bottom: 1px solid #ccc;">
+						<td colspan="4">NHÂN VIÊN</td>
+					</tr>
+					<tr>
+						<td width="30%">Xem Danh Sách: </td>
+						<td width="5%"><input type="checkbox" name="XEMDSNV-boolean" value="1" /><input type="hidden" name="XEMDSNV-boolean" value="0" /></td>
+						<td width="30%" class="borderleft">Thêm: </td>
+						<td><input type="checkbox" name="THEMNV-boolean" value="1" /><input type="hidden" name="THEMNV-boolean" value="0" /></td>
+					</tr>
+					<tr>
+						<td width="30%">Sửa: </td>
+						<td width="5%"><input type="checkbox" name="SUANV-boolean" value="1" /><input type="hidden" name="SUANV-boolean" value="0" /></td>
+						<td width="30%" class="borderleft">Xóa / Khóa: </td>
+						<td><input type="checkbox" name="KHOANV-boolean" value="1" /><input type="hidden" name="KHOANV-boolean" value="0" /></td>
+					</tr>
+					<tr style="font-weight: bold;border-bottom: 1px solid #ccc;">
+						<td colspan="4">ĐƠN HÀNG</td>
+					</tr>
+					<tr>
+						<td width="30%">Xem Danh Sách: </td>
+						<td width="5%"><input type="checkbox" name="XEMDSDH-boolean" value="1" /><input type="hidden" name="XEMDSDH-boolean" value="0" /></td>
+						<td width="30%" class="borderleft">Xóa: </td>
+						<td><input type="checkbox" name="XOADH-boolean" value="1" /><input type="hidden" name="XOADH-boolean" value="0" /></td>
+					</tr>
+					<tr style="font-weight: bold;border-bottom: 1px solid #ccc;">
+						<td colspan="4">NHÓM</td>
+					</tr>
+					<tr>
+						<td width="30%">Xem Danh Sách: </td>
+						<td width="5%"><input type="checkbox" name="XEMDSN-boolean" value="1" /><input type="hidden" name="XEMDSN-boolean" value="0" /></td>
+						<td width="30%" class="borderleft">Thêm: </td>
+						<td><input type="checkbox" name="THEMNHOM-boolean" value="1" /><input type="hidden" name="THEMNHOM-boolean" value="0" /></td>
+					</tr>
+					<tr>
+						<td width="30%">Xóa: </td>
+						<td width="5%"><input type="checkbox" name="XOANHOM-boolean" value="1" /><input type="hidden" name="XOANHOM-boolean" value="0" /></td>
+						<td width="30%" class="borderleft">Sửa: </td>
+						<td><input type="checkbox" name="SUANHOM-boolean" value="1" /><input type="hidden" name="SUANHOM-boolean" value="0" /></td>
+					</tr>
+					<tr style="font-weight: bold;border-bottom: 1px solid #ccc;">
+						<td colspan="4">KHÁCH HÀNG</td>
+					</tr>
+					<tr>
+						<td width="30%">Xem Danh Sách: </td>
+						<td width="5%"><input type="checkbox" name="XEMDSKH-boolean" value="1" /><input type="hidden" name="XEMDSKH-boolean" value="0" /></td>
+						<td width="30%" class="borderleft">Xóa / Khóa: </td>
+						<td><input type="checkbox" name="KHOAKH-boolean" value="1" /><input type="hidden" name="KHOAKH-boolean" value="0" /></td>
+					</tr>
+					<tr style="font-weight: bold;border-bottom: 1px solid #ccc;">
+						<td colspan="4">LOẠI SẢN PHẨM</td>
+					</tr>
+					<tr>
+						<td width="30%">Xem Danh Sách: </td>
+						<td width="5%"><input type="checkbox" name="XEMDSLSP-boolean" value="1" /><input type="hidden" name="XEMDSLSP-boolean" value="0" /></td>
+						<td width="30%" class="borderleft">Thêm: </td>
+						<td><input type="checkbox" name="THEMLSP-boolean" value="1" /><input type="hidden" name="THEMLSP-boolean" value="0" /></td>
+					</tr>
+					<tr>
+						<td width="30%">Xóa: </td>
+						<td width="5%"><input type="checkbox" name="XOALSP-boolean" value="1" /><input type="hidden" name="XOALSP-boolean" value="0" /></td>
+						<td width="30%" class="borderleft">Sửa: </td>
+						<td><input type="checkbox" name="SUALSP-boolean" value="1" /><input type="hidden" name="SUALSP-boolean" value="0" /></td>
+					</tr>
+					<tr style="font-weight: bold;border-bottom: 1px solid #ccc;">
+						<td colspan="4">NHẬN XÉT</td>
+					</tr>
+					<tr>
+						<td width="15%">Xem Danh Sách: </td>
+						<td width="20%"><input type="checkbox" name="XEMDSXN-boolean" value="1" /><input type="hidden" name="XEMDSNX-boolean" value="0" /></td>
+						<td width="15%" class="borderleft">Xóa: </td>
+						<td><input type="checkbox" name="XOANX-boolean" value="1" /><input type="hidden" name="XOANX-boolean" value="0" /></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+				<td>
+
+				</td>
+				<td colspan="3">
+					<input type="submit" class="btn btn-primary" value="Thêm mới" />
+					<input type="reset" class="btn btn-default" value="Nhập lại" />
+				</td>
+			</tr>
+	</table>
+</form>
+<script type="text/javascript">
+	$(function(){
+			$("input:checkbox").change(function(){
+				if(this.checked){
+					$(this).parent().find("input").eq(1).attr("disabled","disabled");
+				}else{
+					$(this).parent().find("input").eq(1).removeAttr("disabled");
+				}
+			});
+	});
+</script>

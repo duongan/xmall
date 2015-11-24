@@ -1,0 +1,123 @@
+
+<form action="" id="frmthongso" method="post">
+	<textarea id="thong_so" style="width:980px;height:400px" name="thong_so-decode"><?php echo html_entity_decode($this->data) ?></textarea>
+	<br />
+	<input type="submit" class="btn btn-primary" value="Lưu lại" />
+	<input type="button" onclick="window.location.reload()" class="btn btn-default" value="Nhập lại" />
+	<input type="hidden" name="action" value="2" />
+	<input type="hidden" name="id" value="<?php echo $_GET["id"] ?>" />
+	<input type="hidden" name="ngaycapnhat" value="<?php date_default_timezone_set('Asia/Ho_Chi_Minh'); $now=getdate(); echo $now["year"].'/'.$now["mon"].'/'.$now["mday"].' '.$now["hours"].':'.$now["minutes"].':'.$now["seconds"] ?>" />
+</form>
+<script type="text/javascript">
+var currentclick=null;
+	$(function(){
+		setTimeout(function(){
+			$(".thongsosp .nicEdit-panel").append("<div onclick='addpara()' id='addtable'><img src='"+base_url+"/public/admin/Images/table.png' width='15px' height='15px' /></div><div onclick='addnewitem()' id='additem'><img src='"+base_url+"/public/admin/Images/newrow.jpg' width='15px' height='15px' /></div>");
+			$(".thongsosp .nicEdit-panel").css("height","22px").find("div:not(#addtable,#additem)").hide();
+			$(".thongsosp .nicEdit-main .groupparam .paramitem input").each(function(){
+				$(this).val($(this).parent().find("i").html());
+			});
+			$(".thongsosp .nicEdit-main .groupparam").on("click",function(){
+				currentclick=$(this);
+			});
+			$(".thongsosp .nicEdit-main .groupparam .paramitem u").on("click",function(){
+			$(this).parent().remove();
+		});
+
+		},1000);
+
+		$("#frmthongso").submit(function(){
+			$(".thongsosp .nicEdit-main .groupparam .paramitem input").each(function(){
+				if($(this).val()!="")
+				$(this).parent().find("i").html($(this).val());
+			});
+		});
+	});
+	function addpara(){
+		var thongso=$(".thongsosp .nicEdit-main");
+		thongso.append("<div class=\'groupparam\'><div class=\'gname\'>TÊN NHÓM</div><div class=\'paramitem clearfix\'><label><input /><i></i></label><span><input /><i></i></span><u></u></div></div>");
+		$(".thongsosp .nicEdit-main .groupparam").off("click");
+		$(".thongsosp .nicEdit-main .groupparam").on("click",function(){
+			currentclick=$(this);
+		});
+		$(".thongsosp .nicEdit-main .groupparam .paramitem u").off("click");
+		$(".thongsosp .nicEdit-main .groupparam .paramitem u").on("click",function(){
+			$(this).parent().remove();
+		});
+	}
+	function addnewitem(){
+		if(currentclick!=null){
+			currentclick.append("<div class=\'paramitem clearfix\'><label><input /><i></i></label><span><input /><i></i></span><u></u></div>");
+			$(".thongsosp .nicEdit-main .groupparam .paramitem u").off("click");
+		$(".thongsosp .nicEdit-main .groupparam .paramitem u").on("click",function(){
+			$(this).parent().remove();
+		});
+		}else{
+			alert("Vui lòng click vào group muốn thêm");
+		}
+	}
+</script>
+<style type="text/css">
+	#addtable,#additem{
+		margin-left: 4px;
+		width: 16px;
+		height: 16px;
+		padding: 2px;
+		float: left;
+		margin-top: -1px;
+		border:1px solid rgb(239, 239, 239);
+	}
+	#addtable:hover,#additem:hover{
+		cursor: pointer;
+	}
+	.thongsosp .nicEdit-main .groupparam{
+		padding: 5px 7px;
+		width: 100%;
+	}
+	.thongsosp .nicEdit-main .groupparam div.gname{
+		color: rgb(45, 46, 46);
+		padding: 10px 0 5px 0;
+		margin-bottom: 10px;
+		font: bold 108% Arial, Helvetica, sans-serif;
+		border-bottom: 1px dotted #ccc;
+		margin-top: 20px;
+	}
+	.thongsosp .nicEdit-main .groupparam .paramitem {
+		clear: left;
+		padding: 8px 2px;
+		position: relative;
+		width: 710px;
+	}
+	.thongsosp .nicEdit-main .groupparam .paramitem label {
+		display: block;
+		float: left;
+		width: 300px;
+	}
+	.thongsosp .nicEdit-main .groupparam .paramitem i{
+		display: none;
+	}
+	.thongsosp .nicEdit-main .groupparam .paramitem span {
+		display: block;
+		float: left;
+		width: 400px;
+		overflow: hidden;
+	}
+	.thongsosp .nicEdit-main .groupparam .paramitem span input{
+		width:350px;
+	}
+	.thongsosp .nicEdit-main .groupparam .paramitem u {
+		position: absolute;
+		display: block;
+		background-image: url(<?php echo $this->baseUrl() ?>/public/admin/Images/delete.png);
+		width: 16px;
+		height:16px;
+		top:10px;
+		right: 30px;
+	}
+	.thongsosp .nicEdit-main .groupparam .paramitem u:hover{
+		cursor: pointer;
+	}
+	.thongsosp .nicEdit-main .groupparam .paramitem .clear{
+		clear:left;
+	}
+</style>

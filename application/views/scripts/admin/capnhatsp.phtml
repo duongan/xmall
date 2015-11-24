@@ -1,0 +1,88 @@
+<script type="text/javascript" src="<?php echo $this->baseUrl() ?>/public/Scripts/nicEdit.js"></script>
+<script type="text/javascript">
+	$(".breadcrumb").html("<li><i class='fa fa-dashboard'></i> <a href='"+base_url+"/admin'>Trang Chủ</a></li> <li><i class='fa fa-cube'></i><a href='"+base_url+"/admin/sanpham'> Sản Phẩm</a></li> <li><i class='fa fa-edit'></i> Cập Nhật Sản Phẩm</li><li class='active'><i class='fa fa-bookmark'></i> "+"<a href='<?php echo $this->baseUrl().'/'.$this->thongtin["URL"].'_'.$_GET['id'] ?>.html' target='_black' style='color: #777;'><?php echo $this->thongtin["TENSP"] ?></a>"+"</li>");
+	$("h1.page-header").text("Sửa Sản Phẩm");
+	var ooooo;
+	$(function(){
+		$("#qlsanpham").parent().addClass("active").find("a").click();
+		setTimeout(function(){
+			ooooo=$(".tabitem form .nicEdit-panelContain");
+			$(window).scroll(function(){
+				if($(this).scrollTop()>220){
+					ooooo.addClass("no");	
+				}else{
+					ooooo.removeClass("no");
+				}
+			});
+		},1000);
+		
+	});
+
+	bkLib.onDomLoaded(function () {
+        	new nicEditor({ fullPanel: true }).panelInstance("baiviet");
+        	new nicEditor({ fullPanel: true }).panelInstance("khuyenmai");
+    	});
+</script>
+<style type="text/css">
+	.tabitem form .nicEdit-panelContain.no{
+		position: fixed;
+		top:52px;
+		z-index: 9999;
+		width: 980px !important;
+	}
+</style>
+
+<?php if($this->clsp["THONG_SO"]==1){ ?>
+	<script type="text/javascript">
+	bkLib.onDomLoaded(function () {
+        	new nicEditor({ fullPanel: true }).panelInstance("thong_so");
+    	});
+	</script>
+<?php } ?>
+
+
+<div id="tabs">
+	<a href="#thongtinsp"><i class='fa fa-info'></i> Thông Tin Sản Phẩm</a>
+	<?php if($this->clsp["THONG_SO"]==1){ ?>
+	<a href="#thongsosp"><i class='fa fa-paragraph'></i> Thông Số</a>
+	<?php } ?>
+	<a href="#baivietsp"><i class='fa fa-newspaper-o'></i> Bài Viết Sản Phẩm</a>
+	<?php if($this->clsp["VIDEO"]==1){ ?>
+	<a href="#video"><i class='fa fa-video-camera'></i> Video</a>
+	<?php } ?>
+	<a href="#hinhanh"><i class='fa fa-picture-o'></i> Hình Ảnh</a>
+	<a href="#khuyenmai"><i class='fa fa-flash'></i> Khuyến Mãi - Giảm Giá</a>
+	<a href="#trangthai"><i class='fa fa-paw'></i> Trạng Thái SP</a>
+</div>
+<div>
+	<?php if($this->message!=null){ ?>
+		<div class="message">
+			<?php echo $this->message ?>
+		</div>
+	<?php } ?>
+	<div id="" class="tabitem thongtinsp">
+		<?php echo $this->partial('admin/modules/capnhatsp/thongtinsp.phtml',array('thongtin'=>$this->thongtin,'lsp'=>$this->lsp)); ?>
+	</div>
+	<?php if($this->clsp["THONG_SO"]==1){ ?>
+	<div id="" class="tabitem thongsosp">
+		<?php echo $this->partial('admin/modules/capnhatsp/thongso.phtml',array('data'=>$this->thongso)); ?>
+	</div>
+	<?php } ?>
+	<div id="" class="tabitem baivietsp">
+			<?php echo $this->partial('admin/modules/capnhatsp/baiviet.phtml',array('data'=>$this->baiviet)); ?>
+	</div>
+	<?php if($this->clsp["VIDEO"]==1){ ?>
+	<div id="" class="tabitem video">
+			<?php echo $this->partial('admin/modules/capnhatsp/video.phtml',array('data'=>$this->video)); ?>
+	</div>
+	<?php } ?>
+	<div id="" class="tabitem hinhanh">
+			<?php echo $this->partial('admin/modules/capnhatsp/hinhanh.phtml',array('data'=>$this->hinhanh)); ?>
+	</div>
+	<div id="" class="tabitem khuyenmai">
+			<?php echo $this->partial('admin/modules/capnhatsp/khuyenmai.phtml',array('data'=>$this->khuyenmai)); ?>
+	</div>
+	<div id="" class="tabitem trangthai">
+			<?php echo $this->partial('admin/modules/capnhatsp/trangthai.phtml',array('data'=>$this->trangthai)); ?>
+	</div>
+</div>

@@ -1,0 +1,62 @@
+<section class="layout_center">
+	<div id="iconeventleft"></div>
+	<div id="iconeventright"></div>
+
+	<nav id="breadcrumb-global">
+		<ul class="clearfix">
+			<li><a href="/">Trang chủ</a><span style="margin-left:5px;">»</span></li><li><a href="<?php echo $this->baseUrl() ?>/dang-nhap.html">Đăng nhập</a><span style="margin-left:5px;">»</span></li><li><h1>Quyên Mật Khẩu</h1></li>
+		</ul>
+	</nav>
+	<div class="clearleft"></div>
+
+	<?php if($this->send==null){ ?>
+
+	<?php if($this->message!=null){ ?>
+		<div id="message" style="color:red;margin-left:220px;margin-top:10px;font-weight:bold">
+			<?php echo $this->message ?>
+		</div>
+	<?php }if($this->hide==null){ ?>
+	<div class="login">
+		<form id="frm" action="" method="post">
+
+
+			<div class="form-field">
+				<label for="to" class="cm-required cm-trim cm-email" style="margin-top:5px">Email :</label>
+				<input type="email" id="to" name="to" size="30" value="" class="input-text cm-focus" required />
+
+			</div>
+<div class="buttons-container" style="margin-left:170px">
+												
+
+			<input type="submit" value="Send Mail" name="submit">
+
+							</div>
+							<br /><br />
+
+			</form>
+
+	</div>
+
+	<?php }}else{ ?>
+		<form id="frmsend" action="http://tienghoadidong.com/sendmail.php" method="post">
+			 <input type="hidden" name="to" value="<?php echo $this->to ?>" />
+			 <input type="hidden" name="content" value="<?php echo $this->content ?>" />
+			 <input type="hidden" name="title" value="Lấy lại mật khẩu vienthonga" />
+			 <input type="hidden" name="r" value="http://<?php echo $_SERVER['HTTP_HOST'].$this->baseUrl() ?>/quyen-mat-khau.html" />
+		</form>
+		<script type="text/javascript">
+			$("#frmsend").submit();
+		</script>
+	<?php } ?>
+
+</section>
+<script type="text/javascript">
+	$(function(){
+		if (!navigator.onLine) {
+			$("#frm").before('<div style="text-align:center;width: 530px;margin-top: 20px;color:red">Không có kết nối mạng. Vui lòng kiểm tra lại kết nối internet</div>');
+			$("#frm input").attr("disabled","disabled");
+			
+				
+		}
+	});
+</script>

@@ -1,0 +1,56 @@
+<script type="text/javascript">
+var ooooo;
+	$(function(){
+		setTimeout(function(){
+			ooooo=$(".nicEdit-panelContain");
+			$(window).scroll(function(){
+				if($(this).scrollTop()>175){
+					ooooo.addClass("on");	
+				}else{
+					ooooo.removeClass("on");
+				}
+			});
+		},1000);
+	});
+
+</script>
+<style type="text/css">
+	.nicEdit-panelContain.on{
+		position: fixed;
+		top: 51px;
+		z-index: 9999;
+		width: 984px !important;
+	}
+</style>
+<?php  
+	if(!isset($_GET["a"])){
+		echo $this->partial('admin/modules/website/changetitle.phtml',array('data'=>$this->title));
+	}else{
+		switch ($_GET["a"]) {
+			case 'chung':
+				echo $this->partial('admin/modules/website/changetitle.phtml',array('data'=>$this->title));
+				break;
+			case 'logo':
+				echo $this->partial('admin/modules/website/changelogo.phtml');
+				break;
+			case 'menutop':
+				echo $this->partial('admin/modules/website/changemenutop.phtml',array('data'=>$this->menutop));
+				break;
+			case 'css':
+				echo $this->partial('admin/modules/website/changecss.phtml',array('filename'=>$this->filename));
+				break;
+			case 'tuyendung':
+				echo $this->partial('admin/modules/website/tuyendung.phtml',array('tuyendung'=>$this->data));
+				break;
+			case 'baohanh':
+				echo $this->partial('admin/modules/website/baohanh.phtml',array('baohanh'=>$this->data));
+				break;
+			case 'huongdan':
+				echo $this->partial('admin/modules/website/huongdan.phtml',array('huongdan'=>$this->data));
+				break;
+			case 'baotri':
+				echo $this->partial('admin/modules/website/baotri.phtml',array('baotri'=>$this->baotri));
+				break;
+		}
+	}
+?>

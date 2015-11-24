@@ -1,0 +1,513 @@
+<script type="text/javascript">
+	var scm=parseInt("<?php echo $this->countnx ?>");
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+ 
+    var native_width = 0;
+    var native_height = 0;
+    var imageurl=null;
+ 
+    //Now the mousemove function
+    $(".magnify").mousemove(function(e){
+    	 imageurl=$(".small").attr("src");
+        //When the user hovers on the image, the script will first calculate
+        //the native dimensions if they don't exist. Only after the native dimensions
+        //are available, the script will show the zoomed version.
+        if(!native_width && !native_height)
+        {
+            //This will create a new image object with the same image as that in .small
+            //We cannot directly get the dimensions from .small because of the
+            //width specified to 200px in the html. To get the actual dimensions we have
+            //created this image object.
+            var image_object = new Image();
+            image_object.src = $(".small").attr("src");
+
+
+             
+            //This code is wrapped in the .load function which is important.
+            //width and height of the object would return 0 if accessed before
+            //the image gets loaded.
+            native_width = image_object.width;
+            native_height = image_object.height;
+        }
+        else
+        {
+            //x/y coordinates of the mouse
+            //This is the position of .magnify with respect to the document.
+            var magnify_offset = $(this).offset();
+            //We will deduct the positions of .magnify from the mouse positions with
+            //respect to the document to get the mouse positions with respect to the
+            //container(.magnify)
+            var mx = e.pageX - magnify_offset.left;
+            var my = e.pageY - magnify_offset.top;
+             
+            //Finally the code to fade out the glass if the mouse is outside the container
+            if(mx < $(this).width() && my < $(this).height() && mx > 0 && my > 0)
+            {
+                $(".large").fadeIn(100);
+            }
+            else
+            {
+                $(".large").fadeOut(100);
+            }
+            if($(".large").is(":visible"))
+            {
+                //The background position of .large will be changed according to the position
+                //of the mouse over the .small image. So we will get the ratio of the pixel
+                //under the mouse pointer with respect to the image and use that to position the
+                //large image inside the magnifying glass
+                var rx = Math.round(mx/$(".small").width()*native_width - $(".large").width()/2)*-1;
+                var ry = Math.round(my/$(".small").height()*native_height - $(".large").height()/2)*-1;
+                var bgp = rx + "px " + ry + "px";
+                 
+                //Time to move the magnifying glass with the mouse
+                var px = mx - $(".large").width()/2;
+                var py = my - $(".large").height()/2;
+                //Now the glass moves with the mouse
+                //The logic is to deduct half of the glass's width and height from the
+                //mouse coordinates to place it with its center at the mouse coordinates
+                 
+                //If you hover on the image now, you should see the magnifying glass in action
+                $(".large").css({left: px, top: py, backgroundPosition: bgp,"background-image":"url('"+imageurl+"')"});
+            }
+        }
+    }).mouseout(function(){
+    	$(".large").hide();
+    }).mouseover(function(){
+    	$(".large").show();
+    });
+})
+</script>
+<style type="text/css">
+	.large {
+    width: 175px; height: 175px;
+    position: absolute;
+    border-radius: 100%;
+     
+    /*Multiple box shadows to achieve the glass effect*/
+    box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.85),
+    0 0 7px 7px rgba(0, 0, 0, 0.25),
+    inset 0 0 40px 2px rgba(0, 0, 0, 0.25);
+     
+    /*Lets load up the large image first*/
+    background-repeat:no-repeat;
+     
+    /*hide the glass by default*/
+    display: none;
+}
+</style>
+<section class="layout_center beg">
+	<div id="iconeventleft"></div>
+	<div id="iconeventright"></div>
+	<nav id="breadcrumb-global">
+		<ul class="clearfix">
+			<?php echo $this->navs; ?>
+		</ul>
+	</nav>
+	<div class="clearleft"></div>
+	<?php if($this->message==null){ ?>
+	<section id="product_infos">
+
+		<article id="product_images" class="left">
+			<div id="imagesp">
+				<div class="magnify">
+			<div class="large"></div>
+				<img class="small" alt="" src="<?php echo $this->baseUrl()."/uploads/images/sp/".$this->info["HINHANH"] ?>" width="270" height="250" />
+			</div>				
+			</div>
+			<div id="pseleftimages">
+				<div id="selectimages">
+					<div id="contentimages">
+						<img class="active" src="<?php echo $this->baseUrl()."/uploads/images/sp/".$this->info["HINHANH"] ?>" width="30" height="30" />
+						<?php foreach (explode(" ", $this->info["HINH_ANH_KHAC"]) as $iimage) {
+							if($iimage!=""){
+								echo '<img src="'.$this->baseUrl().'/uploads/images/sp/'.$iimage.'" width="30" height="30" />';
+							}
+						} ?>
+
+					</div>
+				</div>
+			</div>
+			<div id="psstatus">
+				<i class="iconstatus <?php echo $this->info["ICON_TRANGTHAI"]; ?>"></i>
+			</div>
+			<div style="text-align:center;margin-top:10px">
+				<?php for ($dg=1; $dg < $this->danhgia; $dg++) { 
+					echo '<img src="'.$this->baseUrl().'/public/Contents/Images/star_full.gif" />';
+				} 
+					$dg--;
+					if($this->danhgia>$dg && $this->danhgia<$dg+1)
+						echo '<img src="'.$this->baseUrl().'/public/Contents/Images/star_n.png" />';
+					else
+						echo '<img src="'.$this->baseUrl().'/public/Contents/Images/star_full.gif" />';
+					for ($x=$dg+1; $x < 5; $x++) { 
+						echo '<img src="'.$this->baseUrl().'/public/Contents/Images/star_empty.gif" />';
+					}
+				?>
+			</div>
+		</article>
+		<article id="product_detail" class="left">
+			<h2><?php echo $this->info["TENSP"] ?></h2>
+			
+				<?php $currentUrl="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']; ?>
+				<div class="sharep">
+                    <div class="addthis_toolbox addthis_default_style printnone">    	
+                        <a class="addthis_button_facebook at300b" title="Facebook" href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $currentUrl ?>" target="_blank"><span class="at16nc at300bs at15nc at15t_facebook at16t_facebook"><span class="at_a11y"></span></span></a>
+                        <a class="addthis_button_twitter at300b" title="Tweet" href="https://twitter.com/intent/tweet?source=webclient&text=<?php echo $this->info["TENSP"] ?>&url=<?php echo $currentUrl ?>" target="_blank"><span class="at16nc at300bs at15nc at15t_twitter at16t_twitter"><span class="at_a11y"></span></span></a>      
+                        <a class="addthis_button_google at300b" href="https://plus.google.com/share?url=<?php echo $currentUrl ?>" target="_blank" title="Google"><span class="at16nc at300bs at15nc at15t_google at16t_google"><span class="at_a11y"></span></span></a>
+                        <a class="addthis_button_zingme at300b" href="http://link.apps.zing.vn/share?u=<?php echo $currentUrl ?>" target="_blank" title="ZingMe"><span class=" at300bs at16nc at15nc at15t_zingme"><span class="at_a11y"></span></span></a>  
+		                <a class="addthis_button_email at300b" target="_blank" title="Email" href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to&su=<?php echo $this->info["TENSP"] ?>&body=<?php echo $currentUrl ?>&ui=2&tf=1"><span class="at16nc at300bs at15nc at15t_email at16t_email"><span class="at_a11y"></span></span></a>
+                        <div class="addthis_toolbox addthis_default_style left">
+    	                    <a class="addthis_button_email printpage at300b" title="In Trang" href="#"><span class="at16nc at300bs at15nc at15t_print at16t_print" onclick="window.print()"><span class="at_a11y"></span></span></a>
+                        </div>
+                         <div class="clearleft"></div>
+                    </div>
+                </div>
+			<p id="product_status">
+				<?php $arr=array("Còn hàng","Sắp hết hàng","Sắp ra mắt","Đang sả hàng","Hết hàng","Không kinh doanh","Bán chạy"); echo $arr[$this->info["TEN_TRANGTHAI"]]; ?>
+			</p>
+			<p class="product_price">
+				<span>Giá sản phẩm:</span> <strong><?php if($this->info["GIA"]>0) echo number_format(((100-$this->info["GIAM_GIA"])*$this->info["GIA"])/100,0,',','.')." VND";else echo "Liên Hệ"; ?></strong>
+				<?php 
+					if($this->info["GIA"]>0){
+						if($this->info["GIAM_GIA"]>0){
+							echo "<s>".number_format($this->info["GIA"],0,',','.')." VND</s>";
+						}
+					}
+					?>
+			</p>
+
+			<p>
+			<span>Linh kiện đi kèm: </span> <?php echo $this->info["LINH_KIEN"]; ?>
+			</p>
+			<p>
+			<span>Bảo Hành: </span> <?php echo $this->info["BAOHANH"] ?> Tháng
+			</p><br />
+			<p>
+					<a href="<?php echo $this->baseUrl().'/gio-hang?id='.$this->info["MASP"] ?>" class="<?php if($this->info["TEN_TRANGTHAI"]!=2 && $this->info["TEN_TRANGTHAI"]!=4 && $this->info["TEN_TRANGTHAI"]!=5) echo 'adtocart';else echo 'nonadtocart' ?> btn-product-details-add-to-cart btn-a">    		
+						<?php if($this->info["TEN_TRANGTHAI"]!=2 && $this->info["TEN_TRANGTHAI"]!=4 && $this->info["TEN_TRANGTHAI"]!=5) echo 'ĐẶT HÀNG<span>Nhận tại cửa hàng - Giao tận nơi</span>';else echo mb_strtoupper($arr[$this->info["TEN_TRANGTHAI"]],"UTF-8"); ?>
+					</a>
+					<a href="<?php echo $this->baseUrl() ?>/yeu-thich?id=<?php echo $this->info['MASP'] ?>" class="btn btn-like">
+				THÊM VÀO YÊU THÍCH<span class="pricetragop">Để lần sau mua</span>
+				</a>
+			<div class="clearleft"></div>
+			</p>
+
+
+			<p style="margin-top:10px;border-bottom:1px solid #ccc;padding-bottom:7px;margin-bottom:7px">
+				<span style="font-size:18px">
+					<?php if($this->oplsp["THONG_SO"]==1) echo "Tóm tắt thông số kỹ thuật"; else echo "Tóm tắt thông tin sản phẩm"; ?>
+				</span>
+			</p>
+			<p style="color:#666;font-size:13px">
+				<?php echo $this->info["TOM_TAT_TS"]; ?>
+			</p>
+		</article>
+
+		<article id="product_promo" class="left">
+			<?php if($this->info["KHUYENMAI"]!="&lt;br&gt;"){ ?>
+			<div class="product-promo-info" id="pro-scroll">
+				<h3><span class="icon icon-product-promo-2"></span>Khuyến mãi</h3>
+				<div class="contentnano">
+						<?php echo html_entity_decode($this->info["KHUYENMAI"]); ?>
+				</div>				
+             </div>
+             <?php }else echo "<div id='qckm'></div>"; ?>
+
+		</article>
+		<article class="left">
+             <div class="product-purchase-online-benefits">
+				     		<h3>MUA HÀNG ONLINE</h3>
+				     		<ul>
+				     			<li><a href="giao-hang-toan-quoc.html">Nhận hàng tại siêu thị</a></li>
+				     			<li>Giao hàng tận nơi, MIỄN PHÍ</li>                     			
+				     			<li>Đảm bảo 100% hàng chính hãng</li>
+				     			<li><a href="/bao-hanh.html">Đổi trả hàng trong 8 ngày (*)</a></li>
+
+				     		</ul>
+				     		
+				     		<div class="clearleft"></div>
+				     	</div>
+		</article>
+
+		<div class="clearleft"></div>
+		<br />
+		<article id="tabs">
+			<ul>
+				<a href="#baiviet">Bài viết</a>
+		
+				<?php if($this->oplsp["THONG_SO"]==1 && $this->info["THONG_SO"]!="" && $this->info["THONG_SO"]!="&lt;br&gt;"){ ?>
+					<a href="#thongso">Thông số sản phẩm</a>
+				<?php } ?>
+				<?php if($this->oplsp["VIDEO"]==1 && $this->info["VIDEO"]!=""){ ?>
+				<a href="#hinh360">Video</a>
+				<?php } ?>
+				<a href="#nhanxet">Nhận xét (<?php echo $this->countnx ?>)</a>
+
+				<div class="clearleft"></div>
+			</ul>
+		</article>
+		<article id="boxleftsp" class="left">
+		
+		<!--Bài viết sản phẩm-->
+		<a name="baiviet"></a>
+			<div id="baiviet">
+				<?php echo html_entity_decode($this->info["BAIVIET"]) ?>
+				<div id="tukhoa">
+					Từ khóa liên quan: <?php foreach (explode(",", $this->info["TUKHOA"]) as $itemtk) {
+						if($itemtk!=""){ echo "<a href='".$this->baseUrl()."/search?key=".$itemtk."'>".trim($itemtk)."</a>";}
+					} ?>
+				</div>
+			</div>
+		<?php if($this->oplsp["THONG_SO"]==1 && $this->info["THONG_SO"]!="" && $this->info["THONG_SO"]!="&lt;br&gt;"){ ?>
+			<!--thông số sản phẩm-->
+			<a name="thongso"></a>
+			<div id="thongso">
+				<h3 class="tsttile">THÔNG SỐ SẢN PHẨM</h3>
+				<div>
+					<p style="margin-left:7px;color:#888">(Cấu hình chỉ mang tính tham khảo, để có thông số chính xác của sản phẩm vui lòng liên hệ nhân viên tư vấn hoặc nhân viên cửa hàng để xác nhận thông tin)</p>
+					<div style="margin-top:-30px">
+						<?php echo html_entity_decode($this->info["THONG_SO"]) ?>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<?php } ?>
+			<?php if($this->oplsp["VIDEO"]==1 && $this->info["VIDEO"]!=""){ ?>
+			<!--hinh 360 sản phẩm-->
+			<a name="hinh360"></a>
+			<div id="hinh360">
+				<div class="bordertitle">
+					<h3 class="title">VIDEO</h3>
+				</div>
+				<div style="margin-left:50px">
+				<iframe width="560" height="315" src="//www.youtube.com/embed/<?php $idvideo=explode("v=", $this->info["VIDEO"])[1]; $idvideo=explode("#", $idvideo)[0]; $idvideo=explode("&", $idvideo)[0]; echo $idvideo ?>" frameborder="0" allowfullscreen></iframe>
+				</div>
+			</div>
+			<?php } ?>
+
+			<!--nhận xét-->
+			<a name="nhanxet"></a>
+			<div id="nhanxet">
+				<div class="bordertitle">
+					<h3 class="title">NHẬN XÉT (<?php echo $this->countnx ?>)</h3>
+				</div>
+				<div style="padding-left:15px">
+					<div id="boxsendcm">
+						<form method="post" action="" name="sendcomment" id="frmcomment">
+							<div class="left avatar">
+								<img src="<?php echo $this->baseUrl() ?>/public/Contents/Images/user.png" />
+							</div>
+							<div class="left">
+								<textarea placeholder="Nội dung nhận xét (vui lòng nhập tiếng việt có đấu)..." class="inputstyle" id="valuecomment" name="valuecomment"><?php if(isset($_POST['valuecomment'])) echo $_POST['valuecomment'] ?></textarea>
+							</div>
+							<div class="clearleft"></div>
+							<div style="margin-left:48px">
+								<input type="text" placeholder="Họ tên" class="inputstyle" size="45" name="hoten" value="<?php if(isset($_POST['hoten'])) echo $_POST['hoten'] ?>" />
+								<input type="email" placeholder="Email" class="inputstyle" size="45" name="email" value="<?php if(isset($_POST['email'])) echo $_POST['email'] ?>" />
+								<input type="submit" value="Gửi" class="inputsubmit" />
+								<br />
+								<div class="left" style="width:90%">
+									<div class="left" style="margin-top:10px">
+										<div class="left">Đánh giá sản phẩm: </div>
+										<div class="left" id="danhgiasp">
+											<img src="public/Contents/Images/star-off.png" alt="1" title="Xấu" />
+											<img src="public/Contents/Images/star-off.png" title="Bình Thường" alt="2" />
+											<img src="public/Contents/Images/star-off.png" title="Tạm Được" alt="3" />
+											<img src="public/Contents/Images/star-off.png" alt="4" title="Tốt" />
+											<img src="public/Contents/Images/star-off.png" alt="5" title="Cực Tốt" />
+											<input type="hidden" name="danhgia" id="vdanhgia" value="0" />
+										</div>
+										<div class="clearleft"></div>
+									</div>
+									<div class="right">
+										<div class="left" style="margin-top:5px">Mã Xác Nhận: <input type="text" size="20" name="captcha" id="captcha" />
+										</div>
+										<div class="left" style="margin-top:7px">
+											<img src="<?php echo $this->baseUrl() ?>/captcha" id="imgcaptcha" />
+										</div>
+									</div>
+								</div>
+								<div class="clear"></div>
+							</div>
+							<input type="hidden" name="masp" value="<?php echo $this->info["MASP"] ?>" />
+						</form>
+					</div>
+
+					<hr style="border:0;border-top:1px solid #ccc;margin:30px 0px 10px 0px;display:block" />
+
+					<div id="contentcomment">
+					<?php $countcm=0; foreach ($this->nhanxet as $itemcm) {if($itemcm["NX_CHA"]==0){?>
+						<div class="item itemparent" <?php if($countcm>=10) echo "style='display:none'"; else $countcm++; ?>>
+							<div class="left">
+								<img src="<?php echo $this->baseUrl() ?>/public/Contents/Images/user.png" />
+							</div>
+							<div class="left" style="width:750px;margin-left:10px;">
+								<div class="infocomment">
+									<div class="left">
+										<h2><i ref="<?php echo $itemcm["EMAIL"] ?>" <?php if($itemcm["ADMIN"]==1){echo "style='color:red'";} ?>><?php echo $itemcm["HOTEN"]; ?></i> - <span><?php echo date('d/m/Y H:s:m',strtotime($itemcm["NGAYDANG"])); ?></span></h2>
+									</div>
+									<div class="right">
+										<i>Đánh giá sản phẩm: </i> 
+										<?php for ($dx=0; $dx < 5; $dx++) { 
+											if($dx<$itemcm["DANH_GIA"])
+												echo '<img src="'.$this->baseUrl().'/public/Contents/Images/star_full.gif" />';
+											else
+												echo '<img src="'.$this->baseUrl().'/public/Contents/Images/star_empty.gif" />';
+										} ?>
+										
+									</div>
+									<div class="clear"></div>
+								</div>
+								<div class="contentcomment">
+									<?php echo $itemcm["NOIDUNG"] ?>
+								</div>
+								<div class="ctcomment">
+									<input type="hidden" class="idnx" value="<?php echo $itemcm["MANX"] ?>" />
+									<a href="javascript:void(0)" class="reply">
+										<img src="<?php echo $this->baseUrl() ?>/public/Contents/Images/reply.png" /> Trả Lời
+									</a>
+									<a href="javascript:void(0)" class="like">
+										<img src="<?php echo $this->baseUrl() ?>/public/Contents/Images/like.png" /> Thích <strong><?php if($itemcm["THICH"]>0) echo $itemcm["THICH"] ?></strong>
+									</a>
+									<a href="javascript:void(0)" class="warning">
+										<img src="<?php echo $this->baseUrl() ?>/public/Contents/Images/warning.png" /> Báo cáo vi phạm
+									</a>
+								</div>
+								<div class="replycomment">
+
+									<textarea placeholder="Nội dung nhận xét (vui lòng nhập tiếng việt có đấu)..." class="inputstyle"></textarea><br />
+									<div>
+										<input type="text" placeholder="Họ tên" class="inputstyle" size="30" name="hoten" />
+										<input type="email" placeholder="Email" class="inputstyle" size="30" name="email" />
+									</div>
+									<div style="margin-top:5px;">
+										<div class="left" style="margin-top:5px">Đánh giá sản phẩm: </div>
+										<div class="left dgspsub" style="margin-top:5px">
+											<img src="public/Contents/Images/star-off.png" alt="1" title="Xấu" />
+											<img src="public/Contents/Images/star-off.png" title="Bình Thường" alt="2" />
+											<img src="public/Contents/Images/star-off.png" title="Tạm Được" alt="3" />
+											<img src="public/Contents/Images/star-off.png" alt="4" title="Tốt" />
+											<img src="public/Contents/Images/star-off.png" alt="5" title="Cực Tốt" />
+											<input type="hidden" class="vdg" value="0" />
+										</div>
+										<div class="left" style="margin-left:10px">
+											<input type="hidden" value="<?php echo $itemcm["MANX"] ?>" class="v_nx_cha" />
+											<input type="hidden" value="<?php echo $this->info["MASP"] ?>" class="v_masp" />
+											<input type="button" value="Gửi" class="inputsubmit" />
+										</div>
+										<div class="clearleft"></div>
+									</div>
+
+								</div>
+								<div class="subcomment">
+									<!--sub-->
+									<?php foreach ($this->nhanxet as $itemsubcm) {
+										if($itemsubcm["NX_CHA"]==$itemcm["MANX"]){?>
+									<div class="item">
+										<div class="left">
+											<img src="<?php echo $this->baseUrl() ?>/public/Contents/Images/user.png" />
+										</div>
+										<div class="left" style="width:650px;margin-left:10px;">
+											<div class="infocomment">
+												<div class="left">
+													<h2><i <?php if($itemsubcm["ADMIN"]==1){echo "style='color:red'";} ?>><?php echo $itemsubcm["HOTEN"] ?></i> - <span><?php echo date('d/m/Y H:s:m',strtotime($itemsubcm["NGAYDANG"])); ?></span></h2>
+												</div>
+												<div class="right">
+													<i>Đánh giá sản phẩm: </i> 
+													<?php for ($dx=0; $dx < 5; $dx++) { 
+														if($dx<$itemsubcm["DANH_GIA"])
+															echo '<img src="'.$this->baseUrl().'/public/Contents/Images/star_full.gif" />';
+														else
+															echo '<img src="'.$this->baseUrl().'/public/Contents/Images/star_empty.gif" />';
+													} ?>
+												</div>
+												<div class="clear"></div>
+											</div>
+											<div class="contentcomment">
+												<?php echo $itemsubcm["NOIDUNG"] ?>
+											</div>
+											<div class="ctcomment">
+												<input type="hidden" class="idnx" value="<?php echo $itemsubcm["MANX"] ?>" />
+												<a href="javascript:void(0)" class="like">
+													<img src="<?php echo $this->baseUrl() ?>/public/Contents/Images/like.png" /> Thích <strong><?php if($itemsubcm["THICH"]>0) echo $itemsubcm["THICH"] ?></strong>
+												</a>
+												<a href="javascript:void(0)" class="warning">
+													<img src="<?php echo $this->baseUrl() ?>/public/Contents/Images/warning.png" /> Báo cáo vi phạm
+												</a>
+											</div>
+
+										</div>
+										<div class="clearleft"></div>
+									</div>
+									<!--sub-->
+									<?php }} ?>
+								</div>
+
+							</div>
+							<div class="clearleft"></div>
+						</div>
+						<!---->
+					<?php }}if($this->countnx>10){ ?>
+						<div id="morecomment">
+							<span>Xem Thêm</span>
+						</div>
+						<?php } ?>
+					</div>
+
+				</div>
+			</div>
+
+		</article>
+		<article id="boxrightsp" class="left">
+		<?php if($this->tintuc!=null && count($this->tintuc)>0){ ?>
+				<aside class='boxright'>
+					<h1>TIN TỨC</h1>
+					<div class="contentbox tintuclq">
+						<?php foreach ($this->tintuc as $item) {
+							echo '<div class="item">';
+							echo '<img src="'.$this->baseUrl().'/uploads/images/tintuc/'.$item["HINHANH"].'" />';
+							echo '<a href="'.$this->baseUrl()."/".$item["MATT"]."_".$item["URL"].'.html">'.$item["TIEUDE"].'</a><div class="clearleft"></div>';
+							echo '</div>';
+						} ?>
+						<div class="clearleft"></div>
+					</div>
+				</aside>
+			<?php } ?>
+			<?php if($this->cunggia!=null && count($this->cunggia)>0){ ?>
+				<aside class='boxright'>
+					<h1>CÓ THỂ BẠN MUỐN MUA</h1>
+					<div class="contentbox">
+						<?php foreach ($this->cunggia as $item) {
+							echo '<div class="item">';
+							echo '<img src="'.$this->baseUrl().'/uploads/images/sp/'.$item["HINHANH"].'" />';
+							echo '<a href="'.$this->baseUrl().'/'.$item["URL"].'_'.$item["MASP"].'.html">'.$item["TENSP"].'</a>';
+							echo '<span>'.(($item["GIA"]>0)?(number_format(((100-$item["GIAM_GIA"])*$item["GIA"])/100,0,',','.')):("Liên Hệ")).'</span>';
+							echo '</div>';
+						} ?>
+						<div class="clearleft"></div>
+					</div>
+				</aside>
+			<?php } ?>
+			<?php if($this->cungloai!=null && count($this->cungloai)>0){ ?>
+				<aside class='boxright'>
+					<h1>SẢN PHẨM CÙNG HÃNG</h1>
+					<div class="contentbox">
+						<?php foreach ($this->cungloai as $item) {
+							echo '<div class="item">';
+							echo '<img src="'.$this->baseUrl().'/uploads/images/sp/'.$item["HINHANH"].'" />';
+							echo '<a href="'.$this->baseUrl().'/'.$item["URL"].'_'.$item["MASP"].'.html">'.$item["TENSP"].'</a>';
+							echo '<span>'.(($item["GIA"]>0)?(number_format(((100-$item["GIAM_GIA"])*$item["GIA"])/100,0,',','.')):("Liên Hệ")).'</span>';
+							echo '</div>';
+						} ?>
+						<div class="clearleft"></div>
+					</div>
+				</aside>
+			<?php } ?>
+		</article>
+		<div class="clearleft"></div>
+	</section>
+	<?php }else{echo "<div style='margin:20px;text-align:center'><h2>".$this->message."</h2></div>";} ?>
+</section>
+<i style="display:none" id="currenturl"><?php echo $currentUrl ?></i>

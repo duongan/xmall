@@ -1,0 +1,196 @@
+ <script type="text/javascript" src="<?php echo $this->baseUrl() ?>/public/Scripts/dialog.js"></script>
+ <link href="<?php echo $this->baseUrl() ?>/public/Contents/dialog.css" rel="stylesheet" />
+<script type="text/javascript">
+
+ var dialogxoa=null;
+ var frmxoa=null; 
+
+	$(function(){
+		$(".breadcrumb").html("<li><i class='fa fa-dashboard'></i> <a href='"+base_url+"/admin'>Trang Chủ</a></li> <li class='active'><i class='fa fa-group'></i> Khách Hàng</li>");
+	$("h1.page-header").text("Danh Sách Khách Hàng");
+		$("#qlhoadon").parent().addClass("active").find("a").click();
+		$("#qlhoadon").find("li:eq(3)").addClass("active");
+
+dialogxoa=new dialog($("#dialog"),{
+            "width":500,
+            "height":240
+        });
+        dialogxoa.init();
+
+        $(".frmxoatt").submit(function(){
+      if(!$(this).hasClass("success")){
+        frmxoa=$(this);
+        dialogxoa.show();
+        return false;
+      }
+    });
+
+	});
+
+function xoatt(th){
+    
+
+    LoadJson(base_url+"/ajax/kiemtraxoa",{"mk2":th.find(".mk2").val(),"ma":th.find(".ma").val()},function(result){
+            switch(result){
+                case 0:
+                    $("#dialog .ms").html('Mật khẩu cấp 2 sai.').css("color","red");
+                    break;
+                case 2:
+                    $("#dialog .ms").html('Mã bảo vệ sai').css("color","red");
+                    $("#dialog img").attr("src",base_url+"/captcha");
+                    break;
+                case 1:
+                    frmxoa.addClass("success").submit();
+                    break;
+            }
+        });
+        
+        return false;
+
+}
+
+</script>
+
+
+<div id="dialog">
+    <div class='header'>
+        XÁC NHẬN XÓA KHÁCH HÀNG
+    </div>
+    <div class='ct'>
+        <p>Vui lòng nhập mật khẩu cấp 2 để tiếp tục xóa.</p>
+        <div class='ms' style="margin-top:-10px;text-align:center"></div>
+            <br />
+        <form action="" method="post" role="form" onsubmit="return xoatt($(this));">
+            <div class='row'>
+                <div class='col-lg-4 col-sm-4 col-xs-4' style="margin-top:7px"><b>Mật Khẩu Cấp 2:</b> </div>
+                <div class='col-lg-6 col-sm-6 col-xs-6'>
+                    <input type="password" class="form-control mk2" />
+                </div>
+            </div>
+            <br />
+            <div class='row'>
+                <div class='col-lg-4 col-sm-4 col-xs-4' style="margin-top:7px"><b>Mã Xác Nhận:</b> </div>
+                <div class='col-lg-8 col-sm-8 col-xs-8'>
+                    <input size="18" type="text" class="ma" />
+                    <img src="<?php echo $this->baseUrl() ?>/captcha" style="padding-left:7px" />
+                </div>
+            </div>
+            <br />
+            <div class='row'>
+                <div class='col-lg-4 col-sm-4 col-xs-4' style="margin-top:7px"></div>
+                <div class='col-lg-6 col-sm-6 col-xs-6'>
+                    <input type="submit" class="btn btn-success btn-sm" value="Tiếp tục xóa" />
+                    <input type="button" onclick="dialogxoa.hide();" class="btn btn-default btn-sm" value="Hủy bỏ" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<?php if($this->message!=null){ ?>
+	<div class="message">
+		<?php echo $this->message ?>
+	</div>
+<?php } ?>
+
+    <div class="clearfix">
+        <div class="l">
+            <?php echo $this->partial('admin/phan_trang.phtml',array('arr_page'=>$this->arr_page)); ?>
+        </div>
+        <div class="r">
+            <div class="l">
+                <form method="get" action="">
+                    <div class="frmsearch clearfix">
+                        <input type="text" class="textboxsearch" value="<?php if(isset($_GET['q'])) echo $_GET['q']; ?>"  placeholder="Nhập nội dung tìm kiếm..." name="q" />
+                        <input type="submit" class="buttonsearch" value="" />
+                    </div>
+                    <?php if(isset($_GET["sort"])){ ?>
+                        <input type="hidden" name="sort" value="<?php echo $_GET["sort"] ?>" />
+                    <?php } ?>
+                </form>
+            </div>
+            <div class="l" style="margin-left:10px">
+                <form method="get" action="">
+                    <select onchange="$(this).parent().submit();" name="sort" style="height:25px">
+                        <option value="makh-desc">Mới Nhất</option>
+                        <option value="makh">Cũ Nhất</option>
+                        <option value="diem-desc">Điểm</option>
+                        <option value="ngaysinh">Ngày Sinh</option>
+                        <option value="diachi">Địa Chỉ</option>
+                        <option value="khoa-desc">Khóa</option>
+                    </select>
+                    <?php if(isset($_GET["q"])){ ?>
+                        <input type="hidden" name="q" value="<?php echo $_GET["q"] ?>" />
+                    <?php } ?>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-vm">
+        <tr class="headertable">
+            <td align="center" rowspan="2">EMAIL</td>
+            <td align="center" rowspan="2">Ngày Sinh</td>
+            <td align="center" rowspan="2">CMND</td>
+            <td align="center" colspan="3">Mua</td>
+            <td align="center" colspan="3">Nhận</td>
+            <td rowspan="2" align="center" width="10px">Điểm</td>
+            <?php if($this->quyen['KHOAKH']==1){ ?>
+            <td rowspan="2"></td>
+            <td rowspan="2"></td>
+            <?php } ?>
+        </tr>
+        <tr class="headertable">
+        	<td align="center">Họ Tên</td>
+        	<td align="center">Địa Chỉ</td>
+        	<td align="center">ĐT</td>
+        	<td align="center">Họ Tên</td>
+        	<td align="center">Địa Chỉ</td>
+        	<td align="center">ĐT</td>
+        </tr>
+        <?php foreach ($this->kh as $item) {?>
+        <tr>
+      		<td><?php echo $item["EMAIL"] ?></td>
+      		<td><?php echo date('d/m/Y',strtotime($item["NGAYSINH"])) ?></td>
+      		<td><?php echo $item["CMND"] ?></td>
+      		<td><?php echo $item["TENKH"] ?></td>
+      		<td><?php echo $item["DIACHI"] ?></td>
+      		<td><?php echo $item["DIENTHOAI"] ?></td>
+      		<td><?php echo $item["TENNN"] ?></td>
+      		<td><?php echo $item["DIACHINN"] ?></td>
+      		<td><?php echo $item["DIENTHOAINN"] ?></td>
+      		<td align="center"><?php echo $item["DIEM"] ?></td>
+      		<?php if($this->quyen['KHOAKH']==1){ ?>
+      		<td align="center">
+      			<form method="post" action="" onsubmit="return confirm('Bạn có chắc?');">
+      				<input type="submit" 
+      				<?php if($item["KHOA"]==1){ echo "value='' title='Đang khóa' style='background:transparent url(".$this->baseUrl()."/public/admin/Images/lock.png) no-repeat left center;padding-left:20px;border:0;cursor:pointer'";}else{echo "value='' title='đang hoạt động' style='background:transparent url(".$this->baseUrl()."/public/admin/Images/unlock.png) no-repeat left center;padding-left:20px;border:0;cursor:pointer'";} ?> />
+      					<input type="hidden" name="makh" value="<?php echo $item['MAKH'] ?>" />
+      					<input type="hidden" name="khoa" value="<?php if($item['KHOA']==0) echo "1"; else echo "0"; ?>" />
+      					<input type="hidden" name="tenkh" value="<?php echo $item['TENKH'] ?>" />
+      			</form>
+      		</td>
+          <td>
+            <form method="post" action="" class="frmxoatt">
+            <input type="submit" title="Xóa khách hàng" value="" style="background-image:url(<?php echo $this->baseUrl() ?>/public/admin/Images/delete.png);width:15px;height:15px;border:0;cursor:pointer;" />
+            <input type="hidden" name="id" value="<?php echo $item["MAKH"] ?>" />
+            <input type="hidden" name="name" value="<?php echo $item["TENKH"] ?>" />
+          </form>
+          </td>
+      		<?php } ?>
+        </tr>
+        <?php } ?>
+       </table>
+      </div>
+<style type="text/css">
+	.table .headertable{
+		background-color: #eee;
+	}
+</style>
+<script type="text/javascript">
+		var sort="<?php if(isset($_GET['sort'])) echo $_GET['sort']; else echo 'makh-desc' ?>";
+
+			$("select[name='sort']").val(sort);
+</script>

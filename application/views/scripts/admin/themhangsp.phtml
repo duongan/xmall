@@ -1,0 +1,114 @@
+<script type="text/javascript">
+	$(".breadcrumb").html("<li><i class='fa fa-dashboard'></i> <a href='"+base_url+"/admin'>Trang Chủ</a></li> <li><i class='fa fa-asterisk'></i><a href='"+base_url+"/admin/loaisp'> Loại Sản Phẩm</a></li> <li class='active'><i class='fa fa-bookmark'></i> <?php echo $this->tenlsp ?></li> <li class='active'><i class='fa fa-plus'></i> Thêm Hãng</li>");
+	$("h1.page-header").text("Thêm Hãng Sản Phẩm");
+$(function(){
+		
+	$("#qlsanpham").parent().addClass("active").find("a").click();
+	});
+$(document).ready(function(){
+	$("#frm").kiemtra([
+		{
+			'name':'ten_loai',
+			'max':70,
+			'min':1,			
+			'message':'tên loại sản phẩm phải lớn hơn 0 và nhỏ hơn 70'
+		}
+	]);
+});
+</script>
+<style type="text/css">
+	.asimg{
+		width: 75px;
+		height: 75px;
+	}
+	.asimg img{
+		width: 70px;
+		height: 70px;
+	}
+</style>
+<?php if($this->message!=null){ ?>
+	<div class="message">
+		<?php echo $this->message ?>
+	</div>
+<?php } ?>
+<form method="post" action="" id="frm" enctype="multipart/form-data" role="form">
+<div class="table-responsive">
+	<table class="table">
+		<tr>
+			<td>
+				<b>Tên Hãng Sản Xuất: </b><span class="red">*</span>
+			</td>
+			<td colspan="3">
+				<input class="form-control" value="<?php echo ($this->arrdata)?$this->arrdata['TEN_LOAI']:'' ?>" type="text" name="ten_loai" />
+			</td>
+		</tr>
+		<tr class="bordertop">
+			<td  width="200">
+				<b>Icon Lớn(Banner):</b>
+			</td>
+			<td width="200">
+				<div class="inputmr">
+					 <div class="asimg imguploadhover" onclick="$(this).parent().find('input.none').click();">
+                        <img src="<?php echo $this->baseUrl() ?>/public/admin/Images/uploadimg.png" />
+                    </div>
+                    <input type="file" name="iconlon" class="none"  onchange="readURL(this);" />
+				</div>
+			</td>
+			<td width="120">
+				<b>Icon Nhỏ(Menu) 33x31:</b>
+			</td>
+			<td>
+					 <div class="asimg imguploadhover" onclick="$(this).parent().find('input.none').click();">
+                        <img src="<?php echo $this->baseUrl() ?>/public/admin/Images/uploadimg.png" />
+                    </div>
+                    <input type="file" name="iconnho" class="none"  onchange="readURL(this);" />
+			</td>
+		</tr>
+		<tr class="bordertop">
+			<td>
+				<b>Hiển Thị:</b>
+			</td>
+			<td colspan="3">
+				<div class="inputmr">
+					<label>Hiển Thị Chung: <input <?php echo ($this->arrdata)?(($this->arrdata['HIEN_THI'])?'checked="checked"':''):'checked="checked"' ?> type="checkbox" name="hienthi" /></label>
+					<label class="pdleft">Hiển Thị Menu: <input <?php echo ($this->arrdata)?(($this->arrdata['HIEN_THI_MENU'])?'checked="checked"':''):'checked="checked"' ?> type="checkbox" name="hienthimenu" /></label>
+					<label class="pdleft">Hiển Thị Trang Chủ: <input <?php echo ($this->arrdata)?(($this->arrdata['HIEN_THI_TC'])?'checked="checked"':''):'' ?> type="checkbox" name="hienthitc" /></label>
+					<label class="pdleft">Hiển Thị Banner: <input <?php echo ($this->arrdata)?(($this->arrdata['HIEN_THI_BANNER'])?'checked="checked"':''):'' ?> type="checkbox" name="hienthibanner" /></label>
+				</div>
+			</td>
+		</tr>
+		<tr class="bordertop">
+			<td>
+				<b>Khác:</b>
+			</td>
+			<td colspan="3">
+				<div class="inputmr">
+					<table class="table tablenormal">
+						<tr>
+							<td width="20%">
+								Kiểu Hiển Thị Banner:
+							</td>
+							<td>
+								<label class="pdleft">Nhỏ <input <?php echo ($this->arrdata)?((!$this->arrdata['LOAI_BANNER'])?'checked="checked"':''):'checked="checked"' ?> type="radio" value="0" name="lbanner" /></label><label>  Lớn <input <?php echo ($this->arrdata)?(($this->arrdata['LOAI_BANNER'])?'checked="checked"':''):'' ?> type="radio" value="1" name="lbanner" /></label>
+							</td>
+						</tr>
+					</table>
+
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+
+			</td>
+			<td colspan="3">
+				<div class="inputmr">
+					<input type="submit" class="btn btn-success btn-sm" value="Thêm mới" />
+					<input type="reset" class="btn btn-default btn-sm" value="Nhập lại" />
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>
+	<input type="hidden" name="lsp_cha" value="<?php echo $_GET['id'] ?>" />
+</form>

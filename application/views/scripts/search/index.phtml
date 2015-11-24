@@ -1,0 +1,229 @@
+<section class="layout_center">
+
+	<div id="iconeventleft"></div>
+	<div id="iconeventright"></div>
+	<?php 
+		$url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+		$url=explode("?", $url)[0];
+		$url.="?";
+		if(isset($_GET["key"])){
+			$url.="key=".$_GET["key"]."&";
+		}
+		if(isset($_GET["sort"])){
+			$url.="sort=".$_GET["sort"]."&";
+		}
+		if(isset($_GET["page"])){
+			$url.="page=".$_GET["page"]."&";
+		}
+		 ?>
+
+	<div class="left" style="width:200px;padding:5px;margin-top:5px">
+	<?php if($this->lsp!=null){ ?>
+		<div class="sidebox">
+	        <h3>LỌC THEO LOẠI SẢN PHẨM</h3>
+	        <div class="content contentl">
+	        	<a href="<?php echo substr($url,0,strlen($url)-1) ?>">Tất Cả Loại Sản Phẩm</a>
+	            <?php foreach ($this->lsp as $item) {
+	            	echo "<a href='".$url."lsp=".$item["MALSP"]."'>".$item["TEN_LOAI"]."</a>";
+	            } ?>
+	        </div>
+	    </div>
+	<?php } ?>
+		<div class="sidebox">
+	        <h3>LỌC THEO GIÁ</h3>
+	        <div class="content contentl">
+	        	<a href="<?php echo substr($url,0,strlen($url)-1) ?>">Tất Cả Giá</a>
+	            <a href="<?php echo $url."bgia=0&egia=1000000" ?>">Nhỏ Hơn 1 Triệu</a>
+	            <a href="<?php echo $url."bgia=1000000&egia=5000000" ?>">1 Triệu - 5 Triệu</a>
+	            <a href="<?php echo $url."bgia=6000000&egia=10000000" ?>">6 triệu - 10 triệu</a>
+	            <a href="<?php echo $url."bgia=10000000" ?>">Trên 10 triệu</a>
+	        </div>
+	    </div>
+
+	    <div class="sidebox">
+	        <h3>LỌC TINH TRẠNG</h3>
+	        <div class="content contentl">
+	        	<a href="<?php echo substr($url,0,strlen($url)-1) ?>">Tất Cả Sản Phẩm</a>
+	            <a href="<?php echo $url."gg=1" ?>">Sản Phẩm Giảm Giá</a>
+	            <a href="<?php echo $url."km=1" ?>">Sản Phẩm Khuyến Mãi</a>
+	            <a href="<?php echo $url."rm=1" ?>">Sản Phẩm Sắp Ra Mắt</a>
+	        </div>
+	    </div>
+
+	</div>
+	<div class="left" style="width:975px">
+		<nav id="breadcrumb-global">
+			<ul class="clearfix">
+				<li><a href="/">Trang chủ</a><span style="margin-left:5px;">»</span></li>
+				<li><h1>Kết quả tìm kiếm</h1></li>
+			</ul>
+		</nav>
+		<div class="clearleft"></div>
+		<div class="boxproduct boxproductbig">
+				<div class="headerbox">
+					<h3 class="left">Tìm thấy <?php echo $this->arr_page['sum'] ?> sản phẩm</h3>
+					<h3 class="right">
+						<form method="get" action="" id="frmsort">
+							<select name="sort">
+								<option value="1">Mới nhất</option>
+								<option value="2">Cũ nhất</option>
+								<option value="3">Giá tăng dần</option>
+								<option value="4">Giá giảm dần</option>
+							</select>	
+							<input type="hidden" name="key" value="<?php echo $_GET['key'] ?>" />
+						</form>
+					</h3>
+					<div class="clear"></div>
+				</div>
+				<div class="contentbox">
+						
+						<?php 
+							if(count($this->sp)>0){foreach ($this->sp as $isp) {
+						 ?>
+						<div class="item">
+							<a href="<?php echo $this->baseUrl().'/'.$isp['info']['URL'].'_'.$isp['info']['MASP'] ?>.html" class="noneunder">
+								<div class="beforhover">
+									<i class="iconstatus <?php echo $isp['info']["ICON_TRANGTHAI"] ?>"></i>
+									<div class="product-image">
+										<img width="150" height="120" src="<?php echo $this->baseUrl().'/uploads/images/sp/'.$isp['info']["HINHANH"] ?>" />
+									</div>
+									<div class="product-info">
+										<div class="product-name"><?php echo $isp['info']["TENSP"] ?></div>
+										<div class="product-price">
+											<?php
+											if($isp['info']["GIA"]>0){
+												if($isp['info']["GIAM_GIA"]==0)
+										            echo  number_format($isp['info']["GIA"],0,',','.')." VND";
+										        else{
+										        	echo number_format(((100-$isp['info']["GIAM_GIA"])*$isp['info']["GIA"])/100,0,',','.')." VND"; 
+										        }
+									    	}
+									        else{
+									        	echo "Liên Hệ";
+									        }
+											?>
+										</div>
+									</div>
+								</div>
+								<div class="afterhover">
+									<div class="product-info">
+										<div class="product-name"><?php echo $isp['info']["TENSP"] ?></div>
+										<div class="product-price">
+											<?php if($isp['info']["GIA"]>0){echo "Giá gốc: ".number_format($isp['info']["GIA"],0,',','.')." VND";} else{echo "Liên Hệ";} ?>
+										</div>
+									</div>
+									<div class="product-s">
+										<?php echo $isp['info']["TOM_TAT_TS"] ?>
+									</div>
+									<div class="promo-info"><span class="icon icon-product-promo"></span><?php if($isp['info']["GIAM_GIA"]==0){ ?>Khuyến mãi
+										<?php }else{ ?>
+										Giảm Giá <?php echo $isp['info']["GIAM_GIA"] ?>%
+										<?php } ?>
+									</div>		
+									<div class="product-o">
+										<?php if($isp['info']['GIA']>0){ ?>
+										<a class="btn-buy btn-a" href="<?php echo $this->baseUrl().'/gio-hang?id='.$isp['info']["MASP"] ?>">
+											<i class="icon left"></i>
+											ĐẶT HÀNG
+										</a>
+										<?php } ?>
+										<a href="<?php echo $this->baseUrl().'/yeu-thich?id='.$isp['info']['MASP'] ?>" title="Thêm vào yêu thích" class="icon icon-like left"></a>
+										<div class="clearleft"></div>
+									</div>
+								</div>
+							</a>
+						</div>
+						<?php }}else echo "Không tìm thấy sản phẩm nào."; ?>
+						
+						<div class="clear"></div>
+				</div>
+			</div>
+			<div class="right" style="margin-right: 35px;">
+				<?php echo $this->partial('admin/phan_trang.phtml',array('arr_page'=>$this->arr_page)); ?>
+				
+			</div>
+			<div class="clear"></div>
+
+			<div class="boxproduct boxtintuc">
+				<div class="headerbox">
+					<h3>Tìm thấy <?php echo count($this->tintuc) ?> tin tức</h3>
+				</div>
+				<div class="contentbox">
+					<?php foreach ($this->tintuc as $item) {?>
+						<div class="itemtt">
+							<a href="<?php echo $this->baseUrl().'/'.$item['MATT'].'_'.$item['URL'] ?>.html">
+								<img src="<?php echo $this->baseUrl().'/uploads/images/tintuc/'.$item['HINHANH'] ?>" />
+								<div class="left" style="width:290px">
+									<h4><?php echo $item["TIEUDE"] ?></h4>
+									<div class="timepost">
+										<?php echo date('d/m/Y H:s:m',strtotime($item['THOIGIAN'])) ?>
+									</div>
+									<p>
+										<?php if(strlen($item["MOTA"])>150) echo mb_substr($item["MOTA"],0,100)."..."; else echo $item["MOTA"]; ?>
+									</p>
+								</div>
+								<div class="clearleft"></div>
+							</a>
+						</div>
+					<?php } ?>
+					<div class="clearleft"></div>
+				</div>
+			</div>
+
+	</div>
+	<div class="clearleft"></div>
+</section>
+<script type="text/javascript">
+	$(function(){
+		$("#frmsort select").change(function(){
+			$(this).parent().submit();
+		});
+		var sort="<?php echo (isset($_GET['sort']))?$_GET['sort']:1; ?>";
+		$("#frmsort select").val(sort);
+	});
+</script>
+<link href="<?php echo $this->baseUrl() ?>/public/admin/page.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+	nav#breadcrumb-global{
+		margin-left: 0px !important;
+		margin-top: 5px;
+	}
+	.boxtintuc .itemtt{
+		width: 46%;
+		float: left;
+		padding: 1%;
+		height:110px;
+	}
+	.boxtintuc .itemtt img{
+		width: 150px;
+		height: 100px;
+		display: block;
+		margin:0px auto;
+		float: left;
+		border:1px solid #ddd;
+	}
+	.boxtintuc .itemtt h4{
+		margin:0;
+		margin-left: 5px;
+	}
+	.boxtintuc .itemtt p{
+		margin-left: 5px;
+		color:#777;
+		margin-top: 5px;
+	}
+	.boxtintuc .itemtt .timepost{
+		margin-left: 5px;
+		color:#999;
+	}
+	.boxtintuc .itemtt:hover h4{
+		color:blue;
+	}
+	.boxtintuc .contentbox{
+		border-left: 0 !important;
+	}
+</style>
+<script type="text/javascript">
+	$(function(){
+		$("#search .inputsearch").val('<?php echo $_GET["key"] ?>');
+	});
+</script>

@@ -1,0 +1,31 @@
+.morechild{
+	padding-top: 5px;
+	padding-bottom: -5px;
+	margin-top: 5px;
+	text-align: center;
+}
+.morechild span{
+	display: block;
+	background-image: url("Images/more.png");
+	background-repeat: no-repeat;
+	background-position: center left;
+	width: 145px;
+	margin: 0px auto;
+	padding:5px 5px 5px 15px;
+	opacity: 0.7;
+}
+.morechild:hover span{
+	opacity: 1;
+	cursor: pointer;
+}
+.w150{
+	width: 150px;
+	display: inline-block;
+}
+.w250{
+	width: 250px;
+	display: inline-block;
+}
+.w250 label.r{
+	margin-left: 5px
+}

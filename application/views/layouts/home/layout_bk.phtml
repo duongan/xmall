@@ -1,0 +1,329 @@
+<?php if($this->layout()->bt=="0" || isset($_GET['bt'])){ ?>
+<!DOCTYPE html>
+<html lang="vi">   
+<head>   
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-language" content="vi" />
+    <?php echo $this->headTitle() ?>
+    <link href="<?php echo $this->baseUrl() ?>/public/Contents/Images/favicon.ico" rel="shortcut icon" />
+	<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+	<meta property="og:site_name" content="<?php echo $this->baseUrl() ?>/"/>
+	<meta property="og:url" content="http://<?php echo $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] ?>" />
+    <meta property="og:type" content="website" />
+    <meta name="robots" content="noodp,index,follow" />
+	<?php echo $this->headMeta() ?>
+	<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl() ?>/public/Contents/css.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl() ?>/public/Contents/style.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl() ?>/public/Contents/event.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl() ?>/public/Contents/ads.css" />
+	<?php echo $this->headLink() ?>	
+	<script type="text/javascript" src="<?php echo $this->baseUrl() ?>/public/Scripts/jquery.js"></script>
+	<script type="text/javascript" src="<?php echo $this->baseUrl() ?>/public/Scripts/js.js"></script>
+	<?php echo $this->headScript() ?>
+	<script type="text/javascript">
+		var info={"base_url":"<?php echo $this->baseUrl() ?>"};
+	</script>
+	
+	<!--[if lt IE 9]>
+			<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl() ?>/public/Contents/stylehtml5.css" />
+			<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl() ?>/public/Contents/cssie.css" />
+			<script src="<?php echo $this->baseUrl() ?>/public/Scripts/html5.js" type="text/javascript"></script>
+
+			<script type="text/javascript">
+				$(function(){
+                $("input[placeholder],textarea[placeholder]").each(function(){
+                    $(this).val($(this).attr("placeholder"));
+                    $(this).css("color","#999");
+                    $(this).focus(function(){
+                        if($(this).val()==$(this).attr("placeholder")){
+                            $(this).val("");
+                             $(this).css("color","#333");
+                         }
+                    });
+                    $(this).blur(function(){
+                        var th=$(this);
+                        setTimeout(function () {
+                        if(th.val()==""){
+                           th.val(th.attr("placeholder"));
+                            th.css("color","#999");
+                        }
+                    }, 100);
+                    });
+                });
+            });
+			</script>
+	<![endif]-->
+	
+</head>   
+<body> 
+	<a name="top"></a>
+	<header>
+			<section class="layout_center">
+				<article id="navbar_top">
+					<div id="hotline" class="left">
+						<span class="icon icon-hotline left"></span>
+						<?php echo $this->layout()->hotline; ?>
+					</div>
+					<nav id="nav_top1" class="left">
+						<div class="left">
+							<a href="<?php echo $this->baseUrl() ?>/ho-tro.html" class="a_1">Hỗ trợ</a>
+							<a href="<?php echo $this->baseUrl() ?>/lien-he.html" class="a_1">Liên hệ</a>
+						</div>
+					</nav>
+					<nav id="nav_top2" class="left">
+						<?php if(!isset($this->layout()->login)){ ?>
+							<a href="<?php echo $this->baseUrl() ?>/dang-ky.html" class="a_2">Đăng ký</a> -
+							<a href="<?php echo $this->baseUrl() ?>/dang-nhap.html?r=<?php echo "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] ?>" class="a_2">Đăng nhập</a>
+					<?php }else{ ?> 
+							<ul id="userinfo">
+								<li><span>Chào Bạn:  <?php echo $this->layout()->login['TEN'] ?></span>
+									<ul>
+								
+										<a href="<?php echo $this->baseUrl() ?>/thong-tin-ca-nhan.html">Thông tin cá nhân</a>
+										<a href="<?php echo $this->baseUrl() ?>/don-hang-cua-ban.html">Đơn hàng của bạn</a>
+										<a href="<?php echo $this->baseUrl() ?>/dang-xuat.html">Thoát</a>
+									</ul>
+							</li>
+								
+							</ul>
+						<?php } ?>
+					</nav>
+					<nav id="nav_top3" class="right">
+						<div id="cart" class="left">
+							<a href="<?php echo $this->baseUrl() ?>/gio-hang">
+								<span class="left block asa">Giỏ hàng</span>
+								<span class="icon icon-cart left"></span>
+							</a>
+							<span class="total_item">(<?php echo $this->layout()->qcart ?>)</span>
+						</div>
+						<div id="like" class="left">
+							<a href="<?php echo $this->baseUrl() ?>/yeu-thich">
+								<span class="left block asa">Yêu Thích</span>
+								<span class="icon icon-like left"></span>
+							</a>
+							<span class="total_item">(0)</span>
+						</div>
+					</nav>
+					<div class="clear"></div>
+				</article>
+			</section>
+			<section id="header">
+				<section class="layout_center">
+					<div id="navtop_header">
+						<div id="logo" class="left">
+							<a href="<?php echo $this->baseUrl() ?>/"><img alt="vienthonga" src="<?php echo $this->baseUrl() ?>/public/Contents/Images/logo.png" /></a>
+							<div id="logo_event"></div>
+						</div>
+						<div id="search" class="left">
+							<form method="get" action="<?php echo $this->baseUrl() ?>/search">
+								<div class="left casearch">
+									<input type="text" placeholder="Nhập thông tin cần tìm.." onkeyup="ktsearchup(event,this);" autocomplete="off" class="inputsearch first left" name="key" />
+									<div id="datasearch"></div>
+								</div>
+								<i class="icona block left" title="Xóa nội dung tìm kiếm"></i>
+								<img id='iconloads' src="<?php echo $this->baseUrl() ?>/public/Contents/Images/loader/ajax-loader.gif" />
+								<input type="submit" class="iconsearch icon right" value="" />
+							</form>
+						</div>
+						<div id="right_header" class="right">
+							<div class="item">
+								<a href="<?php echo $this->baseUrl() ?>/bao-hanh.html" class="noneunder">
+									<span class="icon icon-returns">Đổi trả hàng<br />trong vòng 8 ngày</span>
+								</a>
+							</div>
+							<div class="item">
+								<a href="<?php echo $this->baseUrl() ?>/giao-hang-toan-quoc.html" class="noneunder">
+									<span class="icon icon-delivery">Giao hàng<br />Toàn quốc</span>
+								</a>
+							</div>
+							<div class="item">
+								<a href="<?php echo $this->baseUrl() ?>/thanh-toan.html" class="noneunder">
+								<span class="icon icon-cod">Thanh toán<br />khi nhận hàng</span>
+								</a>
+							</div>
+						</div>
+						<div class="clear"></div>
+					</div>
+				</section>
+				<section class="layout_center">
+					<nav id="danhmuc" class="left">
+						<span class="eventdanhmuc block">
+						</span>
+						<div class="aaa_12">
+							<i class="icon left"></i>
+							DANH MỤC
+						</div>
+						<ul class="menug">
+							<!---->
+							<?php echo $this->layout()->nav; ?>
+							<!---->
+						</ul>
+					</nav>
+
+					<nav id="menutop" class="left">
+						<ul>
+							<!-- <li>
+								<a href="<?php echo $this->baseUrl() ?>">TRANG CHỦ</a>
+							</li>
+							<li>
+								<a href="<?php echo $this->baseUrl() ?>/tin-tuc.html">TIN TỨC - KHUYẾN MÃI</a>
+							</li>
+							<li>
+								<a href="<?php echo $this->baseUrl() ?>/bao-hanh.html">ĐỔI TRẢ - BẢO HÀNH</a>
+							</li>
+							<li>
+								<a href="<?php echo $this->baseUrl() ?>/huong-dan.html">HƯỚNG DẪN MUA HÀNG</a>
+							</li>
+							<li>
+								<a href="<?php echo $this->baseUrl() ?>/tuyen-dung.html">TUYỂN DỤNG</a>
+							</li>
+							<li>
+								<a href="<?php echo $this->baseUrl() ?>/gioi-thieu.html">GIỚI THIỆU</a>
+							</li> -->
+							<?php foreach ($this->layout()->menutop as $item) {
+								echo '<li><a href="'.$this->baseUrl().$item['path'].'">'.$item['text'].'</a></li>';
+							} ?>
+							<div class="clearleft"></div>
+						</ul>
+						<div id="eventbgmenu">
+					</div>
+					</nav>
+					
+					<div class="clearleft"></div>
+				</section>
+			</section>
+		</header>
+		<section id="content">
+			 <?php echo $this->layout()->content;?> 
+		</section>
+		<footer>
+			<article id="footertop">
+				<section class="layout_center">
+					<nav>
+						<ul>
+						 	<li class="w300 left">
+						 		<h2>Giải Thưởng</h2>
+						 		<div class="article-info"><a href="" class="thumb"><img src="<?php echo $this->baseUrl() ?>/public/Contents/Images/top300-dn-2014.jpg" height="66" width="90"></a><a href="">Top 300 doanh nghiệp hàng đầu Việt Nam năm 2014</a></div>
+						 	</li>
+						 	<li class="left">
+						 		<h2>Liên Hệ</h2>
+						 		<div class="article-info">
+										<ul>
+										<li><span class="icon icon-pin left"></span>Phường Trảng Dài, TP Biên Hòa, Đồng Nai</li>
+										<li><span class="icon icon-telephone left"></span><span class="hotline">Hotline: <?php echo $this->layout()->hotline ?></span></li>
+										<li><span class="icon icon-email left"></span><a href="mailto:vienthonga1203@gmail.com">vienthonga1203@gmail.com</a></li>
+										</ul>
+								</div>
+						 	</li>
+						 	<li class="left" style="width:220px;margin-left:20px">
+						 		<h2>Copyright</h2>
+						 		<div class="article-info">
+						 			Copyright © 2015 - Powered by Trần Công Tuấn, Trần Văn Thỏa
+						 		</div>
+						 	</li>
+						 	<li class="w300 left">
+						 		<h2>Nhận bảng tin</h2>
+						 		<p>Đăng ký nhận bản tin khuyến mãi hằng tuần từ Viễn Thông A</p>
+						 		<p>
+						 			<form method="post" action="" onsubmit="alert('Chức năng chưa hoàn thành.'); return false;">
+						 				<input type="email" placeholder="Nhập địa chỉ email" class="txtemail" name="email" />
+						 				<input type="submit" class="btnsubmit" value="Gửi" />
+						 			</form>
+						 		</p>
+						 	</li>
+						 	<div class="clearleft"></div>
+						</ul>
+					</nav>
+				</section>
+			</article>
+			<article id="footerbottom">
+				<div class="main">
+					<section class="layout_center">
+						<div class="layout-content clearfix">
+						<div class="block-nav clearfix">
+						<div class="nav-footer vien-thong-a">
+						<h3>Viễn Thông A</h3>
+						<ul>
+						<li><a href="<?php echo $this->baseUrl() ?>/gioi-thieu.html">Giới thiệu về Viễn Thông A</a></li>
+						<li><a href="<?php echo $this->baseUrl() ?>/nha-dau-tu.html">Nhà đầu tư</a></li>
+						<li><a href="<?php echo $this->baseUrl() ?>/tuyen-dung.html">Tuyển dụng</a></li>
+						</ul>
+						</div>
+						<div class="nav-footer products">
+						<h3>Sản phẩm</h3>
+						<ul>
+						<li><a href="<?php echo $this->baseUrl() ?>/dien-thoai-smartphone.html">Smartphone - Điện thoại</a></li>
+						<li><a href="<?php echo $this->baseUrl() ?>/laptop.html">Laptop</a></li>
+						<li><a href="<?php echo $this->baseUrl() ?>/may-tinh-bang.html">Máy tính bảng</a></li>
+						<li><a href="<?php echo $this->baseUrl() ?>/linh-kien.html">Linh phụ kiện</a></li>
+						</ul>
+						</div>
+						<div class="nav-footer services-1">
+						<h3>Dịch vụ</h3>
+						<ul>
+						<li><a href="<?php echo $this->baseUrl() ?>/bao-hanh.html">Đổi Trả - Bảo Hành</a></li>
+						<li><a href="<?php echo $this->baseUrl() ?>/tuyen-dung.html">Tuyển Dụng</a></li>
+						<li><a href="<?php echo $this->baseUrl() ?>/khuyen-mai.html">Liên Hê</a></li>
+						<li><a href="<?php echo $this->baseUrl() ?>/tin-tuc.html">Tin Tức</a></li>
+						</ul>
+						</div>
+						<div class="nav-footer services-2">
+						<h3>Dịch vụ thanh toán</h3>
+						<ul>
+						<li><a href="<?php echo $this->baseUrl() ?>/huong-dan.html">Mua online</a></li>
+						<li><a href="<?php echo $this->baseUrl() ?>/giao-hang-toan-quoc.html">Giao hàng toàn quốc</a></li>
+						<li><a href="<?php echo $this->baseUrl() ?>/thanh-toan.html">Thanh toán khi nhận hàng</a></li>
+						</ul>
+						</div>
+						<div class="nav-footer info-online-shopping">
+						<h3>THÔNG TIN HỖ TRỢ</h3>
+						<b style="font-size: 11px;">KHIẾU NẠI &amp; CHĂM SÓC KHÁCH HÀNG</b>
+						<div style="padding-left: 5px;"><span style="font-size: 11px;">(Từ 7:30 - 21:30 hằng ngày)</span>
+						<p class="clearfix"><span class="phone-num"><?php echo $this->layout()->hotline ?></span> <br><span style="font-size: 12px; margin: -2px 0 0 0; display: block;">Nhấn phím 0</span></p>
+						</div>
+						<p class="clearfix"></p>
+						<b style="font-size: 11px;">MUA HÀNG ONLINE</b>
+						<div style="padding-left: 5px;"><span style="font-size: 11px;">(Từ 8:30 - 21:30 hằng ngày)</span><br>
+						<p><span class="phone-num"><?php echo $this->layout()->hotline ?></span> <br><span style="font-size: 12px; ;margin: -2px 0 0 0; display: block;">Nhấn phím 1</span></p>
+						</div>
+						</div>
+						
+						
+						<a href="#top" class="btn icon" id="btn-go-top" style="display: none;"></a></div>
+						</div>
+					</section>
+					<div class="clear"></div>
+					<section style="margin:10px;border-top:1px solid #ddd;padding-top:10px" id="sphotfooter">
+						<?php foreach ($this->layout()->sphot as $item) {
+							echo '<a href="'.$this->baseUrl().'/'.$item["URL"].'_'.$item["MASP"].'.html">'.$item['TENSP'].'</a>';
+						} ?>
+					</section>
+				</div>
+				
+			</article>
+			
+		</footer>
+		
+		<script type="text/javascript" src="<?php echo $this->baseUrl() ?>/public/Scripts/script.js"></script>
+
+		<div id="iconeventtopweb"></div>
+		<div id="iconeventbottomweb"></div>
+   
+</body>  
+</html>
+<?php }else{ ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Website tạm ngừng hoạt động</title>
+</head>
+<body>
+<div style="width:50%;margin:20% auto;text-align:center">
+	Website tạm ngừng hoạt động để nâng cấp. Vui lòng quay lại sau ít phút nữa
+</div>
+</body>
+</html>
+
+<?php } ?>

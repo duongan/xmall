@@ -1,0 +1,49 @@
+<section class="layout_center">
+	<div id="iconeventleft"></div>
+	<div id="iconeventright"></div>
+
+	<nav id="breadcrumb-global">
+		<ul class="clearfix">
+			<li><a href="/">Trang chủ</a><span style="margin-left:5px;">»</span></li><li><h1>Đăng nhập</h1></li>
+		</ul>
+	</nav>
+	<div class="clearleft"></div>
+	<?php if($this->message!=null){ ?>
+		<div style="color:red;margin-left:235px;font-weight:bold">
+			<?php echo $this->message ?>
+		</div>
+	<?php } ?>
+	<div class="login">
+		<form name="main_login_form" action="" method="post">
+
+
+<div class="form-field">
+	<label for="login_" class="cm-required cm-trim cm-email">Email :</label>
+	<input type="text" id="login_" name="email" size="30" value="" class="input-text cm-focus">
+</div>
+
+<div class="form-field">
+	<label for="psw_" class="cm-required">Mật khẩu:</label>
+	<input type="password" id="psw_" name="password" size="30" value="" class="input-text password">
+</div>
+
+
+<div class="clear" style="margin-left:167px">
+	<div class="float-left">
+		<input class="valign checkbox" type="checkbox" name="remember_me" id="remember_me_" value="Y">
+		<label for="remember_me_" class="valign lowercase">Lưu thông tin cho lần đăng nhập sau</label>
+	</div>
+		<div class="float-left" style="margin-top:13px;clear:both">
+		
+		
+ 
+	<input type="submit" value="Đăng nhập">
+
+	</div>
+	</div>
+<p class="left" style="margin-left:167px"><a href="<?php echo $this->baseUrl() ?>/quyen-mat-khau.html">Bạn quên mật khẩu?</a></p>
+</form>
+
+	</div>
+
+</section>

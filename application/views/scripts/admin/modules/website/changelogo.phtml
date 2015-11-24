@@ -1,0 +1,31 @@
+<script type="text/javascript">
+	$(".breadcrumb").html("<li><i class='fa fa-dashboard'></i> <a href='"+base_url+"/admin'>Trang Chủ</a></li> <li><i class='fa fa-life-saver'></i><a href='"+base_url+"/admin/website'> Website</a></li> <li class='active'><i class='fa fa-vine'></i> Logo</li>");
+	$("h1.page-header").text("Cập Nhật Logo Website");
+$(function(){
+		
+	$("#qlwebsite").parent().addClass("active").find("a").click();
+	$("#qlwebsite").find("li:eq(1)").addClass("active");
+	});
+</script>
+<?php 
+        $this->headTitle("Chỉnh Sửa Logo"); ?>
+<form method="post" action="" enctype="multipart/form-data">
+	<table class="table">
+		<tr>
+			<td><b>Logo: </b></td>
+			<td>
+				<div class="asimg imguploadhover" style="width:150px;height:40px" onclick="$(this).parent().find('input.none').click();">
+	                        <img style="width:150px;height:40px" src="<?php echo $this->baseUrl() ?>/public/Contents/Images/logo.png" />
+	                    </div>
+	                    <input type="file" name="logo" class="none"  onchange="readURL(this);" />
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>
+				<input type="submit" class="btn btn-success btn-sm" value="Lưu Lại" />
+				<input type="button" class="btn btn-default btn-sm" value="Hủy Bỏ" onclick="window.location.reload()" />
+			</td>
+		</tr>
+	</table>
+</form>

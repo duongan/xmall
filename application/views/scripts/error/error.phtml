@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Zend Framework Default Application</title>
+  <style>
+    #page_404 { width:100%;}
+    #page_404 .page_404_1 { width:750px; margin:0 auto; padding:100px 0 0;}
+    #page_404 h1 { font-size:24px; border-bottom:1px solid #999; padding-bottom:20px;}
+    #page_404 h1 span { font-size:20px;}
+    #page_404 .left { float:left;}
+    #page_404 .right { float:right;}
+    #page_404 ul { float:left; margin:0; padding:0;}
+    #page_404 ul li { float:left; clear:both; margin:0 0 15px; display:block; padding:0 0 0 55px; min-height:30px;}
+    #page_404 ul li.icon_1 { background:url('<?php echo $this->baseUrl(); ?>/public/Contents/Images/page_404/home.jpg') no-repeat left top;}
+    #page_404 ul li.icon_2 { background:url('<?php echo $this->baseUrl(); ?>/public/Contents/Images/page_404/phone.jpg') no-repeat left top;}
+    #page_404 ul li.icon_3 { background:url('<?php echo $this->baseUrl(); ?>/public/Contents/Images/page_404/mail.jpg') no-repeat left top;}
+    #page_404 ul li a { text-decoration:none; font-weight:bold; color:#333;}
+    #page_404 ul li a:hover { color:#2d45c8; text-shadow: 2px 2px 3px #bbb;}
+  </style>
+</head>
+<body>
+   <div id="page_404">
+  <div class="page_404_1">
+    <div class="left">
+      <a href="<?php echo $this->baseUrl(); ?>" id="logo">
+        <img src="<?php echo $this->baseUrl(); ?>/public/Contents/Images/page_404/404_logo_vta.jpg" alt="Viễn Thông A" />
+      </a>
+    </div>
+    <div class="right">
+      <h1>
+        Xin lỗi quý khách<br />
+        <span>Đường link này không tồn tại</span>
+      </h1>
+      <ul>
+        <li class="icon_1">
+          Quý khách vui lòng bấm <a href="<?php echo $this->baseUrl(); ?>">vào đây </a> để quay lại trang chủ <br />
+          <a href="<?php echo $this->baseUrl(); ?>">www.vienthonga.vn</a>
+        </li>
+        <li class="icon_2">
+          Mọi thông tin chi tiết xin quý khách vui lòng liên hệ <br />
+          <strong>1900 54 54 46</strong>
+        </li>
+        <li class="icon_3">Hoặc email: <a href="mailto:vienthonga1203@gmail.com">cs@vienthonga.com</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+ <script type='text/javascript'>
+   setTimeout(function(){window.location.href='<?php echo $this->baseUrl(); ?>'},10000);
+</script>
+  <!-- <h1>An error occurred</h1>
+  <h2><?php echo $this->message ?></h2>
+  
+
+  <?php if (isset($this->exception)): ?>
+  
+  <h3>Exception information:</h3>
+  <p>
+      <b>Message:</b> <?php echo $this->exception->getMessage() ?>
+  </p>
+
+  <h3>Stack trace:</h3>
+  <pre><?php echo $this->exception->getTraceAsString() ?>
+  </pre>
+
+  <h3>Request Parameters:</h3>
+  <pre><?php echo $this->escape(var_export($this->request->getParams(), true)) ?>
+  </pre>
+
+  <?php endif ?> -->
+
+</body>
+</html>

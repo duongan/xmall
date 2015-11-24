@@ -1,0 +1,20 @@
+<script type="text/javascript" src="<?php echo $this->baseUrl() ?>/public/Scripts/nicEdit.js"></script>
+<script type="text/javascript">
+	$(".breadcrumb").html("<li><i class='fa fa-dashboard'></i> <a href='"+base_url+"/admin'>Trang Chủ</a></li> <li><i class='fa fa-life-saver'></i><a href='"+base_url+"/admin/website'> Website</a></li> <li class='active'><i class='fa fa-ticket'></i> Bảo Hành</li>");
+	$("h1.page-header").text("Quy Định Bảo Hành");
+$(function(){
+		
+	$("#qlwebsite").parent().addClass("active").find("a").click();
+	$("#qlwebsite").find("li:eq(5)").addClass("active");
+	bkLib.onDomLoaded(function () {
+        	new nicEditor({ fullPanel: true }).panelInstance("data");
+    	});
+	});
+</script>
+
+<?php $this->headTitle("Quy Định Bảo Hành - Admin Control Panel"); ?>
+
+<form method="post" action="">
+	<textarea name="data" id="data" class="input" style="width:98%" rows="20"><?php echo $this->baohanh ?></textarea><br /><br />
+	<input type="submit" class="btn btn-primary" value="Lưu Lại" />
+</form>

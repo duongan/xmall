@@ -1,0 +1,366 @@
+ <script type="text/javascript" src="<?php echo $this->baseUrl() ?>/public/Scripts/dialog.js"></script>
+ <link href="<?php echo $this->baseUrl() ?>/public/Contents/dialog.css" rel="stylesheet" />
+<script type="text/javascript">
+var dialogxoa=null;
+var dialogreply=null;
+var idcurrentcm=0;
+var idspc=0;
+	$(function(){
+		$(".breadcrumb").html("<li><i class='fa fa-dashboard'></i> <a href='"+base_url+"/admin'>Trang Chủ</a></li> <li class='active'><i class='fa fa-comment-o'></i> Nhận xét</li>");
+		$("h1.page-header").text("Nhận Xét Về Sản Phẩm");
+		$("#qlsanpham").parent().addClass("active").find("a").click();
+		$("#qlsanpham").find("li:eq(2)").addClass("active");
+		$("#selectall").change(function () {
+	        $(".checkboxitem").prop('checked', this.checked);
+	    });
+	    dialogxoa=new dialog($("#dialog"),{
+			"width":500,
+			"height":240
+		});
+		dialogxoa.init();
+		dialogreply=new dialog($("#dialog1"),{
+			"width":500,
+			"height":200
+		});
+		dialogreply.init();
+		$(".reply").click(function(){
+			idcurrentcm=$(this).attr("ref");
+			idspc=$(this).attr("id");
+			dialogreply.show();
+		});
+	    $("#xoanx").click(function(){
+	    	if(!$(this).is(":disabled")){
+	    		if($(".checkboxitem:checked").size()>0){
+	    			if($(this).hasClass("success")){
+	    				$("#frmxoa").submit();
+	    			}else{
+	    				dialogxoa.show();
+	    			}
+	    			
+	    		}
+	    		else
+	    			alert("vui lòng chọn ít nhất 1 nhận xét để xóa");
+	    	}
+	    });
+	    $(".hienthi").change(function(){
+	    	LoadJson(base_url+"/ajax/hienthicm",{"MANX":$(this).val(),"HT":$(this).is(":checked")},function(result){
+
+	    	});
+	    });
+	    $(".admin").change(function(){
+	    	LoadJson(base_url+"/ajax/laadmincm",{"MANX":$(this).val(),"AD":$(this).is(":checked")},function(result){
+
+	    	});
+	    });
+	    $(".table.table-bordered .hover").each(function(){
+	    	if($(this).next(".sub").find("td").size()>1){
+	    		$(this).find(".ic").addClass("icon");
+	    		$(this).css("cursor","pointer");
+	    		$(this).addClass("clickhere");
+	    	}
+	    });
+	    $(".table.table-bordered .sub").each(function(){
+	    	if($(this).find("td").size()==1){
+	    		$(this).hide();
+	    	}else{
+	    		$(this).find("td:eq(0)").addClass("bordered");
+	    	}
+	    });
+
+	     $(".table .hover.clickhere").click(function(){
+            $(this).next(".sub").fadeToggle();
+            $(this).toggleClass("click");
+            $(this).find(".icon").toggleClass("show");
+        });
+	     
+	});
+
+function ajaxXoa(th){
+	LoadJson(base_url+"/ajax/kiemtraxoa",{"mk2":th.find(".mk2").val(),"ma":th.find(".ma").val()},function(result){
+			switch(result){
+				case 0:
+					$("#dialog .ms").html('Mật khẩu cấp 2 sai.').css("color","red");
+					break;
+				case 2:
+					$("#dialog .ms").html('Mã bảo vệ sai').css("color","red");
+					$("#dialog img").attr("src",base_url+"/captcha");
+					break;
+				case 1:
+					$("#xoanx").addClass("success").click();
+			}
+		});
+		
+		return false;
+
+}
+function guinx(th){
+	th.append("<input type='hidden' name='idnxc' value='"+idcurrentcm+"' />");
+	th.append("<input type='hidden' name='idsp' value='"+idspc+"' />");
+	return true;
+}
+</script>
+
+<?php if($this->message!=null){ ?>
+	<div class="message">
+		<?php echo $this->message ?>
+	</div>
+<?php } ?>
+
+<style type="text/css">
+	.item h3{
+		font-size: 15px;
+		background-color: 
+#E4F5FF;
+		padding: 5px 3px;
+		margin: 0px;
+	}
+	.item .h{
+		border-bottom:1px solid #ddd;
+		padding: 5px;
+	}
+	.item{
+		margin-bottom: 10px;
+		border:1px solid #ccc;
+	}
+	.item .c{
+		padding: 7px;
+		padding-left: 10px;
+	}
+	.frmsearch{
+		width: 200px;
+	}
+	.frmsearch .textboxsearch{
+		width: 155px;
+	}
+	.item .item h3{
+		background-color: #eee;
+	}
+	.table tbody tr.sub .bordered{
+		background-image: url("<?php echo $this->baseUrl() ?>/public/admin/Images/backgroundhd.png") !important;
+	}
+	.table .hover .icon{
+    background-image: url("<?php echo $this->baseUrl() ?>/public/Contents/Images/hide.gif");
+    }
+    .table .hover .show{
+        background-image: url("<?php echo $this->baseUrl() ?>/public/Contents/Images/show.gif") !important;
+    }
+     .table .hover .icon{
+          width: 9px;
+        height: 9px;
+}
+.table .hover.click{
+	background-image: url("<?php echo $this->baseUrl() ?>/public/admin/Images/backgroundhd.png") !important;
+}
+ .table tr.sub{
+        display: none;
+    }
+    .table tr.cxx{
+        background-color: rgb(97, 255, 116) !important;
+    }
+</style>
+
+
+<div id="dialog">
+	<div class='header'>
+		XÁC NHẬN XÓA NHẬN XÉT
+	</div>
+	<div class='ct'>
+		<p>Vui lòng nhập mật khẩu cấp 2 để tiếp tục xóa.</p>
+		<div class='ms' style="margin-top:-10px;text-align:center"></div>
+			<br />
+		<form action="" method="post" role="form" onsubmit="return ajaxXoa($(this));">
+			<div class='row'>
+				<div class='col-lg-4 col-sm-4 col-xs-4' style="margin-top:7px"><b>Mật Khẩu Cấp 2:</b> </div>
+				<div class='col-lg-6 col-sm-6 col-xs-6'>
+					<input type="password" class="form-control mk2" />
+				</div>
+			</div>
+			<br />
+			<div class='row'>
+				<div class='col-lg-4 col-sm-4 col-xs-4' style="margin-top:7px"><b>Mã Xác Nhận:</b> </div>
+				<div class='col-lg-8 col-sm-8 col-xs-8'>
+					<input size="18" type="text" class="ma" />
+					<img src="<?php echo $this->baseUrl() ?>/captcha" style="padding-left:7px" />
+				</div>
+			</div>
+			<br />
+			<div class='row'>
+				<div class='col-lg-4 col-sm-4 col-xs-4' style="margin-top:7px"></div>
+				<div class='col-lg-8 col-sm-8 col-xs-8'>
+					<input type="submit" class="btn btn-success btn-sm" value="Tiếp tục xóa" />
+					<input type="button" onclick="dialogxoa.hide();" class="btn btn-default btn-sm" value="Hủy bỏ" />
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<div id="dialog1">
+	<div class='header'>
+		Trả lời nhận xét
+	</div>
+	<div class='ct'>
+		<div class='ms' style="margin-top:-10px;text-align:center"></div>
+			<br />
+		<form action="" method="post" role="form" onsubmit="return guinx($(this));">
+			<div class='row'>
+				<div class='col-lg-12 col-sm-12 col-xs-12' style="margin-top:7px">
+					<textarea class="form-control" rows="3" name="noidung" placeholder="Nội dung nhận xét"></textarea>
+				</div>
+			</div>
+			<br />
+			<div class='row'>
+				<div class='col-lg-4 col-sm-4 col-xs-4' style="margin-top:7px"></div>
+				<div class='col-lg-8 col-sm-8 col-xs-8 text-right'>
+					<input type="submit" class="btn btn-success btn-sm" value="Gửi nhận xét" />
+					<input type="button" onclick="dialogxoa.hide();" class="btn btn-default btn-sm" value="Hủy bỏ" />
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+
+	<div class="clearfix">
+		<div class="l" style="margin-top:-5px" >
+			<input type="button" class="btn btn-primary btn-sm" value="Xóa Nhận Xét" <?php if($this->quyen["XOANX"]==0) echo "disabled='disabled'"; ?> id="xoanx" />
+		</div>
+		<div class="l" style="margin-left:10px;margin-top:-8px">
+			<?php echo $this->partial('admin/phan_trang.phtml',array('arr_page'=>$this->arr_page)); ?>
+		</div>
+		<div class="r">
+			<div class="l">
+				<form method="get" action="">
+					<div class="frmsearch clearfix">
+						<input type="text" class="textboxsearch" value="<?php if(isset($_GET['q'])) echo $_GET['q']; ?>"  placeholder="Nhập nội dung tìm kiếm.." name="q" />
+						<input type="submit" class="buttonsearch" value="" />
+					</div>
+					<?php if(isset($_GET["sort"])){ ?>
+						<input type="hidden" name="sort" value="<?php echo $_GET["sort"] ?>" />
+					<?php } ?>
+				</form>
+			</div>
+			<div class="l" style="margin-left:10px">
+				<form method="get" action="">
+					<select onchange="$(this).parent().submit();" name="sort" style="height:25px">
+						<option value="manx-desc">Mới Nhất</option>
+						<option value="manx">Cũ Nhất</option>
+						<option value="masp">Theo Sản Phẩm</option>
+						<option value="thich-desc">Theo Lượt Thích</option>
+						<option value="vi_pham-desc">Theo Lượt Vi Phạm</option>
+					</select>
+					<?php if(isset($_GET["q"])){ ?>
+						<input type="hidden" name="q" value="<?php echo $_GET["q"] ?>" />
+					<?php } ?>
+				</form>
+			</div>
+		</div>
+	</div>
+
+<form method="post" action="" id="frmxoa" onsubmit="return confirm('Bạn có chắc muốn xóa các nhận xét được chọn?');">
+<div class="table-responsive">
+    <table class="table table-bordered table-hover table-vm">
+        <tr>
+            <th></th>
+            <?php if($this->quyen["XOANX"]==1){ ?>
+            <th>
+                <input type="checkbox" id="selectall" />
+            </th>
+            <?php } ?>
+            <th>KH</th>
+            <th>SP</th>
+            <th>Thích</th>
+            <th>Spam</th>
+            <th>Điểm</th>
+            <th>Ngày Gửi</th>
+            <th>Nội Dung</th>
+            <th>Admin</th>
+            <th>HT</th>
+            <th></th>
+        </tr>
+        <?php foreach ($this->nx as $item) {?>
+        <tr title="<?php echo $item["MANX"] ?>" class="hover <?php if($item['DA_XEM']==0) echo 'cxx' ?>">
+            <td align="center"><div class="ic"></div></td>
+            <?php if($this->quyen["XOANX"]==1){ ?>
+            	<td align="center">
+            		<input type="checkbox" name="arr[]" value="<?php echo $item["MANX"] ?>" class="checkboxitem" <?php if($this->quyen["XOANX"]==0) echo "disabled='disabled'"; ?> />
+            	</td>
+            <?php } ?>
+            <td>
+               <?php if($item["ADMIN"]==1) echo "<div class='red'>".$item["HOTEN"]."</div>"; else echo $item["HOTEN"]; ?> 
+            </td>
+            <td>
+            	<a target="_black" href="<?php echo $this->baseUrl()."/".$item["URL"]."_".$item["MASP"] ?>.html"><?php echo $item["TENSP"] ?></a>
+            </td>
+            <td align="center"><?php echo $item["THICH"] ?></td>
+            <td align="center"><?php echo $item['VI_PHAM'] ?></td>
+            <td align="center"><?php echo $item['DANH_GIA'] ?> *</td>
+            <td align="center">
+                <?php echo date("d/m/Y",strtotime($item["NGAYDANG"])) ?>
+            </td>
+            <td>
+                <div style="width:200px;max-height:100px;overflow:auto">
+                	<?php echo $item["NOIDUNG"] ?>
+                </div>
+            </td>
+            <td>
+            	<input type="checkbox" class="admin" style="display:block;margin-left:5px;margin-top:0px" <?php if($item["ADMIN"]==1) echo "checked='checked'"; ?> value="<?php echo $item["MANX"] ?>" />
+            </td>
+            <td>
+            	<input type="checkbox" class="hienthi" style="display:block;margin-left:5px;margin-top:0px" <?php if($item["HIEN_THI"]==1) echo "checked='checked'"; ?> value="<?php echo $item["MANX"] ?>" />
+            </td>
+            <td width="17px">
+            	<a href="#" ref="<?php echo $item["MANX"] ?>" id="<?php echo $item["MASP"] ?>" class="reply" title="trả lời nhận xét"><img src="<?php echo $this->baseUrl() ?>/public/Contents/Images/reply.png" width="15px" /></a>
+            </td>
+        </tr>
+        <tr class="sub">
+					<td colspan="12">
+						<table class="table">
+							 <?php foreach ($this->subcomment as $itemsub) { 
+				if($itemsub["NX_CHA"]==$item["MANX"]){?>
+						<tr>
+				            <?php if($this->quyen["XOANX"]==1){ ?>
+				            	<td align="center">
+				            		<input type="checkbox" name="arr[]" value="<?php echo $itemsub["MANX"] ?>" class="checkboxitem" <?php if($this->quyen["XOANX"]==0) echo "disabled='disabled'"; ?> />
+				            	</td>
+				            <?php } ?>
+				            <td>
+				               <?php if($itemsub["ADMIN"]==1) echo "<div class='red'>".$itemsub["HOTEN"]."</div>"; else echo $itemsub["HOTEN"]; ?> 
+				            </td>
+				            <td align="center"><?php echo $itemsub["THICH"] ?></td>
+				            <td align="center"><?php echo $itemsub['VI_PHAM'] ?></td>
+				            <td align="center"><?php echo $itemsub['DANH_GIA'] ?> *</td>
+				            <td align="center">
+				                <?php echo date("d/m/Y",strtotime($itemsub["NGAYDANG"])) ?>
+				            </td>
+				            <td width="300px">
+				                <div style="width:230px;max-height:100px;overflow:auto">
+				                	<?php echo $itemsub["NOIDUNG"] ?>
+				                </div>
+				            </td>
+				            <td>
+				            	<input type="checkbox" class="admin" style="display:block;margin-left:5px;margin-top:0px" <?php if($itemsub["ADMIN"]==1) echo "checked='checked'"; ?> value="<?php echo $itemsub["MANX"] ?>" />
+				            </td>
+				            <td>
+				            	<input type="checkbox" class="hienthi" style="display:block;margin-left:5px;margin-top:0px" <?php if($itemsub["HIEN_THI"]==1) echo "checked='checked'"; ?> value="<?php echo $itemsub["MANX"] ?>" />
+				            </td>
+						</tr>
+						<?php }} ?>
+						</table>
+					</td>
+					
+				
+         </tr>
+        <?php } ?>
+    </table>
+</div>
+</form>
+
+	
+
+<script type="text/javascript">
+		var sort="<?php if(isset($_GET['sort'])) echo $_GET['sort']; else echo 'manx-desc' ?>";
+
+		
+			$("select[name='sort']").val(sort);
+</script>

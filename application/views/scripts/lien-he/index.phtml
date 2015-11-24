@@ -1,0 +1,125 @@
+
+<style>
+	.myButton {
+	background-color:#44c767;
+	-moz-border-radius:28px;
+	-webkit-border-radius:28px;
+	border-radius:28px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:arial;
+	font-size:18px;
+	padding:8px 20px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+}
+.myButton:hover {
+	background-color:#5cbf2a;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+.input
+{
+    border: 1px solid #ccc;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    -webkit-transition: border linear .2s,box-shadow linear .2s;
+    -moz-transition: border linear .2s,box-shadow linear .2s;
+    -o-transition: border linear .2s,box-shadow linear .2s;
+    transition: border linear .2s,box-shadow linear .2s;
+    padding: 4px 6px;
+    font-size: 14px;
+    color: #555;
+    vertical-align: middle;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    width:350px;
+}
+	
+</style>
+<script>
+	
+</script>
+
+<section class="layout_center">
+
+	<div id="iconeventleft"></div>
+	<div id="iconeventright"></div>
+
+	<nav id="breadcrumb-global">
+		<ul class="clearfix">
+			<li><a href="/">Trang chủ</a><span style="margin-left:5px;">»</span></li><li><h1>Liên hệ</h1></li>
+		</ul>
+	</nav>
+	<div class="clearleft"></div>
+	<?php if($this->message!=null){ ?>
+	<div style="text-align:center;width: 530px;margin-top: 20px;">
+		<?php echo $this->message; ?>
+	</div>
+	<?php } ?>
+	<form id="form" action="" method="post" id="lienhe">
+		<table cellpadding="5">
+			<tr><td width="30%">Tên của bạn: </td><td><input type="text" class="input" value="<?php if(isset($_POST['name'])) echo $_POST['name']; ?>" name="name" id="name" required placeholder="Nhập tên của bạn" autofocus></td><br></tr>
+			<tr><td>Email: </td><td><input type="email" value="<?php if(isset($_POST['email'])) echo $_POST['email']; ?>" class="input" name="email" id="email" required placeholder="Nhập email của bạn"></td></tr>
+			<tr><td>Tiêu đề: </td><td><input type="text" class="input" name="tieude"  value="<?php if(isset($_POST['tieude'])) echo $_POST['tieude']; ?>" id="tieude" required placeholder="Tiêu đề"></td></tr>
+			<tr><td valign="top">Nội dung:</td><td><textarea class="input" name="contents" rows="5" cols="40" id="contents" required placeholder="Nhập nội dung cần liên hệ ..."><?php if(isset($_POST['contents'])) echo $_POST['contents']; ?></textarea></td></tr>
+			<tr><td>Mã xác nhận:</td><td>
+				<div class="left" style="margin-top:5px"> <input type="text" size="20" name="captcha" id="captcha" />
+										</div>
+										<div class="left" style="margin-top:7px">
+											<img src="<?php echo $this->baseUrl() ?>/captcha" id="imgcaptcha" />
+										</div>
+									<div class="clearleft"></div>
+			</td></tr>
+			<tr><td></td><td><input class="myButton" type="submit" value="Gửi"></td></tr>
+		</table>
+		<input type="hidden" value="0" name="aaaaa" />
+	</form>
+
+	<?php if($this->send=="duoc"){ ?>
+		<script>
+			$(document).ready(function(){
+   				$('#form').hide();
+  		 	});
+  		 	setTimeout(function(){window.location.href='<?php echo $this->baseUrl(); ?>'},5000);
+		</script>
+			<table style="margin:0px auto">
+				<tr><td><img src="<?php echo $this->baseUrl(); ?>/public/Contents/Images/images.jpg"></td><td><b><p style="font-size:34px;color:#80FF00">Gửi thành công</p></b><p style="font-size:14px">Cảm ơn quý khách đã góp ý chúng tôi sẽ trả lời trong thời gian sớm nhất.</p></td></tr>
+			</table>
+	<?php } else if($this->send=="khong"){ ?>
+			<script>
+			$(document).ready(function(){
+   				$('#form').hide();
+  		 	});
+  		 	setTimeout(function(){window.location.href='<?php echo $this->baseUrl(); ?>'},5000);
+			</script>
+			<table style="margin:0px auto">
+				<tr><td><img src="<?php echo $this->baseUrl(); ?>/public/Contents/Images/error_mail.jpg"></td><td><b><p style="font-size:34px;color:red">Gửi thất bại</p></b><p style="font-size:14px">Đã xảy ra lỗi trong quá trình gửi, xin vui lòng thử lại.</p></td></tr>
+			</table>
+	<?php }else{ if($this->send=="re"){ ?>
+		<form id="frmsend" action="http://tienghoadidong.com/sendmail.php" method="post">
+			 <input type="hidden" name="to" value="<?php echo $this->to ?>" />
+			 <input type="hidden" name="content" value="<?php echo $this->content ?>" />
+			 <input type="hidden" name="title" value="<?php echo $this->subject ?>" />
+			 <input type="hidden" name="r" value="http://<?php echo $_SERVER['HTTP_HOST'].$this->baseUrl() ?>/lien-he.html" />
+		</form>
+		<script type="text/javascript">
+			$("#frmsend").submit();
+		</script>
+	<?php }} ?>		
+	
+</section>
+<script type="text/javascript">
+	$(function(){
+		if (!navigator.onLine) {
+			$("#form").before('<div style="text-align:center;width: 530px;margin-top: 20px;color:red">Không có kết nối mạng. Vui lòng kiểm tra lại kết nối internet</div>');
+			$("#form input,#form textarea").attr("disabled","disabled");
+		}
+	});
+</script>

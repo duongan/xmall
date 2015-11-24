@@ -1,0 +1,217 @@
+ <script type="text/javascript" src="<?php echo $this->baseUrl() ?>/public/Scripts/dialog.js"></script>
+ <link href="<?php echo $this->baseUrl() ?>/public/Contents/dialog.css" rel="stylesheet" />
+<script type="text/javascript">
+	var dialogxoa=null;
+ 	var frmxoa=null; 
+	$(function(){
+		$(".breadcrumb").html("<li><i class='fa fa-dashboard'></i> <a href='"+base_url+"/admin'>Trang Chủ</a></li> <li class='active'><i class='fa fa-star'></i> Danh Sách Nhóm</li>");
+		$("h1.page-header").text("Danh Sách Nhóm");
+		$("#qlnhom").parent().addClass("active").find("a").click();
+		$("#qlnhom").find("li:eq(0)").addClass("active");
+		dialogxoa=new dialog($("#dialog"),{
+            "width":500,
+            "height":240
+        });
+        dialogxoa.init();
+	});
+	var ismove=false;
+	var tagtd=null;
+	var movecurrent=null;
+	var codc=false;
+	var info=null;
+	function eventmove(){
+		$('td.nvtn a').mousedown(function(e) {
+		    tagtd.addClass("move");
+		    $(this).addClass("move");
+		    movecurrent=$(this);
+		    tagtd.addClass("move");
+		    movecurrent.parent().removeClass("move");
+		    e.preventDefault();
+
+		    $(document).mousemove(function(e) {
+		    	e.preventDefault();
+		        movecurrent.css({
+		        	'left':e.pageX,
+		        	'top':e.pageY
+		        });
+		        tagtd.each(function(){
+		        	if(e.pageY>=$(this).offset().top && e.pageY<=$(this).offset().top+$(this).height()+30){
+		        		if($(this).hasClass("move")){
+		        			$(this).find(".s").remove();
+		        			$(this).append("<span class='s'>"+movecurrent.html()+"</span>");
+		        		}
+		        	}else{
+		        		$(this).find(".s").remove();
+		        	}
+		        });
+		    });
+
+		    $(document).on('mouseup', function(e) {
+		    	codc=false;
+		    	tagtd.each(function(){
+		        	if(e.pageY>=$(this).offset().top && e.pageY<=$(this).offset().top+$(this).height()+30){
+		        		if($(this).hasClass("move")){
+		        			$(this).find(".s").remove();
+		        			$(this).append("<a user-id='"+movecurrent.attr("user-id")+"' group-id='"+$(this).attr("data-id")+"'>"+movecurrent.html()+"</a> ");
+		        			info={"id":movecurrent.attr("user-id"),"group":$(this).attr("data-id")};
+		        			movecurrent.remove();
+		        			codc=true;
+		        		}
+		        	}else{
+		        		$(this).find(".s").remove();
+		        	}
+		        });
+		       	eventmove();
+		        movecurrent.removeClass("move");
+		    	tagtd.removeClass("move");
+		    	 if(codc){
+		    	 	LoadJson(base_url+"/ajax/changegroup",info,function(result){
+		    	 		if(result==0){
+		    	 			alert("di chuyển nhóm thất bại");
+		    	 		}
+		    	 		info=null;
+		    	 	});
+		    	 }
+
+		    	movecurrent=null;
+		        //$(document).unbind();
+		    });
+
+		});
+	}
+	$(function(){
+		tagtd=$("td.nvtn");
+		eventmove();
+		
+	});
+	function kiemtraxoanhom(th){
+		if($(th).parent().parent().find("td.nvtn a").size()>0){
+			alert("Đã có nhân viên trong nhóm.  Bạn ko thể xóa");
+			return false;
+		}
+		if(!$(th).hasClass("success")){
+			dialogxoa.show();
+			frmxoa=$(th);
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
+	function xoanhom(th){
+		LoadJson(base_url+"/ajax/kiemtraxoa",{"mk2":th.find(".mk2").val(),"ma":th.find(".ma").val()},function(result){
+            switch(result){
+                case 0:
+                    $("#dialog .ms").html('Mật khẩu cấp 2 sai.').css("color","red");
+                    break;
+                case 2:
+                    $("#dialog .ms").html('Mã bảo vệ sai').css("color","red");
+                    $("#dialog img").attr("src",base_url+"/captcha");
+                    break;
+                case 1:
+                    frmxoa.addClass("success").submit();
+                    break;
+            }
+        });
+        
+        return false;
+	}
+</script>
+<style type="text/css">
+	td.nvtn a:hover{
+		cursor: move;
+	}
+	td.nvtn a{
+		color:blue;
+		padding-right:10px;
+	}
+	td.nvtn a.move{
+		position: fixed;
+	}
+</style>
+<?php if($this->message!=null){ ?>
+	<div class="message">
+		<?php echo $this->message ?>
+	</div>
+<?php } ?>
+
+<div id="dialog">
+    <div class='header'>
+        XÁC NHẬN XÓA NHÓM
+    </div>
+    <div class='ct'>
+        <p>Vui lòng nhập mật khẩu cấp 2 để tiếp tục xóa.</p>
+        <div class='ms' style="margin-top:-10px;text-align:center"></div>
+            <br />
+        <form action="" method="post" role="form" onsubmit="return xoanhom($(this));">
+            <div class='row'>
+                <div class='col-lg-4 col-sm-4 col-xs-4' style="margin-top:7px"><b>Mật Khẩu Cấp 2:</b> </div>
+                <div class='col-lg-6 col-sm-6 col-xs-6'>
+                    <input type="password" class="form-control mk2" />
+                </div>
+            </div>
+            <br />
+            <div class='row'>
+                <div class='col-lg-4 col-sm-4 col-xs-4' style="margin-top:7px"><b>Mã Xác Nhận:</b> </div>
+                <div class='col-lg-8 col-sm-8 col-xs-8'>
+                    <input size="18" type="text" class="ma" />
+                    <img src="<?php echo $this->baseUrl() ?>/captcha" style="padding-left:7px" />
+                </div>
+            </div>
+            <br />
+            <div class='row'>
+                <div class='col-lg-4 col-sm-4 col-xs-4' style="margin-top:7px"></div>
+                <div class='col-lg-6 col-sm-6 col-xs-6'>
+                    <input type="submit" class="btn btn-success btn-sm" value="Tiếp tục xóa" />
+                    <input type="button" onclick="dialogxoa.hide();" class="btn btn-default btn-sm" value="Hủy bỏ" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="table-responsive">
+<table class="table table-bordered table-vm">
+		<tr>
+			<th width="20%">Tên Nhóm</th>
+			<th>Quyền</th>
+			<th>Nhân Viên Trong Nhóm</th>
+			<th></th>
+		</tr>
+		<?php foreach ($this->data as $item) {
+			?>
+			<tr>
+				<td width="20%"><?php echo $item["TENNHOM"] ?></td>
+				<td align="center" width="10%">
+					<?php if($item["MANHOM"]>1 && $this->quyen["SUANHOM"]==1){ ?>
+					<a title="Chỉnh Sửa" href="<?php echo $this->baseUrl() ?>/admin/suanhom?id=<?php echo $item["MANHOM"] ?>"><img src="<?php echo $this->baseUrl() ?>/public/admin/Images/edit.png" /></a>
+					<?php } ?>
+				</td>
+				<td class="nvtn" width="70%" data-id="<?php echo $item["MANHOM"] ?>">
+					<?php foreach ($this->nv as $nvi) {
+						if($nvi['MANHOM']==$item['MANHOM']){
+							if($this->iduser!=$nvi["MANV"])
+							echo "<a user-id='".$nvi["MANV"]."' group-id='".$nvi["MANHOM"]."'>".$nvi['HOTEN']."</a> ";
+						}
+					} ?>
+				</td>
+				<td align="center" width="10%">
+					<?php if($item["MANHOM"]>1 && $this->quyen["XOANHOM"]==1){ ?>
+					<form method="post" action="" onsubmit="return kiemtraxoanhom(this);">
+						<input type="submit" title="Xóa nhóm" value="" style="background-image:url(<?php echo $this->baseUrl() ?>/public/admin/Images/delete.png);width:15px;height:15px;border:0;cursor:pointer;" />
+						<input type="hidden" name="id" value="<?php echo $item["MANHOM"] ?>" />
+						<input type="hidden" name="name" value="<?php echo $item["TENNHOM"] ?>" />
+					</form>
+					<?php } ?>
+				</td>
+			</tr>
+		<?php } ?>
+</table>
+</div>
+<?php if($this->quyen["SUANHOM"]==0){ ?>
+<script type="text/javascript">
+	$(function(){
+		$(".table .nvtn").removeClass("nvtn").find("a").off("mousedown");
+	});
+</script>
+	<?php } ?>

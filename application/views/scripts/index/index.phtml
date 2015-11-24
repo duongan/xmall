@@ -1,0 +1,823 @@
+﻿
+
+
+<div id="vtquangcaocenterhome3"></div>
+<section class="layout_center">
+	<div id="iconeventleft"></div>
+	<div id="iconeventright"></div>
+	<section id="banner">
+		<nav id="nav_intro" class="left">
+			<ul>
+				<?php $count=0; foreach ($this->banner as $item) {
+				?>
+				<li id="itembanner<?php echo $count++; ?>">
+					<a href="<?php echo $this->baseUrl().'/'.$item['URL'] ?>.html" class="<?php if($item['LOAI_BANNER']==1) echo 'itembig';else echo 'itemsmall'; ?> noneunder" style="background-image:url('<?php echo $this->baseUrl() ?>/uploads/images/loaisp/<?php echo $item['ICON_LON'] ?>');">
+						<div class="iconevent2"></div>
+						<span><?php echo $item['TEN_LOAI'] ?></span>
+					</a>
+				</li>
+				<?php } ?>
+				<div class="clearleft"></div>
+			</ul>
+		</nav>
+		<nav id="quangcaobanner">
+			<ul>
+				<li>
+					<a href="" id="vt1">
+					</a>
+				</li>
+				<li>
+					<a href="" id="vt2">
+					</a>
+				</li>
+				<li>
+					<a href="" id="vt3">
+					</a>
+				</li>
+			</ul>
+		</nav>
+		<article id="slide">
+			<div class="loader"></div>
+		</article>
+		<div class="clear"></div>
+	</section>
+	<div id="vtquangcaocenterhome1"></div>
+	<section id="contentmain">
+		<article id="indexbox" class="left">
+			<div class="boxproduct boxfirst left" style="width:925px">
+				<div class="headerbox tabs">
+					<h1 class="spgiamgia active" alt="success">
+						<span class="block icon left"></span>
+						GIẢM GIÁ ONLINE HẤP DẪN
+					</h1>
+					<h1 class="spbanchay">
+						<span class="block icon left"></span>
+						SẢN PHẨM BÁN CHẠY
+					</h1>
+					<h1 class="spmoi">
+						<span class="block icon left"></span>
+						SẢN PHẨM MỚI
+					</h1>
+					<div class="clearleft"></div>
+				</div>
+				<div class="contentbox">
+					<div class="spgiamgia itemtabs active success">
+						<?php foreach ($this->spgiamgia as $item) {
+							 ?>
+						<div class="item">
+							<a href="<?php echo $this->baseUrl().'/'.$item['URL'].'_'.$item['MASP'] ?>.html" class="noneunder">
+								<div class="beforhover">
+									<i class="iconstatus <?php echo $item["ICON_TRANGTHAI"] ?>"></i>
+									<div class="product-image">
+										<img width="140" height="120" src="<?php echo $this->baseUrl().'/uploads/images/sp/'.$item["HINHANH"] ?>" />
+									</div>
+									<div class="product-info">
+										<div class="product-name"><?php echo $item["TENSP"] ?></div>
+										<div class="product-price">
+											<?php
+											if($item["GIA"]>0){
+												if($item["GIAM_GIA"]==0)
+										            echo  number_format($item["GIA"],0,',','.')." VND";
+										        else{
+										        	echo number_format(((100-$item["GIAM_GIA"])*$item["GIA"])/100,0,',','.')." VND"; 
+										        }
+									    	}
+									        else{
+									        	echo "Liên Hệ";
+									        }
+											?>
+										</div>
+									</div>
+								</div>
+								<div class="afterhover">
+									<div class="product-info">
+										<div class="product-name"><?php echo $item["TENSP"] ?></div>
+										<div class="product-price">
+											<?php if($item["GIA"]>0){echo "Giá gốc: ".number_format($item["GIA"],0,',','.')." VND";} else{echo "Liên Hệ";} ?>
+										</div>
+									</div>
+									<div class="product-s">
+										<?php echo $item["TOM_TAT_TS"] ?>
+									</div>
+									<?php if($item["KHUYENMAI"]!="&lt;br&gt;"){ ?>
+									<div class="promo-info">
+										<li><span class="icon icon-product-promo"></span> Khuyến Mãi</li>
+										<div class="none">
+											<?php echo html_entity_decode($item["KHUYENMAI"]); ?>
+										</div>
+									</div>		
+									<?php } ?>
+									<div class="product-o">
+										<?php if($item["GIA"]>0){ ?>
+											<a class="btn-buy btn-a left" href="<?php echo $this->baseUrl().'/gio-hang?id='.$item["MASP"] ?>">
+												<i class="icon left"></i>
+												ĐẶT HÀNG
+											</a>
+										<?php } ?>
+										<a href="<?php echo $this->baseUrl().'/yeu-thich?id='.$item["MASP"] ?>" title="Thêm vào yêu thích" class="icon icon-like left"></a>
+										<div class="clearleft"></div>
+									</div>
+								</div>
+							</a>
+						</div>
+						<?php } ?>
+						<!-- <div class="item">
+							<a href="" class="noneunder">
+								<div class="beforhover">
+									<i class="iconstatus km"></i>
+									<div class="product-image">
+										<img src="<?php echo $this->baseUrl() ?>/public/Contents/Images/product/acer-iconia-b1-740-1.jpg" />
+									</div>
+									<div class="product-info">
+										<div class="product-name">SAmsung garaxy prime asd as d asd asd as d asd as da s asd as</div>
+										<div class="product-price">
+											1,600,000 VND
+										</div>
+									</div>
+								</div>
+								<div class="afterhover">
+									<div class="product-info">
+										<div class="product-name">SAmsung garaxy prime asd as d asd asd as d asd as da s asd as</div>
+										<div class="product-price">
+											1,600,000 VND
+										</div>
+									</div>
+									<div class="product-s">- Màn hình 5.0 inches qHD TFT<br>- CPU Quad-core 1.2 GHz<br>- RAM 1GB ROM 8GB<br>- Camera 8 MP/5 MP<br>- Pin Li-Ion 2600 mAh</div>
+									<div class="promo-info"><span class="icon icon-product-promo"></span>Khuyến mãi <span class="ppromo">đến 450,000 đ</span>	
+									</div>		
+									</a>
+									<div class="product-o">
+										<a class="btn-buy btn-a">
+											<i class="icon left"></i>
+											MUA NHANH
+										</a>
+										<a class="btn-a iconcompare icon left" title="So Sánh">
+										</a>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="item">
+							<a href="" class="noneunder">
+								<div class="beforhover">
+									<i class="iconstatus km"></i>
+									<div class="product-image">
+										<img src="<?php echo $this->baseUrl() ?>/public/Contents/Images/product/acer-iconia-b1-740-1.jpg" />
+									</div>
+									<div class="product-info">
+										<div class="product-name">SAmsung garaxy prime asd as d asd asd as d asd as da s asd as</div>
+										<div class="product-price">
+											1,600,000 VND
+										</div>
+									</div>
+								</div>
+								<div class="afterhover">
+									<div class="product-info">
+										<div class="product-name">SAmsung garaxy prime asd as d asd asd as d asd as da s asd as</div>
+										<div class="product-price">
+											1,600,000 VND
+										</div>
+									</div>
+									<div class="product-s">- Màn hình 5.0 inches qHD TFT<br>- CPU Quad-core 1.2 GHz<br>- RAM 1GB ROM 8GB<br>- Camera 8 MP/5 MP<br>- Pin Li-Ion 2600 mAh</div>
+									<div class="promo-info"><span class="icon icon-product-promo"></span>Khuyến mãi <span class="ppromo">đến 450,000 đ</span>	
+									</div>		
+									</a>
+									<div class="product-o">
+										<a class="btn-buy btn-a">
+											<i class="icon left"></i>
+											MUA NHANH
+										</a>
+										<a class="btn-a iconcompare icon left" title="So Sánh">
+										</a>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="item">
+							<a href="" class="noneunder">
+								<div class="beforhover">
+									<i class="iconstatus km"></i>
+									<div class="product-image">
+										<img src="<?php echo $this->baseUrl() ?>/public/Contents/Images/product/acer-iconia-b1-740-1.jpg" />
+									</div>
+									<div class="product-info">
+										<div class="product-name">SAmsung garaxy prime asd as d asd asd as d asd as da s asd as</div>
+										<div class="product-price">
+											1,600,000 VND
+										</div>
+									</div>
+								</div>
+								<div class="afterhover">
+									<div class="product-info">
+										<div class="product-name">SAmsung garaxy prime asd as d asd asd as d asd as da s asd as</div>
+										<div class="product-price">
+											1,600,000 VND
+										</div>
+									</div>
+									<div class="product-s">- Màn hình 5.0 inches qHD TFT<br>- CPU Quad-core 1.2 GHz<br>- RAM 1GB ROM 8GB<br>- Camera 8 MP/5 MP<br>- Pin Li-Ion 2600 mAh</div>
+									<div class="promo-info"><span class="icon icon-product-promo"></span>Khuyến mãi <span class="ppromo">đến 450,000 đ</span>	
+									</div>		
+									</a>
+									<div class="product-o">
+										<a class="btn-buy btn-a">
+											<i class="icon left"></i>
+											MUA NHANH
+										</a>
+										<a class="btn-a iconcompare icon left" title="So Sánh">
+										</a>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="item">
+							<a href="" class="noneunder">
+								<div class="beforhover">
+									<i class="iconstatus km"></i>
+									<div class="product-image">
+										<img src="<?php echo $this->baseUrl() ?>/public/Contents/Images/product/acer-iconia-b1-740-1.jpg" />
+									</div>
+									<div class="product-info">
+										<div class="product-name">SAmsung garaxy prime asd as d asd asd as d asd as da s asd as</div>
+										<div class="product-price">
+											1,600,000 VND
+										</div>
+									</div>
+								</div>
+								<div class="afterhover">
+									<div class="product-info">
+										<div class="product-name">SAmsung garaxy prime asd as d asd asd as d asd as da s asd as</div>
+										<div class="product-price">
+											1,600,000 VND
+										</div>
+									</div>
+									<div class="product-s">- Màn hình 5.0 inches qHD TFT<br>- CPU Quad-core 1.2 GHz<br>- RAM 1GB ROM 8GB<br>- Camera 8 MP/5 MP<br>- Pin Li-Ion 2600 mAh</div>
+									<div class="promo-info"><span class="icon icon-product-promo"></span>Khuyến mãi <span class="ppromo">đến 450,000 đ</span>	
+									</div>		
+									</a>
+									<div class="product-o">
+										<a class="btn-buy btn-a">
+											<i class="icon left"></i>
+											MUA NHANH
+										</a>
+										<a class="btn-a iconcompare icon left" title="So Sánh">
+										</a>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="item">
+							<a href="" class="noneunder">
+								<div class="beforhover">
+									<i class="iconstatus km"></i>
+									<div class="product-image">
+										<img src="<?php echo $this->baseUrl() ?>/public/Contents/Images/product/acer-iconia-b1-740-1.jpg" />
+									</div>
+									<div class="product-info">
+										<div class="product-name">SAmsung garaxy prime asd as d asd asd as d asd as da s asd as</div>
+										<div class="product-price">
+											1,600,000 VND
+										</div>
+									</div>
+								</div>
+								<div class="afterhover">
+									<div class="product-info">
+										<div class="product-name">SAmsung garaxy prime asd as d asd asd as d asd as da s asd as</div>
+										<div class="product-price">
+											1,600,000 VND
+										</div>
+									</div>
+									<div class="product-s">- Màn hình 5.0 inches qHD TFT<br>- CPU Quad-core 1.2 GHz<br>- RAM 1GB ROM 8GB<br>- Camera 8 MP/5 MP<br>- Pin Li-Ion 2600 mAh</div>
+									<div class="promo-info"><span class="icon icon-product-promo"></span>Khuyến mãi <span class="ppromo">đến 450,000 đ</span>	
+									</div>		
+									</a>
+									<div class="product-o">
+										<a class="btn-buy btn-a">
+											<i class="icon left"></i>
+											MUA NHANH
+										</a>
+										<a class="btn-a iconcompare icon left" title="So Sánh">
+										</a>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="item">
+							<a href="" class="noneunder">
+								<div class="beforhover">
+									<i class="iconstatus km"></i>
+									<div class="product-image">
+										<img src="<?php echo $this->baseUrl() ?>/public/Contents/Images/product/acer-iconia-b1-740-1.jpg" />
+									</div>
+									<div class="product-info">
+										<div class="product-name">SAmsung garaxy prime asd as d asd asd as d asd as da s asd as</div>
+										<div class="product-price">
+											1,600,000 VND
+										</div>
+									</div>
+								</div>
+								<div class="afterhover">
+									<div class="product-info">
+										<div class="product-name">SAmsung garaxy prime asd as d asd asd as d asd as da s asd as</div>
+										<div class="product-price">
+											1,600,000 VND
+										</div>
+									</div>
+									<div class="product-s">- Màn hình 5.0 inches qHD TFT<br>- CPU Quad-core 1.2 GHz<br>- RAM 1GB ROM 8GB<br>- Camera 8 MP/5 MP<br>- Pin Li-Ion 2600 mAh</div>
+									<div class="promo-info"><span class="icon icon-product-promo"></span>Khuyến mãi <span class="ppromo">đến 450,000 đ</span>	
+									</div>		
+									</a>
+									<div class="product-o">
+										<a class="btn-buy btn-a">
+											<i class="icon left"></i>
+											MUA NHANH
+										</a>
+										<a class="btn-a iconcompare icon left" title="So Sánh">
+										</a>
+									</div>
+								</div>
+							</a>
+						</div> -->
+						<div class="clearleft"></div>
+					</div>
+					<div class="spbanchay itemtabs">
+						<div class="loader"></div>
+					</div>
+					<div class="spmoi itemtabs">
+						<div class="loader"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="boxproduct left boxright" style="width:257px">
+				<div class="headerbox">
+					<a href=""><h3>Tin Tức</h3></a>
+					<div class="clearleft"></div>
+				</div>
+				<div class="contentbox news">
+					<?php
+						if(count($this->tintuc)>0){ 
+							$first=$this->tintuc[0];
+							echo '<div class="newsfirst"><a href="'.$this->baseUrl().'/'.$first["MATT"]."_".$first["URL"].'.html"><img src="'.$this->baseUrl()."/uploads/images/tintuc/".$first['HINHANH'].'" width="255" height="170" /><h2 class="opa">'.$first["TIEUDE"].'</h2></a></div>';
+							for ($i=1; $i < count($this->tintuc); $i++) { 
+							 	echo '<div class="itemnews"><a href="'.$this->baseUrl().'/'.$this->tintuc[$i]["MATT"]."_".$this->tintuc[$i]['URL'].'.html">';
+							 	echo "<div class='left imagenews'><img src='".$this->baseUrl()."/uploads/images/tintuc/".$this->tintuc[$i]['HINHANH']."' width='46' height='34' /></div><div class='left titlenews'>".$this->tintuc[$i]["TIEUDE"]."</div>";
+							 	echo "<div class='clearleft'></div>";
+							 	echo "</a></div>";
+							 } 
+						}
+					?>
+				</div>
+			</div>
+			<div class="clearleft"></div>
+
+			<div id="vtquangcaocenterhome2"></div>
+
+			<?php foreach ($this->indexbox as $item) {
+				?>
+				<div class="qcindexbox qcindexboxtop<?php echo $item["MA"] ?>"></div>
+			<div class="boxproduct boxproductbig left" style="width:925px">
+				<div class="headerbox">
+					<h3 class="left"><?php echo $item["TEN_LOAI"] ?></h3>
+					<h3 class="right">
+						<?php 
+							$count=count($item["SUB"]);
+							for ($i=0; $i < $count-1; $i++) { 
+								echo '<a href="'.$this->baseUrl().'/'.$item["SUB"][$i]["URL"].'.html">'.$item["SUB"][$i]["TEN_LOAI"].'</a><span>/</span>';
+							}
+							if($count>=1){
+								echo '<a href="'.$this->baseUrl().'/'.$item["SUB"][$i]["URL"].'.html">'.$item["SUB"][$count-1]["TEN_LOAI"].'</a>';
+							}
+						?>
+					</h3>
+					<div class="clear"></div>
+				</div>
+				<div class="contentbox">
+					<div class="left boxqcleft qcindexbox<?php echo $item["MA"] ?>">
+
+					</div>
+					<div class="left" style="width:723px">
+						<?php foreach ($item["pro"] as $isp) {
+						 ?>
+						<div class="item">
+							<a href="<?php echo $this->baseUrl().'/'.$isp['URL'].'_'.$isp['MASP'] ?>.html" class="noneunder">
+								<div class="beforhover">
+									<i class="iconstatus <?php echo $isp["ICON_TRANGTHAI"] ?>"></i>
+									<div class="product-image">
+										<img width="140" height="120" src="<?php echo $this->baseUrl().'/uploads/images/sp/'.$isp["HINHANH"] ?>" />
+									</div>
+									<div class="product-info">
+										<div class="product-name"><?php echo $isp["TENSP"] ?></div>
+										<div class="product-price">
+											<?php
+											if($isp["GIA"]>0){
+												if($isp["GIAM_GIA"]==0)
+										            echo  number_format($isp["GIA"],0,',','.')." VND";
+										        else{
+										        	echo number_format(((100-$isp["GIAM_GIA"])*$isp["GIA"])/100,0,',','.')." VND"; 
+										        }
+									    	}
+									        else{
+									        	echo "Liên Hệ";
+									        }
+											?>
+										</div>
+									</div>
+								</div>
+								<div class="afterhover">
+									<div class="product-info">
+										<div class="product-name"><?php echo $isp["TENSP"] ?></div>
+										<div class="product-price">
+											<?php if($isp["GIA"]>0){echo "Giá gốc: ".number_format($isp["GIA"],0,',','.')." VND";} else{echo "Liên Hệ";} ?>
+										</div>
+									</div>
+									<div class="product-s">
+										<?php echo $isp["TOM_TAT_TS"] ?>
+									</div>
+									<?php if($isp["KHUYENMAI"]!="&lt;br&gt;"){ ?>
+									<div class="promo-info">
+										<li><span class="icon icon-product-promo"></span> Khuyến Mãi</li>
+										<div class="none">
+											<?php echo html_entity_decode($isp["KHUYENMAI"]); ?>
+										</div>
+									</div>		
+									<?php } ?>
+									<div class="product-o">
+										<?php if($isp["GIA"]>0){ ?>
+											<a class="btn-buy btn-a left" href="<?php echo $this->baseUrl().'/gio-hang?id='.$isp["MASP"] ?>">
+												<i class="icon left"></i>
+												ĐẶT HÀNG
+											</a>
+										<?php } ?>
+										<a href="<?php echo $this->baseUrl().'/yeu-thich?id='.$isp["MASP"] ?>" title="Thêm vào yêu thích" class="icon icon-like left"></a>
+										<div class="clearleft"></div>
+									</div>
+								</div>
+							</a>
+						</div>
+						<?php } ?>
+					</div>
+					<div class="clearleft"></div>
+				</div>
+			</div>
+			<div class="boxproduct left boxright" style="width:257px">
+				<div class="headerbox">
+					<a href=""><h1>SẢN PHẨM HOT</h1></a>
+					<div class="clearleft"></div>
+				</div>
+				<div class="contentbox news prohot">
+
+					<?php 
+						if(count($item["prohot"])>0){ 
+							
+							for ($k=0; $k < count($item["prohot"]); $k++) { 
+								 	echo '<div class="itemnews"><a href="'.$this->baseUrl().'/'.$item["prohot"][$k]["URL"].'_'.$item["prohot"][$k]["MASP"].'.html">';
+								 	if($item["prohot"][$k]["GIA"]>0){
+								 	if($item["prohot"][$k]["GIAM_GIA"]==0)
+										      $giasp=number_format($item["prohot"][$k]["GIA"],0,',','.')." VND";
+										  else{
+										       $giasp=number_format(((100-$item["prohot"][$k]["GIAM_GIA"])*$item["prohot"][$k]["GIA"])/100,0,',','.')." VND"; 
+										}
+									}else{
+										$giasp="[Liên Hệ]";
+									}
+								 	echo "<div class='left imagenews'><img src='".$this->baseUrl()."/uploads/images/sp/".$item["prohot"][$k]["HINHANH"]."' width='46' height='34' /></div><div class='left titlenews'>".$item["prohot"][$k]["TENSP"]."</div><br />".$giasp;
+								 	echo "<div class='clearleft'></div>";
+								 	echo "</a></div>";
+							 } 
+						}
+					?>
+					<div class="probanchay">
+						<div class="ctbc">
+							<?php foreach ($item["spbc"] as $ibc) { ?>
+								<a href="<?php echo $this->baseUrl()."/".$ibc["URL"]."_".$ibc["MASP"] ?>.html"><?php echo $ibc["TENSP"] ?></a>
+							<?php } ?>
+							<div class="clearleft"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="clearleft"></div>
+
+			<?php } ?>
+
+			<!---->
+			<!-- <div class="boxproduct boxproductbig left" style="width:925px">
+				<div class="headerbox">
+					<h3 class="left">SRAMTPHONE - ĐIỆN THOẠI</h3>
+					<h3 class="right">
+						<a href="">Nokia</a><span>/</span><a href="">Samsung</a>
+					</h3>
+					<div class="clear"></div>
+				</div>
+				<div class="contentbox">
+					<div class="left boxqcleft">
+asd
+					</div>
+					<div class="left" style="width:723px">
+						<div class="item">
+							<a href="" class="noneunder">
+								<div class="beforhover">
+									<i class="iconstatus km"></i>
+									<div class="product-image">
+										<img src="<?php echo $this->baseUrl() ?>/public/Contents/Images/product/acer-iconia-b1-740-1.jpg" />
+									</div>
+									<div class="product-info">
+										<div class="product-name">SAmsung garaxy prime asd as d asd asd as d asd as da s asd as</div>
+										<div class="product-price">
+											1,600,000 VND
+										</div>
+									</div>
+								</div>
+								<div class="afterhover">
+									<div class="product-info">
+										<div class="product-name">SAmsung garaxy prime asd as d asd asd as d asd as da s asd as</div>
+										<div class="product-price">
+											1,600,000 VND
+										</div>
+									</div>
+									<div class="product-s">- Màn hình 5.0 inches qHD TFT<br>- CPU Quad-core 1.2 GHz<br>- RAM 1GB ROM 8GB<br>- Camera 8 MP/5 MP<br>- Pin Li-Ion 2600 mAh</div>
+									<div class="promo-info"><span class="icon icon-product-promo"></span>Khuyến mãi <span class="ppromo">đến 450,000 đ</span>	
+									</div>		
+									</a>
+									<div class="product-o">
+										<a class="btn-buy btn-a">
+											<i class="icon left"></i>
+											MUA NHANH
+										</a>
+										<a class="btn-a iconcompare icon left" title="So Sánh">
+										</a>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="item">
+							<a href="" class="noneunder">
+								<div class="beforhover">
+									<i class="iconstatus km"></i>
+									<div class="product-image">
+										<img src="<?php echo $this->baseUrl() ?>/public/Contents/Images/product/acer-iconia-b1-740-1.jpg" />
+									</div>
+									<div class="product-info">
+										<div class="product-name">SAmsung garaxy prime asd as d asd asd as d asd as da s asd as</div>
+										<div class="product-price">
+											1,600,000 VND
+										</div>
+									</div>
+								</div>
+								<div class="afterhover">
+									<div class="product-info">
+										<div class="product-name">SAmsung garaxy prime asd as d asd asd as d asd as da s asd as</div>
+										<div class="product-price">
+											1,600,000 VND
+										</div>
+									</div>
+									<div class="product-s">- Màn hình 5.0 inches qHD TFT<br>- CPU Quad-core 1.2 GHz<br>- RAM 1GB ROM 8GB<br>- Camera 8 MP/5 MP<br>- Pin Li-Ion 2600 mAh</div>
+									<div class="promo-info"><span class="icon icon-product-promo"></span>Khuyến mãi <span class="ppromo">đến 450,000 đ</span>	
+									</div>		
+									</a>
+									<div class="product-o">
+										<a class="btn-buy btn-a">
+											<i class="icon left"></i>
+											MUA NHANH
+										</a>
+										<a class="btn-a iconcompare icon left" title="So Sánh">
+										</a>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="item">
+							<a href="" class="noneunder">
+								<div class="beforhover">
+									<i class="iconstatus km"></i>
+									<div class="product-image">
+										<img src="<?php echo $this->baseUrl() ?>/public/Contents/Images/product/acer-iconia-b1-740-1.jpg" />
+									</div>
+									<div class="product-info">
+										<div class="product-name">SAmsung garaxy prime asd as d asd asd as d asd as da s asd as</div>
+										<div class="product-price">
+											1,600,000 VND
+										</div>
+									</div>
+								</div>
+								<div class="afterhover">
+									<div class="product-info">
+										<div class="product-name">SAmsung garaxy prime asd as d asd asd as d asd as da s asd as</div>
+										<div class="product-price">
+											1,600,000 VND
+										</div>
+									</div>
+									<div class="product-s">- Màn hình 5.0 inches qHD TFT<br>- CPU Quad-core 1.2 GHz<br>- RAM 1GB ROM 8GB<br>- Camera 8 MP/5 MP<br>- Pin Li-Ion 2600 mAh</div>
+									<div class="promo-info"><span class="icon icon-product-promo"></span>Khuyến mãi <span class="ppromo">đến 450,000 đ</span>	
+									</div>		
+									</a>
+									<div class="product-o">
+										<a class="btn-buy btn-a">
+											<i class="icon left"></i>
+											MUA NHANH
+										</a>
+										<a class="btn-a iconcompare icon left" title="So Sánh">
+										</a>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="item">
+							<a href="" class="noneunder">
+								<div class="beforhover">
+									<i class="iconstatus km"></i>
+									<div class="product-image">
+										<img src="<?php echo $this->baseUrl() ?>/public/Contents/Images/product/acer-iconia-b1-740-1.jpg" />
+									</div>
+									<div class="product-info">
+										<div class="product-name">SAmsung garaxy prime asd as d asd asd as d asd as da s asd as</div>
+										<div class="product-price">
+											1,600,000 VND
+										</div>
+									</div>
+								</div>
+								<div class="afterhover">
+									<div class="product-info">
+										<div class="product-name">SAmsung garaxy prime asd as d asd asd as d asd as da s asd as</div>
+										<div class="product-price">
+											1,600,000 VND
+										</div>
+									</div>
+									<div class="product-s">- Màn hình 5.0 inches qHD TFT<br>- CPU Quad-core 1.2 GHz<br>- RAM 1GB ROM 8GB<br>- Camera 8 MP/5 MP<br>- Pin Li-Ion 2600 mAh</div>
+									<div class="promo-info"><span class="icon icon-product-promo"></span>Khuyến mãi <span class="ppromo">đến 450,000 đ</span>	
+									</div>		
+									</a>
+									<div class="product-o">
+										<a class="btn-buy btn-a">
+											<i class="icon left"></i>
+											MUA NHANH
+										</a>
+										<a class="btn-a iconcompare icon left" title="So Sánh">
+										</a>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="item">
+							<a href="" class="noneunder">
+								<div class="beforhover">
+									<i class="iconstatus km"></i>
+									<div class="product-image">
+										<img src="<?php echo $this->baseUrl() ?>/public/Contents/Images/product/acer-iconia-b1-740-1.jpg" />
+									</div>
+									<div class="product-info">
+										<div class="product-name">SAmsung garaxy prime asd as d asd asd as d asd as da s asd as</div>
+										<div class="product-price">
+											1,600,000 VND
+										</div>
+									</div>
+								</div>
+								<div class="afterhover">
+									<div class="product-info">
+										<div class="product-name">SAmsung garaxy prime asd as d asd asd as d asd as da s asd as</div>
+										<div class="product-price">
+											1,600,000 VND
+										</div>
+									</div>
+									<div class="product-s">- Màn hình 5.0 inches qHD TFT<br>- CPU Quad-core 1.2 GHz<br>- RAM 1GB ROM 8GB<br>- Camera 8 MP/5 MP<br>- Pin Li-Ion 2600 mAh</div>
+									<div class="promo-info"><span class="icon icon-product-promo"></span>Khuyến mãi <span class="ppromo">đến 450,000 đ</span>	
+									</div>		
+									</a>
+									<div class="product-o">
+										<a class="btn-buy btn-a">
+											<i class="icon left"></i>
+											MUA NHANH
+										</a>
+										<a class="btn-a iconcompare icon left" title="So Sánh">
+										</a>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="item">
+							<a href="" class="noneunder">
+								<div class="beforhover">
+									<i class="iconstatus km"></i>
+									<div class="product-image">
+										<img src="<?php echo $this->baseUrl() ?>/public/Contents/Images/product/acer-iconia-b1-740-1.jpg" />
+									</div>
+									<div class="product-info">
+										<div class="product-name">SAmsung garaxy prime asd as d asd asd as d asd as da s asd as</div>
+										<div class="product-price">
+											1,600,000 VND
+										</div>
+									</div>
+								</div>
+								<div class="afterhover">
+									<div class="product-info">
+										<div class="product-name">SAmsung garaxy prime asd as d asd asd as d asd as da s asd as</div>
+										<div class="product-price">
+											1,600,000 VND
+										</div>
+									</div>
+									<div class="product-s">- Màn hình 5.0 inches qHD TFT<br>- CPU Quad-core 1.2 GHz<br>- RAM 1GB ROM 8GB<br>- Camera 8 MP/5 MP<br>- Pin Li-Ion 2600 mAh</div>
+									<div class="promo-info"><span class="icon icon-product-promo"></span>Khuyến mãi <span class="ppromo">đến 450,000 đ</span>	
+									</div>		
+									</a>
+									<div class="product-o">
+										<a class="btn-buy btn-a">
+											<i class="icon left"></i>
+											MUA NHANH
+										</a>
+										<a class="btn-a iconcompare icon left" title="So Sánh">
+										</a>
+									</div>
+								</div>
+							</a>
+						</div> 
+
+					
+						
+					</div>
+					<div class="clearleft"></div>
+				</div>
+			</div>
+			<div class="boxproduct left boxright" style="width:257px">
+				<div class="headerbox">
+					<a href=""><h1>Tin Tức</h1></a>
+					<div class="clearleft"></div>
+				</div>
+				<div class="contentbox">
+					asd
+				</div>
+			</div>
+
+			<div class="clearleft"></div>-->
+			
+			<div class="boxproduct boxtintuc">
+				<div class="headerbox">
+					<h3>TIN TỨC</h3>
+				</div>
+				<div class="contentbox">
+					<?php foreach ($this->tintuchot as $item) {?>
+						<div class="itemtt">
+							<a href="<?php echo $this->baseUrl().'/'.$item['MATT'].'_'.$item['URL'] ?>.html">
+								<img src="<?php echo $this->baseUrl().'/uploads/images/tintuc/'.$item['HINHANH'] ?>" />
+								<div class="left" style="width:370px">
+									<h4><?php echo $item["TIEUDE"] ?></h4>
+									<div class="timepost">
+										<?php echo date('d/m/Y H:s:m',strtotime($item['THOIGIAN'])) ?>
+									</div>
+									<p>
+										<?php if(strlen($item["MOTA"])>200) echo mb_substr($item["MOTA"],0,210-strlen($item["TIEUDE"]))."..."; else echo $item["MOTA"]; ?>
+									</p>
+								</div>
+								<div class="clearleft"></div>
+							</a>
+						</div>
+					<?php } ?>
+					<div class="clearleft"></div>
+				</div>
+			</div>
+
+			<style type="text/css">
+				.boxtintuc .itemtt{
+					width: 46%;
+					float: left;
+					padding: 1%;
+					height:110px;
+				}
+				.boxtintuc .itemtt img{
+					width: 150px;
+					height: 100px;
+					display: block;
+					margin:0px auto;
+					float: left;
+					border:1px solid #ddd;
+				}
+				.boxtintuc .itemtt h4{
+					margin:0;
+					margin-left: 5px;
+				}
+				.boxtintuc .itemtt p{
+					margin-left: 5px;
+					color:#777;
+					margin-top: 5px;
+				}
+				.boxtintuc .itemtt .timepost{
+					margin-left: 5px;
+					color:#999;
+				}
+				.boxtintuc .itemtt:hover h4{
+					color:blue;
+				}
+				.boxtintuc .contentbox{
+					border-left: 0 !important;
+				}
+
+			</style>
+
+		</article>
+	</section>
+
+</section>
+
+<div class="clear"></div>
+
+<div id="vtquangcaobottomhome"></div>

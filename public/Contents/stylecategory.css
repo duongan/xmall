@@ -1,0 +1,256 @@
+.boxproduct .contentbox{
+	border-left: 1px solid #cccccc;
+}
+.boxproduct .contentbox .item{
+	width:24.8%;
+	height: 190px;
+	border-right: 1px solid #cccccc;
+	border-bottom: 1px solid #cccccc;
+	cursor: inherit;
+	float: left;
+	position: relative;
+	overflow: hidden;
+	margin: 0;
+}
+.boxproduct .contentbox .item .beforhover .product-image{
+	width:100%;
+	height: 120px;
+	overflow: hidden;
+	text-align: center;
+}
+.boxproduct .contentbox .item .beforhover .product-info{
+	width:190px;
+	padding: 10px 20px;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+
+}
+.boxproduct .contentbox .item  .product-info .product-price{
+	color:red;
+	font-weight: bold;
+}
+.boxproduct .contentbox .item .beforhover,.boxproduct .contentbox .item .afterhover{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height:100%;
+}
+.boxproduct .contentbox .item .product-name{
+	line-height: 1.3em;
+}
+.boxproduct .contentbox .item .afterhover .product-info{
+	padding: 7px 10px 0px 10px;
+	height: 55px;
+	overflow: hidden;
+}
+.boxproduct .contentbox .item .afterhover{
+	font-size:12px;
+	opacity: 0;
+	z-index: 11;
+	background-color: white;
+	-webkit-transition: all 300ms ease 100ms;
+	-moz-transition: all 300ms ease 100ms;
+	transition: all 300ms ease 100ms;
+}
+.boxproduct .contentbox .item:hover .afterhover{
+	opacity: 1;
+}
+.boxproduct .contentbox .item .afterhover .product-s{
+	font-size:11px;
+	line-height: 1.3em;
+	padding:0px 7px;
+}
+.boxproduct .contentbox .item .afterhover .btn-buy{
+	background: url(Images/bg-btn-1.png) repeat-x;
+	border: 1px solid #037db9;
+	color: #fff;
+	height: 24px;
+	line-height: 24px;
+	padding: 0px 11px 0px 30px;
+	text-transform: uppercase;
+	position: relative;
+	border-radius: 4px 4px 4px 4px;
+	-moz-border-radius: 4px 4px 4px 4px;
+	-webkit-border-radius: 4px 4px 4px 4px;
+	float: left;
+	margin: 0 7px 0 10px;
+}
+.boxproduct .contentbox .item .afterhover .btn-buy i{
+	background-position: -30px -210px;
+	width: 18px;
+	height: 17px;
+	position: absolute;
+	left: 7px;
+	top: 4px;
+}
+.boxproduct .contentbox .item .afterhover .product-o{
+	height: 30px;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+}
+.boxproduct .contentbox .item .afterhover .product-o .icon-like{
+	display: block;
+	margin-left: 0px;
+	background-position: 0px -1382px;
+	height: 25px;
+	width: 30px;
+}
+.boxproduct .contentbox .item .afterhover .btn-buy:hover{
+	opacity: 0.8;
+}
+
+.btn-a{
+	display: block;
+	cursor: pointer;
+}
+.btn-a:hover{
+	text-decoration: none;
+}
+.boxproduct .contentbox .item .afterhover .icon-product-promo{
+	background-position: 0px -1350px;
+	background-repeat: none;
+	width: 12px;
+	height: 13px;
+	float:left;
+	margin-left:10px;
+	margin-right: 5px;
+}
+.boxproduct .contentbox .item .afterhover .promo-info {
+	color: #ed0000;
+	font-size: 12px;
+	padding: 3px 0px;
+}
+.boxproduct .contentbox .item .afterhover .promo-info .ppromo{
+	color:#333;
+}
+.iconcompare{
+	background-position: 0px -1410px;
+	width: 27px;
+	height: 28px;
+}
+
+.boxproduct .contentbox .itemmore{
+	background: #f1f1f1;
+}
+.boxproduct .contentbox .itemmore:hover{
+	background: #ddd;
+}
+.boxproduct .contentbox .itemmore a{
+	background: url(Images/arrow-global-5.png) 167px center no-repeat;
+	color: #b7b7b7;
+	font-size: 18px;
+	height: 190px;
+	display: block;
+	line-height: 190px;
+	text-align: center;
+}
+.boxproduct{
+	margin-bottom: 40px;
+}
+.boxproduct .headerbox h3{
+	margin-bottom:5px;
+}
+.boxproduct .headerbox h3.left{
+	font-size:13.5px;
+	margin-left: 5px;
+	text-transform: uppercase;
+}
+.boxproduct .headerbox h3.right{
+	font-size: 13px;
+	font-weight: normal;
+	margin-right: 10px;
+}
+.boxproduct .headerbox h3.right span{
+	padding:0px 5px;
+}
+.boxproductbig .contentbox .item{
+	width:24%;
+}
+.boxproduct.boxright .headerbox h3{
+	padding-bottom: 15px;
+	margin:0px;
+	font-size:15px;
+}
+.boxproduct.boxright .headerbox h1{
+	padding-bottom: 5px;
+	margin:0px;
+	margin-top: 15px;
+	font-size:15px;
+}
+.boxproduct.boxright .contentbox{
+	border-right: 1px solid #cccccc;
+	border-bottom: 1px solid #cccccc;
+}
+.boxproduct.boxright .headerbox{
+	width: 100%;
+}
+.boxfirst .spbanchay .loader,.boxfirst .spmoi .loader{
+	width:925px;
+	height: 380px;
+}
+.boxfirst .contentbox .itemtabs{
+	display: none;
+}
+.boxfirst .contentbox .itemtabs.active{
+	display: block;
+}
+.boxproductbig .contentbox .boxqcleft{
+	border-right: 1px solid #cccccc;
+	border-bottom: 1px solid #cccccc;
+	width: 199px;
+	height: 381px;
+}
+.boxproduct .headerbox h3{
+	font-size: 13.5px;
+	margin-left: 5px;
+	text-transform: uppercase;
+}
+.boxproduct .headerbox {
+	border-bottom: 3px solid #999;
+	width: 96.5%;
+}
+.page .pagestart, .page .pageend, .page .pagenext, .page .pageprev{
+	width:10px !important;
+	height: 19px !important;
+}
+.page i ul{
+	top:10px !important;
+}
+.page b{
+	visibility: hidden;
+}
+.sidebox {
+	border: 1px solid #ccc;
+	border-top: none;
+	margin-bottom: 10px;
+}
+.sidebox h3  {
+	font: normal 13px Arial, Tahoma, Helvetica, sans-serif;
+	color: #2d2d2d;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+.sidebox h3 {
+	text-align: center;
+	padding: 7px 0px;
+	font-weight: bold;
+	background: rgb(207, 223, 231) url('Images/sb_title_left.png') no-repeat left top;
+	border-bottom: 1px solid #ccc;
+	font-size: 11px;
+}
+.sidebox .contentl {
+	text-align: left;
+	padding: 15px;
+}
+.sidebox .contentl a{
+	color:blue;
+	display: block;
+	padding: 3px 0px;
+}
+.sidebox .boxhang a{
+	text-transform: uppercase;
+}

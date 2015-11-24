@@ -1,0 +1,179 @@
+ <script type="text/javascript" src="<?php echo $this->baseUrl() ?>/public/Scripts/dialog.js"></script>
+ <link href="<?php echo $this->baseUrl() ?>/public/Contents/dialog.css" rel="stylesheet" />
+<script type="text/javascript">
+ var dialogxoa=null;
+ var frmxoa=null; 
+	$(function(){
+		$(".breadcrumb").html("<li><i class='fa fa-dashboard'></i> <a href='"+base_url+"/admin'>Trang Chủ</a></li> <li class='active'><i class='fa fa-globe'></i> Tin Tức</li>");
+	$("h1.page-header").text("Danh Sách Tin Tức");
+		$("#qltintuc").parent().addClass("active").find("a").click();
+		$("#qltintuc").find("li:eq(0)").addClass("active");
+
+		$(".changehienthi").change(function(){
+			LoadJson(base_url+"/ajax/changehttintuc",{"MATT":$(this).val(),'HT':$(this).is(":checked")},function(result){
+
+			});
+		});
+
+		dialogxoa=new dialog($("#dialog"),{
+            "width":500,
+            "height":240
+        });
+        dialogxoa.init();
+
+		$(".frmxoatt").submit(function(){
+			if(!$(this).hasClass("success")){
+				frmxoa=$(this);
+				dialogxoa.show();
+				return false;
+			}
+		});
+	});
+
+function xoatt(th){
+    
+
+    LoadJson(base_url+"/ajax/kiemtraxoa",{"mk2":th.find(".mk2").val(),"ma":th.find(".ma").val()},function(result){
+            switch(result){
+                case 0:
+                    $("#dialog .ms").html('Mật khẩu cấp 2 sai.').css("color","red");
+                    break;
+                case 2:
+                    $("#dialog .ms").html('Mã bảo vệ sai').css("color","red");
+                    $("#dialog img").attr("src",base_url+"/captcha");
+                    break;
+                case 1:
+                    frmxoa.addClass("success").submit();
+                    break;
+            }
+        });
+        
+        return false;
+
+}
+
+</script>
+
+<div id="dialog">
+    <div class='header'>
+        XÁC NHẬN XÓA TIN TỨC
+    </div>
+    <div class='ct'>
+        <p>Vui lòng nhập mật khẩu cấp 2 để tiếp tục xóa.</p>
+        <div class='ms' style="margin-top:-10px;text-align:center"></div>
+            <br />
+        <form action="" method="post" role="form" onsubmit="return xoatt($(this));">
+            <div class='row'>
+                <div class='col-lg-4 col-sm-4 col-xs-4' style="margin-top:7px"><b>Mật Khẩu Cấp 2:</b> </div>
+                <div class='col-lg-6 col-sm-6 col-xs-6'>
+                    <input type="password" class="form-control mk2" />
+                </div>
+            </div>
+            <br />
+            <div class='row'>
+                <div class='col-lg-4 col-sm-4 col-xs-4' style="margin-top:7px"><b>Mã Xác Nhận:</b> </div>
+                <div class='col-lg-8 col-sm-8 col-xs-8'>
+                    <input size="18" type="text" class="ma" />
+                    <img src="<?php echo $this->baseUrl() ?>/captcha" style="padding-left:7px" />
+                </div>
+            </div>
+            <br />
+            <div class='row'>
+                <div class='col-lg-4 col-sm-4 col-xs-4' style="margin-top:7px"></div>
+                <div class='col-lg-6 col-sm-6 col-xs-6'>
+                    <input type="submit" class="btn btn-success btn-sm" value="Tiếp tục xóa" />
+                    <input type="button" onclick="dialogxoa.hide();" class="btn btn-default btn-sm" value="Hủy bỏ" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<?php if($this->message!=null){ ?>
+	<div class="message">
+		<?php echo $this->message ?>
+	</div>
+<?php } ?>
+<?php if($this->quyen["THEMTT"]==1){ ?>
+	<a href="<?php echo $this->baseUrl() ?>/admin/themtt" class="btn btn-default btn-sm"><i class="fa fa-plus"></i> Thêm tin tức mới</a>
+	<br /><br />
+	<?php } ?>
+	<div class="clearfix">
+		<div class="l">
+			<?php echo $this->partial('admin/phan_trang.phtml',array('arr_page'=>$this->arr_page)); ?>
+		</div>
+		<div class="r">
+			<div class="l">
+				<form method="get" action="">
+					<div class="frmsearch clearfix">
+						<input type="text" class="textboxsearch" value="<?php if(isset($_GET['q'])) echo $_GET['q']; ?>"  placeholder="Nhập tên tin tức..." name="q" />
+						<input type="submit" class="buttonsearch" value="" />
+					</div>
+					<?php if(isset($_GET["sort"])){ ?>
+						<input type="hidden" name="sort" value="<?php echo $_GET["sort"] ?>" />
+					<?php } ?>
+				</form>
+			</div>
+			<div class="l" style="margin-left:10px">
+				<form method="get" action="">
+					<select onchange="$(this).parent().submit();" name="sort" style="height:25px">
+						<option value="matt-desc">Mới Thêm</option>
+						<option value="xem-desc">Lượt xem</option>
+						<option value="nguoigui">Người gửi</option>
+					</select>
+					<?php if(isset($_GET["q"])){ ?>
+						<input type="hidden" name="q" value="<?php echo $_GET["q"] ?>" />
+					<?php } ?>
+				</form>
+			</div>
+		</div>
+	</div>
+<div class="table-responsive">
+	<table class="table table-bordered table-vm">
+		<tr>
+			<th>Tiêu Đề</th>
+			<th>Mô Tả</th>
+			<th>Người Gửi</th>
+			<th>Ngày Gửi</th>
+			<th>Hình Ảnh</th>
+			<th>Từ Khóa</th>
+			<th>Xem</th>
+			<th>HT</th>
+			<th></th>
+		</tr>
+		<?php foreach ($this->data as $item) {
+			?>
+			<tr>
+				<td width="15%"><?php echo $item["TIEUDE"] ?></td>
+				<td width="25%">
+					<div style="height:100px;overflow:auto"><?php echo $item["MOTA"] ?></div>
+				</td>
+				<td><?php echo $item["HOTEN"] ?></td>
+				<td><?php echo date('d/m/Y',strtotime($item['THOIGIAN'])) ?></td>
+				<td align="center"><img src='<?php echo $this->baseUrl() ?>/uploads/images/tintuc/<?php echo $item['HINHANH'] ?>' width='120' height='100' /></td>
+				<td width="15%">
+					<?php echo $item['TUKHOA'] ?>
+				</td>
+				<td align="center">
+					<?php echo $item['XEM'] ?>
+				</td>
+				<td align="center">
+					<input type="checkbox" class="changehienthi" <?php if($item['HIEN_THI']==1) echo "checked='checked'"; if($this->quyen['SUATT']==0) echo "disabled='disabled'"; ?> value="<?php echo $item['MATT'] ?>" />
+				</td>
+				<td align="center">
+				<?php if($this->quyen["SUATT"]==1){ ?>
+					<a title="Sửa" href="<?php echo $this->baseUrl() ?>/admin/suatt?id=<?php echo $item['MATT'] ?>"><img src="<?php echo $this->baseUrl() ?>/public/admin/Images/edit.png" /></a><br /><br />
+					<?php } ?>
+					<?php if($this->quyen["XOATT"]==1){ ?>
+					<form method="post" action="" class="frmxoatt">
+						<input type="submit" title="Xóa tin tức" value="" style="background-image:url(<?php echo $this->baseUrl() ?>/public/admin/Images/delete.png);width:15px;height:15px;border:0;cursor:pointer;" />
+						<input type="hidden" name="name" value="<?php echo $item["TIEUDE"] ?>" />
+						<input type="hidden" name="id" value="<?php echo $item["MATT"] ?>" />
+						<input type="hidden" name="hinhanh" value="<?php echo $item["HINHANH"] ?>" />
+					</form>
+					<?php } ?>
+				</td>
+			</tr>
+		<?php } ?>
+	</table>
+</div>

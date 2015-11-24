@@ -1,0 +1,230 @@
+<link href="<?php echo $this->baseUrl() ?>/public/admin/inputstyle.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<?php echo $this->baseUrl() ?>/public/Scripts/validate.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#frm1").kiemtra([
+			{
+				'name':'passwordcu',
+				'trong':true
+			},
+			{
+				'name':'passwordmoi',
+				'trong':true
+			}
+			,
+			{
+				'name':'repasswordxn',
+				'sosanhdoituong':true,
+				'name2':'passwordmoi',
+				'message':'Nhập lại mật khẩu sai'
+			}
+		]);
+	});
+</script>
+<section class="layout_center">
+
+	<div id="iconeventleft"></div>
+	<div id="iconeventright"></div>
+
+	<nav id="breadcrumb-global">
+		<ul class="clearfix">
+			<li><a href="/">Trang chủ</a><span style="margin-left:5px;">»</span></li><li><h1>Thông Tin Cá Nhân[<?php echo $this->username ?>]</h1></li>
+		</ul>
+	</nav>
+	<div class="clearleft"></div>
+	
+	<div class="contentboxdk">
+		<?php if($this->message!=null){ ?>
+		<div class="red" style="width:380px;margin-top:20px;text-align:center;font-weight:bold">
+			<?php echo $this->message ?>
+		</div>
+	<?php } ?>
+		<form action="" method="post" id="frm1">
+						
+		<div class="border">
+			<div class="subheaders-group">		
+			<h2 class="subheader">
+			
+			ĐỔI MẬT KHẨU
+			</h2>
+			
+		<div class="form-field">
+			<label for="password1" class="cm-required cm-password">Mật khẩu Cũ:</label>
+			<input type="password" id="password1" name="passwordcu" size="32" maxlength="32" value="" class="input-text cm-autocomplete-off" autocomplete="off">
+			<span id="password11"></span>
+		</div>
+
+		<div class="form-field">
+			<label for="password1" class="cm-required cm-password">Mật khẩu Mới:</label>
+			<input type="password" id="password1" name="passwordmoi" size="32" maxlength="32" value="" class="input-text cm-autocomplete-off" autocomplete="off">
+			<span id="password11"></span>
+		</div>
+
+		<div class="form-field">
+			<label for="password2" class="cm-required cm-password">Xác nhận mật khẩu:</label>
+			<input type="password" id="password2" name="repasswordxn" size="32" maxlength="32" value="" class="input-text cm-autocomplete-off" autocomplete="off">
+		</div>
+		<div class="form-field">
+			<label for="password2" class="cm-required cm-password"></label>
+			<input type="submit" value="Lưu Lại" style="padding:5px 10px;cursor:pointer" />
+			<input type="reset" value="Nhập Lại" style="padding:5px 10px;cursor:pointer" />
+		</div>
+		<input type="hidden" value="1" name="action" />
+		</form>
+		<?php if($this->message2!=null){ ?>
+		<div class="red" style="width:380px;margin-top:20px;text-align:center;font-weight:bold">
+			<?php echo $this->message2 ?>
+		</div>
+	<?php } ?>
+		<form action="" method="post" id="frm2">
+			<h2 class="subheader">
+			
+			SINH NHẬT
+
+			</h2>
+		<div class="form-field">
+			<?php $ngaysinh=explode("-", date('d-m-Y',strtotime($this->info["NGAYSINH"])));
+				 ?>
+			<label for="birthday">Ngày sinh</label>
+			
+				<select name="ngaysinh">
+					<option value="0">Ngày</option>
+					<?php 
+						for($i=1;$i<=31;$i++){
+							if($i!=$ngaysinh[0])
+								echo "<option value='".$i."'>".(($i<10)?('0'.$i):$i)."</option>";
+							else
+								echo "<option selected='selected' value='".$i."'>".(($i<10)?('0'.$i):$i)."</option>";
+						}
+					 ?>
+				</select>
+				<select name="thangsinh">
+					<option value="0">Tháng</option>
+					<?php 
+						for($i=1;$i<=12;$i++){
+							if($i!=$ngaysinh[1])
+								echo "<option value='".$i."'>".(($i<10)?('0'.$i):$i)."</option>";
+							else
+								echo "<option selected='selected' value='".$i."'>".(($i<10)?('0'.$i):$i)."</option>";
+						}
+					 ?>
+				</select>
+				<select name="namsinh">
+					<option  value="0">Năm</option>
+					<?php 
+						for($i=1970;$i<=2040;$i++){
+							if($i!=$ngaysinh[2])
+								echo "<option value='".$i."'>".$i."</option>";
+							else
+								echo "<option selected='selected' value='".$i."'>".$i."</option>";
+						}
+					 ?>
+				</select>
+
+		</div>		
+
+
+			<h2 class="subheader">
+			
+			THÔNG TIN LIÊN HỆ
+
+			</h2>
+				
+					
+
+		<div class="form-field">
+			<label for="elm_36" class="cm-profile-field  ">CMND:</label>
+			  		<input type="text" id="elm_36" name="cmnd" size="32" value="<?php echo $this->info["CMND"] ?>" class="input-text ">
+			</div>
+
+
+
+										
+																															
+					
+
+
+			<h2 class="subheader">
+			
+			ĐỊA CHỈ THANH TOÁN
+
+			</h2>
+				
+					       
+
+							
+		<div class="form-field">
+			<label for="elm_14" class="cm-profile-field cm-required ">Họ Tên:</label>
+			  		<input type="text" id="elm_14" name="name" size="32" value="<?php echo $this->info["TENKH"] ?>" class="input-text ">
+			</div>
+					       
+
+							
+		<div class="form-field">
+			<label for="elm_18" class="cm-profile-field cm-required ">Địa chỉ:</label>
+			  		<input type="text" id="elm_18" name="address" size="32" value="<?php echo $this->info["DIACHI"] ?>" class="input-text ">
+			</div>
+					       
+
+							
+					       
+
+							
+		<div class="form-field">
+			<label for="elm_30" class="cm-profile-field cm-required cm-phone ">Điện thoại liên lạc:</label>
+			  		<input type="text" id="elm_30" name="phone" size="32" value="<?php echo $this->info["DIENTHOAI"] ?>" class="input-text ">
+			</div>
+
+
+					
+
+			
+			<h2 class="subheader">
+				ĐỊA CHỈ NHẬN HÀNG
+			</h2>
+			<div id="sa">
+				
+					       
+
+							
+		<div class="form-field">
+			<label for="elm_15" class="cm-profile-field cm-required ">Họ Tên:</label>
+			  		<input type="text" id="elm_15" name="s_name" size="32" value="<?php echo $this->info["TENNN"] ?>">
+			</div>
+					       
+
+							
+		<div class="form-field">
+			<label for="elm_19" class="cm-profile-field cm-required ">Địa chỉ :</label>
+			  		<input type="text" id="elm_19" name="s_address" size="32" value="<?php echo $this->info["DIACHINN"] ?>">
+			</div>
+					       
+
+	
+					       
+
+							
+		<div class="form-field">
+			<label for="elm_31" class="cm-profile-field  cm-phone ">Điện thoại liên lạc:</label>
+			  		<input type="text" id="elm_31" name="s_phone" size="32" value="<?php echo $this->info["DIENTHOAINN"] ?>">
+			</div>
+
+		</div>
+
+				
+				
+			
+				
+				</div>
+		</div>
+		<div class="form-field">
+			<label for="password2" class="cm-required cm-password"></label>
+			<input type="submit" value="Lưu Lại" style="padding:5px 10px;cursor:pointer" />
+			<input type="reset" value="Nhập Lại" style="padding:5px 10px;cursor:pointer" />
+		</div>
+		<input type="hidden" value="2" name="action" />
+			</form>
+		
+		</div>
+
+</section>

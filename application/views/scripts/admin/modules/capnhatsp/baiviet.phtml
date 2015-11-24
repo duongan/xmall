@@ -1,0 +1,9 @@
+<form action="" method="post">
+	<textarea id="baiviet" style="width:980px;height:600px" name="baiviet-decode"><?php echo html_entity_decode($this->data) ?></textarea>
+	<br />
+	<input type="submit" class="btn btn-primary btn-sm" value="Lưu lại" />
+	<input type="button" onclick="window.location.reload()" class="btn btn-default btn-sm" value="Nhập lại" />
+	<input type="hidden" name="action" value="5" />
+	<input type="hidden" name="id" value="<?php echo $_GET["id"] ?>" />
+	<input type="hidden" name="ngaycapnhat" value="<?php date_default_timezone_set('Asia/Ho_Chi_Minh'); $now=getdate(); echo $now["year"].'/'.$now["mon"].'/'.$now["mday"].' '.$now["hours"].':'.$now["minutes"].':'.$now["seconds"] ?>" />
+</form>

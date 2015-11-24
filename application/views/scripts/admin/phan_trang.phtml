@@ -1,0 +1,104 @@
+<div class="page clearfix">
+	<?php  
+
+		$sl=(int)($this->arr_page["sum"]/$this->arr_page["count"]);
+
+		if($this->arr_page["sum"]%$this->arr_page["count"]==0)
+			$sl--;
+
+		$url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+
+		if($_GET['page']!=null){
+			$url=preg_replace("/page=[0-9]*$/", "", $url);
+		}else{ 
+			if(count(explode("?", $url))>1){
+				$url=$url.="&";
+			}else{
+				$url=$url.="?";
+			}
+		}
+
+		if($sl>=1){
+
+			$page_current=$this->arr_page["current"];
+
+
+			if($page_current!=0){
+				echo '<a href="'.$url.'page=0" class="pagestart"></a>';
+				echo '<a href="'.$url.'page='.($page_current-1).'" class="pageprev"></a>';
+			}
+			if($sl<4){
+				for($i=0;$i<=$sl;$i++){
+					if($i!=$page_current)
+						echo '<a class="pageitem" href="'.$url.'page='.$i.'">'.($i+1).'</a>';
+					else
+						echo '<span>'.($i+1).'</span>';
+				}
+			}else{
+				if($page_current>1){
+					echo '<a class="pageitem" href="'.$url.'page=0">1</a>';
+				}
+
+				$max=$page_current+2;
+
+				if($max>$sl){
+					$max=$sl;
+				}
+
+				$min=$page_current-1;
+
+				if($min==-1){
+					$min=0;
+				}
+
+				if($page_current==0)
+					$max+=3;
+
+				if($page_current==$sl){
+					$min-=3;
+				}
+
+				if($page_current>1 && $page_current-1>1){
+					echo '<i>...<ul>';
+					for($index=1;$index<$min;$index++){
+						echo '<a href="'.$url.'page='.$index.'">'.($index+1).'</a>';
+					}
+					echo '</ul></i>';
+				}
+
+
+
+				for($i=$min;$i<=$max;$i++){
+					if($i!=$page_current)
+						echo '<a class="pageitem" href="'.$url.'page='.$i.'">'.($i+1).'</a>';
+					else
+						echo '<span>'.($i+1).'</span>';
+				}
+
+				if($max+1<$sl){
+					echo '<i>...<ul>';
+					for($index=$max+1;$index<$sl;$index++){
+						echo '<a href="'.$url.'page='.$index.'">'.($index+1).'</a>';
+					}
+					echo '</ul></i>';
+				}
+
+				if($max<$sl){
+					echo '<a class="pageitem" href="'.$url.'page='.$sl.'">'.($sl+1).'</a>';
+				}
+			}
+
+			if($page_current!=$sl){
+				echo '<a href="'.$url.'page='.($page_current+1).'" class="pagenext"></a>';
+				echo '<a href="'.$url.'page='.$sl.'" class="pageend"></a>';
+			}
+			$den=($page_current*$this->arr_page['count'])+$this->arr_page['count'];
+			if($den>$this->arr_page['sum'])
+				$den=$this->arr_page['sum'];
+			if(!isset($this->arr_page['ShowLabel']) || $this->arr_page['ShowLabel'])
+				echo "<b>Hiển thị ".(($page_current*$this->arr_page['count'])+1)." đến ".$den." trên ".$this->arr_page['sum']."</b>";
+			
+
+		}
+	?>
+</div>

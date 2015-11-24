@@ -1,0 +1,567 @@
+ <script type="text/javascript" src="<?php echo $this->baseUrl() ?>/public/Scripts/dialog.js"></script>
+ <link href="<?php echo $this->baseUrl() ?>/public/Contents/dialog.css" rel="stylesheet" />
+<script type="text/javascript">
+	$(".breadcrumb").html("<li><i class='fa fa-dashboard'></i> <a href='"+base_url+"/admin'>Trang Chủ</a></li> <li class='active'><i class='fa fa-shopping-cart'></i> Đơn Hàng</li>");
+    var arrtt=["Danh Sách Đơn Hàng Chưa Giao","Danh Sách Đơn Hàng Còn Nợ","Danh Sách Đơn Hàng"];
+	$("h1.page-header").text(arrtt[<?php echo $this->vt ?>]);
+    var dialogxoa=null;
+    var dialogxoa2=null;
+    var dialogxoa3=null;
+    var frmxoacthd=null;
+    var inputslsua=null;
+$(function(){
+	$("#qlhoadon").parent().addClass("active").find("a").click();
+    $("#qlhoadon").find("li:eq(<?php echo $this->vt ?>)").addClass("active");
+    $("#selectall").change(function () {
+            $(".checkboxitem").prop('checked', this.checked);
+        });
+
+    dialogxoa=new dialog($("#dialog"),{
+            "width":500,
+            "height":240
+        });
+        dialogxoa.init();
+
+        dialogxoa2=new dialog($("#dialog2"),{
+            "width":500,
+            "height":240
+        });
+        dialogxoa2.init();
+        dialogxoa3=new dialog($("#dialog3"),{
+            "width":500,
+            "height":240
+        });
+        dialogxoa3.init();
+
+    $("#frmxoa").submit(function(){
+        if(!$(this).hasClass("success")){
+            var list=$(".checkboxitem:checked");
+            if(list.size()==0){
+                alert("Vui lòng chọn ít nhất 1 đơn hàng để xóa");
+                return false;
+            }
+
+            if(confirm("Bạn có chắc muốn xóa "+list.size()+" đơn hàng?")){
+                dialogxoa.show();
+            }
+
+            return false;
+        }
+        return true;
+    });
+
+    $(".subform").submit(function(){
+        if(!$(this).hasClass("success")){
+            if($(this).find("input[type='checkbox']:checked").size()==0){
+                alert("Vui lòng chọn ít nhất 1 cthd để xóa.");
+            }else{
+                frmxoacthd=$(this);
+                dialogxoa2.show();
+            }
+            return false;
+        }
+        return true;
+    });
+});
+
+function xoacthd(th){
+    LoadJson(base_url+"/ajax/kiemtraxoa",{"mk2":th.find(".mk2").val(),"ma":th.find(".ma").val()},function(result){
+            switch(result){
+                case 0:
+                    $("#dialog2 .ms").html('Mật khẩu cấp 2 sai.').css("color","red");
+                    break;
+                case 2:
+                    $("#dialog2 .ms").html('Mã bảo vệ sai').css("color","red");
+                    $("#dialog2 img").attr("src",base_url+"/captcha");
+                    break;
+                case 1:
+                    frmxoacthd.addClass("success").submit();
+                    break;
+            }
+        });
+        
+        return false;
+}
+
+function xoahd(th){
+    
+
+    LoadJson(base_url+"/ajax/kiemtraxoa",{"mk2":th.find(".mk2").val(),"ma":th.find(".ma").val()},function(result){
+            switch(result){
+                case 0:
+                    $("#dialog .ms").html('Mật khẩu cấp 2 sai.').css("color","red");
+                    break;
+                case 2:
+                    $("#dialog .ms").html('Mã bảo vệ sai').css("color","red");
+                    $("#dialog img").attr("src",base_url+"/captcha");
+                    break;
+                case 1:
+                    var list=$(".checkboxitem:checked");
+                    var arrxoa="";
+                    list.each(function(){
+                        arrxoa+=$(this).val()+" ";
+                    });
+                    $("#frmxoa").addClass("success").find("input:hidden").val(arrxoa.trim());
+                    $("#frmxoa").submit();
+                    break;
+            }
+        });
+        
+        return false;
+
+}
+
+function suaslmua(th){
+    
+
+    LoadJson(base_url+"/ajax/kiemtraxoa",{"mk2":th.find(".mk2").val(),"ma":th.find(".ma").val()},function(result){
+            switch(result){
+                case 0:
+                    $("#dialog3 .ms").html('Mật khẩu cấp 2 sai.').css("color","red");
+                    break;
+                case 2:
+                    $("#dialog3 .ms").html('Mã bảo vệ sai').css("color","red");
+                    $("#dialog3 img").attr("src",base_url+"/captcha");
+                    break;
+                case 1:
+                    ChangeQuantity(inputslsua);
+                    break;
+            }
+        });
+        
+        return false;
+
+}
+
+function selectcheckbox(id,th){
+   $(".checkboxitem"+id).prop('checked', th.checked);
+}
+
+</script>
+<?php if($this->message!=null){ ?>
+	<div class="message">
+		<?php echo $this->message ?>
+	</div>
+<?php } ?>
+
+
+<div id="dialog">
+    <div class='header'>
+        XÁC NHẬN XÓA ĐƠN HÀNG
+    </div>
+    <div class='ct'>
+        <p>Vui lòng nhập mật khẩu cấp 2 để tiếp tục xóa.</p>
+        <div class='ms' style="margin-top:-10px;text-align:center"></div>
+            <br />
+        <form action="" method="post" role="form" onsubmit="return xoahd($(this));">
+            <div class='row'>
+                <div class='col-lg-4 col-sm-4 col-xs-4' style="margin-top:7px"><b>Mật Khẩu Cấp 2:</b> </div>
+                <div class='col-lg-6 col-sm-6 col-xs-6'>
+                    <input type="password" class="form-control mk2" />
+                </div>
+            </div>
+            <br />
+            <div class='row'>
+                <div class='col-lg-4 col-sm-4 col-xs-4' style="margin-top:7px"><b>Mã Xác Nhận:</b> </div>
+                <div class='col-lg-8 col-sm-8 col-xs-8'>
+                    <input size="18" type="text" class="ma" />
+                    <img src="<?php echo $this->baseUrl() ?>/captcha" style="padding-left:7px" />
+                </div>
+            </div>
+            <br />
+            <div class='row'>
+                <div class='col-lg-4 col-sm-4 col-xs-4' style="margin-top:7px"></div>
+                <div class='col-lg-6 col-sm-6 col-xs-6'>
+                    <input type="submit" class="btn btn-success btn-sm" value="Tiếp tục xóa" />
+                    <input type="button" onclick="dialogxoa.hide();" class="btn btn-default btn-sm" value="Hủy bỏ" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="dialog2">
+    <div class='header'>
+        XÁC NHẬN XÓA CT ĐƠN HÀNG
+    </div>
+    <div class='ct'>
+        <p>Vui lòng nhập mật khẩu cấp 2 để tiếp tục xóa.</p>
+        <div class='ms' style="margin-top:-10px;text-align:center"></div>
+            <br />
+        <form action="" method="post" role="form" onsubmit="return xoacthd($(this));">
+            <div class='row'>
+                <div class='col-lg-4 col-sm-4 col-xs-4' style="margin-top:7px"><b>Mật Khẩu Cấp 2:</b> </div>
+                <div class='col-lg-6 col-sm-6 col-xs-6'>
+                    <input type="password" class="form-control mk2" />
+                </div>
+            </div>
+            <br />
+            <div class='row'>
+                <div class='col-lg-4 col-sm-4 col-xs-4' style="margin-top:7px"><b>Mã Xác Nhận:</b> </div>
+                <div class='col-lg-8 col-sm-8 col-xs-8'>
+                    <input size="18" type="text" class="ma" />
+                    <img src="<?php echo $this->baseUrl() ?>/captcha" style="padding-left:7px" />
+                </div>
+            </div>
+            <br />
+            <div class='row'>
+                <div class='col-lg-4 col-sm-4 col-xs-4' style="margin-top:7px"></div>
+                <div class='col-lg-6 col-sm-6 col-xs-6'>
+                    <input type="submit" class="btn btn-success btn-sm" value="Tiếp tục xóa" />
+                    <input type="button" onclick="dialogxoa2.hide();" class="btn btn-default btn-sm" value="Hủy bỏ" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="dialog3">
+    <div class='header'>
+        XÁC NHẬN SỬA SỐ LƯỢNG MUA
+    </div>
+    <div class='ct'>
+        <p>Vui lòng nhập mật khẩu cấp 2 để tiếp tục xóa.</p>
+        <div class='ms' style="margin-top:-10px;text-align:center"></div>
+            <br />
+        <form action="" method="post" role="form" onsubmit="return suaslmua($(this));">
+            <div class='row'>
+                <div class='col-lg-4 col-sm-4 col-xs-4' style="margin-top:7px"><b>Mật Khẩu Cấp 2:</b> </div>
+                <div class='col-lg-6 col-sm-6 col-xs-6'>
+                    <input type="password" class="form-control mk2" />
+                </div>
+            </div>
+            <br />
+            <div class='row'>
+                <div class='col-lg-4 col-sm-4 col-xs-4' style="margin-top:7px"><b>Mã Xác Nhận:</b> </div>
+                <div class='col-lg-8 col-sm-8 col-xs-8'>
+                    <input size="18" type="text" class="ma" />
+                    <img src="<?php echo $this->baseUrl() ?>/captcha" style="padding-left:7px" />
+                </div>
+            </div>
+            <br />
+            <div class='row'>
+                <div class='col-lg-4 col-sm-4 col-xs-4' style="margin-top:7px"></div>
+                <div class='col-lg-6 col-sm-6 col-xs-6'>
+                    <input type="submit" class="btn btn-success btn-sm" value="Tiếp tục xóa" />
+                    <input type="button" onclick="dialogxoa3.hide();" class="btn btn-default btn-sm" value="Hủy bỏ" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+    <div class="clearfix">
+        <div class="l">
+            <div style="margin-right:10px">
+                <?php if($this->quyen["XOADH"]==1){ ?>
+                <form method="post" action="" id="frmxoa">
+                    <input type="submit" value="Xóa Đơn Hàng" class="btn btn-primary btn-sm" />
+                    <input type="hidden" name="arrxoa" value="" />
+                </form>
+                <?php } ?>
+            </div>
+            <?php echo $this->partial('admin/phan_trang.phtml',array('arr_page'=>$this->arr_page)); ?>
+        </div>
+        <div class="r">
+            <div class="l">
+                <form method="get" action="">
+                    <div class="frmsearch clearfix">
+                        <input type="text" class="textboxsearch" value="<?php if(isset($_GET['q'])) echo $_GET['q']; ?>"  placeholder="Nhập nội dung tìm kiếm..." name="q" />
+                        <input type="submit" class="buttonsearch" value="" />
+                    </div>
+                    <?php if(isset($_GET["sort"])){ ?>
+                        <input type="hidden" name="sort" value="<?php echo $_GET["sort"] ?>" />
+                    <?php } ?>
+                </form>
+            </div>
+            <div class="l" style="margin-left:10px">
+                <form method="get" action="">
+                    <select onchange="$(this).parent().submit();" name="sort" style="height:25px">
+                        <option value="madh-desc">Mới Nhất</option>
+                        <option value="madh">Cũ Nhất</option>
+                        <option value="sl-desc">Số Lượng Mua</option>
+                        <option value="sum-desc">Tiền Mua</option>
+                        <option value="sotienno-desc">Tiền Nợ</option>
+                        <option value="don_hang.makh">Khách hàng</option>
+                    </select>
+                    <?php if(isset($_GET["q"])){ ?>
+                        <input type="hidden" name="q" value="<?php echo $_GET["q"] ?>" />
+                    <?php } ?>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover table-vm">
+        <tr>
+            <th></th>
+            <?php if($this->quyen["XOADH"]==1){ ?>
+            <th>
+                <input type="checkbox" id="selectall" />
+            </th>
+            <?php } ?>
+            <th>Mã</th>
+            <th>Ngày Lập</th>
+            <th>Số Lượng Sản Phẩm</th>
+            <th>Tổng Tiền</th>
+            <th>Số Tiền Nợ</th>
+            <th>HTGH</th>
+            <th>HTTT</th>
+            <th>Đã Giao</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <?php foreach ($this->hoadon as $item) {?>
+        <tr class="hover <?php if($item['DAXEM']==0) echo 'cxx'; ?>">
+            <td align="center" class="clickshow"><div class="icon"></div></td>
+            <?php if($this->quyen["XOADH"]==1){ ?>
+            <td align="center"><input type="checkbox" class="checkboxitem" value="<?php echo $item["MADH"] ?>" name="arrxoa[]" /></td>
+            <?php } ?>
+            <td align="center" class="clickshow">
+                <?php echo $item["MADH"] ?>
+            </td>
+            <td class="clickshow"><?php echo date("d/m/Y",strtotime($item["NGAYLAP"])) ?></td>
+            <td align="center" class="clickshow"><?php echo $item["sl"] ?></td>
+            <td class="clickshow"><?php echo number_format($item["sum"],0,',','.') ?> VND</td>
+            <td class="clickshow"><?php echo number_format($item["SOTIENNO"],0,',','.') ?> VND</td>
+             <td align="center" class="clickshow">
+                <?php if($item['GIAOHANG']==1) echo "Giao hàng"; else echo "Cửa hàng"; ?>
+            </td>
+            <td align="center" class="clickshow">
+                <?php if($item['THANHTOAN']==1) echo "Ngân Lượng"; else echo "Tiền Mặt"; ?>
+            </td>
+            <td align="center" class="clickshow">
+                <?php if($item["HOANTHANH"]==1) echo "<img src='".$this->baseUrl()."/public/Contents/Images/bullet-3.png' />" ?> 
+            </td>
+           
+            <td align="center">
+                <?php if($item["HOANTHANH"]==0 || $item["SOTIENNO"]>0){ ?>
+                    <a href="<?php echo $this->baseUrl() ?>/admin/hthoadon?id=<?php echo $item["MADH"] ?>">Hoàn thành</a><br />
+                <?php } ?>
+                <?php if($item['HOANTHANH']==1){
+                    foreach ($this->hthd as $itht) {
+                            if($itht['MADH']==$item['MADH']){
+                                echo $itht['HOTEN'].'<br>'.date('d/m/Y',strtotime($itht['NGAY_HT']));
+                            }
+                        }
+                    } ?>
+            </td>
+             <td>
+                <a target="_black" href="<?php echo $this->baseUrl() ?>/admin/inhoadon?id=<?php echo $item['MADH'] ?>" title="In hóa đơn"><i class="fa fa-fw fa-print"></i></a>
+                </td>
+        </tr>
+        <tr class="sub">
+                <td colspan="12">
+                    <form method="post" class="subform" action="">
+                    <table class="table">
+                        <tr>
+                            <td class="nonborder">Email: </td>
+                            <td class="nonborder" colspan="3"><b><?php echo $item["EMAIL"] ?></b></td>
+                            <td class="nonborder">Tên Người Nhận: </td>
+                            <td class="nonborder" colspan="4"><b><?php echo $item["TENNN"] ?></b></td>
+                        </tr>
+                        <tr>
+                            <td class="nonborder">Họ tên: </td>
+                            <td class="nonborder" colspan="3"><b><?php echo $item["TENKH"] ?></b></td>
+                            <td class="nonborder">ĐT Người Nhận: </td>
+                            <td class="nonborder" colspan="4"><b><?php echo $item["DIENTHOAINN"] ?></b></td>
+                        </tr>
+                        <tr>
+                            <td class="nonborder">Số ĐT: </td>
+                            <td class="nonborder" colspan="3"><b><?php echo $item["DIENTHOAI"] ?></b></td>
+                            <td class="nonborder">ĐC Người Nhận: </td>
+                            <td class="nonborder" colspan="4"><b><?php echo $item["DIACHINN"] ?></b></td>
+                        </tr>
+                        <tr>
+                            <td class="nonborder">Địa Chỉ: </td>
+                            <td class="nonborder" colspan="3"><b><?php echo $item["DIACHI"] ?></b></td>
+                            <td class="nonborder">Ghi Chú: </td>
+                            <td class="nonborder" colspan="4"><b><?php echo $item["GHICHU"] ?></b></td>
+                        </tr>
+                        <tr>
+                            <td class="nonborder" colspan="9">
+                                <?php if($this->quyen["XOADH"]==1){ ?>
+                                <input type="submit" value="Xóa CTĐH" class="btn btn-success btn-sm" />
+                                <?php } ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <?php if($this->quyen["XOADH"]==1){ ?>
+                            <th><input type="checkbox" onchange="selectcheckbox(<?php echo $item['MADH'] ?>,this);" /></th>
+                            <?php } ?>
+                            <th>STT</th>
+                            <th width="30%">Tên SP</th>
+                            <th>Hình Ảnh</th>
+                            <th>Số Lượng</th>
+                            <th>Đơn Giá</th>
+                            <th>Thành Tiền</th>
+                        </tr>
+                        <?php $c=0; foreach ($this->cthd as $ict) {
+                            if($ict["MADH"]==$item["MADH"]){
+                            ?>
+                            <tr class="cthditem">
+                            <?php if($this->quyen["XOADH"]==1){ ?>
+                            <td align="center">
+                                <input type="checkbox" class="checkboxitem<?php echo $ict['MADH'] ?>" value="<?php echo $ict['MASP'] ?>" name="arrxoact[]" />
+                            </td>
+                            <?php } ?>
+                            <td align="center"><?php echo ++$c ?></td>
+                            <td>
+                                <a href='<?php echo $this->baseUrl()."/".$ict["URL"]."_".$ict["MASP"] ?>.html' target="_black"><?php echo $ict["TENSP"] ?></a>
+                            </td>
+                            <td align="center">
+                                <img src="<?php echo $this->baseUrl() ?>/uploads/images/sp/<?php echo $ict["HINHANH"] ?>" width="70" height="60" />
+                            </td>
+                            <td align="center">
+                                <?php if($item["HOANTHANH"]==1){ ?>
+                                    <?php echo $ict["SOLUONG"] ?>
+                                <?php }else{ ?>
+                                    <input type="number" style="width:50px" data-id='{"id":<?php echo $ict["MADH"] ?>,"idsp":<?php echo $ict["MASP"] ?>}' class="changeq" value="<?php echo $ict['SOLUONG'] ?>" />
+                                <?php } ?>
+                            </td>
+                            <td align="center">
+                                <?php echo number_format($ict["GIA"],0,',','.') ?> VNĐ
+                            </td>
+                            <td align="center" class="tt">
+                                <?php echo number_format($ict["GIA"]*$ict["SOLUONG"],0,',','.') ?> VNĐ
+                            </td>
+                            </tr>
+                            <?php }} ?>
+                    </table>
+                    <input type="hidden" name="mahd" value="<?php echo $item['MADH'] ?>" />
+                    </form>
+                </td>
+            </tr>
+        <?php } ?>
+    </table>
+</div>
+<style type="text/css">
+    .table tr.hover:hover{
+        cursor: pointer;
+        background-color: #eee;
+    }
+
+
+
+    .table tr.sub{
+        display: none;
+    }
+    
+    .table tr.sub table th{
+        background-image: none;
+        border-left: 1px solid #ddd !important;
+    }
+    .table tr.sub table{
+        border:0;
+    }
+    .table tr.sub table tr th:first-child,.table tr.sub table tr td:first-child{
+        border-left: 0 !important;
+    }
+    .table tr.sub table tr:last-child td{
+        border-bottom: 0 !important;
+    }
+    .table tr.sub table{
+        margin-bottom: 0px !important;
+    }
+    .table tr.sub td{
+        padding: 0;
+    }
+    .table tr.sub td table td{
+        padding: 5px;
+    }
+    .table tr.sub td table td.nonborder{
+        border:0 !important;
+    }
+    .table .hover .icon{
+    background-image: url("<?php echo $this->baseUrl() ?>/public/Contents/Images/hide.gif");
+    }
+    .table .hover .show{
+        background-image: url("<?php echo $this->baseUrl() ?>/public/Contents/Images/show.gif") !important;
+
+    }
+    .table .hover .icon{
+          width: 9px;
+        height: 9px;
+}
+
+    .table tr.click > td{
+         background-image: url("<?php echo $this->baseUrl() ?>/public/admin/Images/backgroundhd.png");
+    }
+    .table tr.sub td,.table tr.sub th{
+        background-image: url("<?php echo $this->baseUrl() ?>/public/admin/Images/backgroundhd.png") !important;
+         background-repeat: repeat;
+    }
+    .table tr.sub > td{
+        border-bottom: 1px solid #999 !important;
+    }
+    .table tr.cxx{
+        background-color: rgb(224, 136, 136) !important;
+    }
+</style>
+<script type="text/javascript">
+        var sort="<?php if(isset($_GET['sort'])) echo $_GET['sort']; else echo 'madh-desc' ?>";
+
+        $("select[name='sort']").val(sort);
+</script>
+<script type="text/javascript">
+var timer=null;
+    $(function(){
+        
+        $(".table .hover td.clickshow").click(function(){
+            $(this).parent().next(".sub").fadeToggle();
+            $(this).find(".icon").toggleClass("show");
+            $(this).parent().toggleClass("click");
+        });
+
+        $(".changeq").change(function () {
+                $(this).addClass("change");
+                inputslsua=$(this);
+                dialogxoa3.show();
+            }).blur(function () {
+
+            }).keyup(function (e) {
+                var key = getKeyEvent(e);
+                if (key >= 48 && key <= 57 || key == 8) {
+                    $(this).addClass("change");
+                    inputslsua=$(this);
+                    dialogxoa3.show();
+                    return true;
+                }
+                return false;
+            });
+    });
+    function getKeyEvent(e) {
+            if (window.event) {
+                return window.event.keyCode;
+            }
+            else {
+                return e.which;
+            }
+            return 0;
+        }
+        function ChangeQuantity(th) {
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+                if ($(th).hasClass("change")) {
+                    if ($(th).val() != "" && !isNaN($(th).val())) {
+                        var id = jQuery.parseJSON($(th).attr("data-id"));
+                        if(parseInt($(th).val())>0){
+                            LoadJson(base_url+"/ajax/changeqhd", { "id": id.id,"idsp":id.idsp, "sl": parseInt($(th).val()) }, function (data) {
+                               if(!data.SUCCESS){
+                                     alert("Sản phẩm chỉ còn "+data.max+" sản phẩm");
+                                    $(th).val(data.max);   
+                                }
+                                $(th).parent().parent().find(".tt").html(data.TT+" VNĐ");
+                                dialogxoa3.hide();
+                            });
+                        }else{
+                            $(th).val("1");
+                        }
+                    }
+                }
+                $(th).removeClass("change");
+            }, 1000);
+            
+        }
+</script>

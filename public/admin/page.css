@@ -1,0 +1,87 @@
+.page{
+    margin:5px 0px;
+}
+.page a,.page span,.page i{
+     display: block;
+    float: left;
+    margin: 3px;
+     padding: 2px 8px;
+      border:1px solid #ddd;
+}
+.page i{
+    border:0;
+    font-style: normal;
+    position: relative;
+    margin-top: 7px;
+}
+.page i ul{
+    position: absolute;
+    width:120px;
+    border:1px solid #eee;
+    top:20px;
+    left: -2px;
+    background-color: white;
+    display: none;
+    border-top: 0;
+    padding-left: 10px;
+    max-height: 100px;
+    overflow: auto;
+}
+.page i ul a{
+    
+    border:0;
+    color:#888;
+    float: left;
+    margin-left: -10px;
+}
+.page i ul a:hover{
+    border:0;
+    color:#000;
+}
+.page i:hover ul{
+    display: block;
+}
+.page a.pagestart{
+    margin-left: 0px;
+}
+.page a.pageitem{
+    background-color:#f3f3f3;
+    color: #414141
+}
+.page a:hover{
+    border: 1px solid #417394;
+}
+.page span{
+    background-color: #dbd8d0 ;
+    color: #79756d;
+    border: 1px solid #c5c1b6;
+}
+.page .pagestart,.page .pageend,.page .pagenext,.page .pageprev{
+    background-repeat: no-repeat;
+    background-position: center center;
+    width:27px;
+    height: 24px;
+}
+.page .pagestart{
+    background-image: url("Images/first-right.png");
+}
+.page .pageend{
+    background-image: url("Images/last-right.png");   
+}
+.page .pagenext{
+    background-image: url("Images/nextt.png");   
+}
+.page .pageprev{
+    background-image: url("Images/previo.png");   
+}
+.page b{
+    display: block;
+    float: left;
+    font-size: 12px;
+    color: #4d5153;
+    padding: 3px 5px;
+    margin-top: 5px;
+    margin-left: -2px;
+    margin-right: 5px;
+    font-weight: normal;
+}

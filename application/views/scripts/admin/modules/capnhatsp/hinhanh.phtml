@@ -1,0 +1,137 @@
+	<style type="text/css">
+	#hinhanhkhac li{
+		display: block;
+		float: left;
+		width: 111px;
+		height: 111px;
+		margin-right: 5px;
+		position: relative;
+		border:1px solid #ddd;
+		margin-bottom: 5px;
+	}
+	#hinhanhkhac li img{
+		width: 108px;
+		height: 108px;
+	}
+	#hinhanhkhac li i{
+		display: block;
+		position: absolute;
+		width: 16px;
+		height: 16px;
+		top:4px;
+		right: 4px;
+		background-image: url("<?php echo $this->baseUrl() ?>/public/admin/Images/delete.png");
+		cursor: pointer;
+	}
+	.hidden{
+		display: none !important;
+	}
+</style>
+<script type="text/javascript">
+	var indexstt=0;
+
+	function removeFile(stt,th){
+		if(typeof stt =="number"){
+			$("#removefile").val($("#removefile").val()+" "+stt);
+		}else{
+			$("#arrimage").val($("#arrimage").val().replace(stt,""));
+			$("#arrxoa").val($("#arrxoa").val()+" "+stt);
+		}
+		$(th).parent().fadeOut('slow',function(){
+				$(this).remove();
+			});
+
+		var sl=$("#hinhanhkhac li.itemfiles").size();
+
+		if(sl==15){
+			$("#hinhanhkhac li.hidden").removeClass("hidden");
+		}
+	}
+
+	function readURLAll(input) {
+       if (input.files && input.files[0]) {
+       		$(input).parent().hide();
+       		var sl=$("#hinhanhkhac li.itemfiles").size();
+       		var size=input.files.length;
+       		var max=size;
+       		if(sl+size>15){
+       			max=15-sl;
+       		}
+       		sl+=max;
+       		for(var i=0;i<max;i++){
+	        	if(isImage(input.files[i].name)){
+		            var reader = new FileReader();
+		            reader.onload = function (e) {
+		                $("#hinhanhkhac").prepend("<li class='itemfiles'><img src='"+e.target.result+"' /><i onclick='removeFile("+(indexstt++)+",this);'></i></li>");
+		            }
+		            reader.readAsDataURL(input.files[i]);
+	            }
+        	}
+        	if(sl<15){
+        	 $("#hinhanhkhac").append('<li><div class="asimg imguploadhover" onclick="$(this).parent().find(\'input.none\').click();"><img src="<?php echo $this->baseUrl() ?>/public/admin/Images/uploadimg.png" /></div><input type="file" name="hinhanhkhac[]" class="none" onchange="readURLAll(this);" multiple=\'multiple\' /></li>');
+        	}else{
+        		$("#hinhanhkhac").append('<li class="hidden"><div class="asimg imguploadhover" onclick="$(this).parent().find(\'input.none\').click();"><img src="<?php echo $this->baseUrl() ?>/public/admin/Images/uploadimg.png" /></div><input type="file" name="hinhanhkhac[]" class="none" onchange="readURLAll(this);" multiple=\'multiple\' /></li>');
+        	}
+        	
+        }
+        else {
+            $(input).parent().find(".asimg img").attr("src",  $(input).val());
+        }
+    }
+</script>
+<form method="post" action="" id="frm" enctype="multipart/form-data">
+	<table class="table">
+		<tr>
+			<td>
+				<b>Hình Ảnh: </b><span class="red">*</span>
+			</td>
+			<td>
+				<div class="asimg imguploadhover" onclick="$(this).parent().find('input.none').click();">
+                        <img src="<?php echo $this->baseUrl()."/uploads/images/sp/".$this->data["HINHANH"] ?>" />
+                    </div>
+                    <input type="file" name="hinhanh" class="none"  onchange="readURL(this);" />
+                    <input type="hidden" name="hinhanhcu" value="<?php echo $this->data["HINHANH"] ?>" />
+			</td>
+		</tr>
+		<tr class="bordertop">
+			<td>
+				<b>Hình Ảnh Khác </b>
+			</td>
+			<td>
+				<div id="hinhanhkhac" class="clearfix">
+						<?php $arr=explode(" ", trim($this->data["HINH_ANH_KHAC"]));
+						
+						foreach ($arr as $item) {
+							if($item!="")
+						 	echo "<li class='itemfiles'><img src='".$this->baseUrl().'/uploads/images/sp/'.$item."' /><i onclick='removeFile(\"".$item."\",this);'></i></li>";
+						 } ?>
+						<li>
+							<div class="asimg imguploadhover" onclick="$(this).parent().find('input.none').click();">
+			                        <img src="<?php echo $this->baseUrl() ?>/public/admin/Images/uploadimg.png" />
+			                </div>
+			                    <input type="file" name="hinhanhkhac[]" class="none"  onchange="readURLAll(this);" multiple='multiple' />
+		                 </li>
+	                 </div>
+	                    <p class="mota">
+	                    	Cách hình ảnh khác của sản phẩm. 
+	                    	Tối đa 15 ảnh.
+	                    </p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+
+			</td>
+			<td>
+				<input type="submit" class="btn btn-primary btn-sm" value="Lưu Lại" />
+				<input type="button" onclick="window.location.reload()" class="btn btn-default btn-sm" value="Nhập lại" />
+			</td>
+		</tr>
+	</table>
+	<input type="hidden" name="action" value="3" />
+	<input type="hidden" name="id" value="<?php echo $_GET["id"] ?>" />
+	<input type="hidden" name="ngaycapnhat" value="<?php date_default_timezone_set('Asia/Ho_Chi_Minh'); $now=getdate(); echo $now["year"].'/'.$now["mon"].'/'.$now["mday"].' '.$now["hours"].':'.$now["minutes"].':'.$now["seconds"] ?>" />
+	<input type="hidden" name="arrxoa" id="arrxoa" value="" />
+	<input type="hidden" name="arrimage" id="arrimage" value="<?php echo trim($this->data["HINH_ANH_KHAC"]); ?>" />
+	<input type="hidden" value="" name="removefile" id="removefile"/>
+</form>

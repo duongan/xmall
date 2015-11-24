@@ -1,0 +1,68 @@
+.login {
+width: 500px;
+padding-left: 50px;
+}
+.form-field {
+padding: 0 0 0 170px;
+}
+.form-field {
+margin: 6px 0;
+vertical-align: middle;
+}
+.form-field, .form-field * {
+text-align: left;
+}
+.form-field {
+clear: both;
+}
+.form-field label.cm-required {
+margin-right: 5px;
+width: 88px;
+}
+.form-field label.cm-required {
+background: url('Images/required_mark.gif') no-repeat right 6px;
+}
+.form-field label {
+float: left;
+clear: left;
+text-align: left;
+width: 160px;
+padding-top: 1px;
+margin-left: -95px;
+}
+.form-field label {
+font: normal 92% Tahoma;
+}
+.form-field input {
+border: 1px solid #cdcdcd;
+}
+.form-field, .form-field * {
+text-align: left;
+}
+.input-text {
+width: 200px;
+}
+.input-text, .input-text-auto, .input-text-large, .input-text-medium, .input-text-short, .input-text-100, .input-textarea, .input-textarea-long, select {
+background-color: #FFFFFF;
+color: #2D2D2D;
+padding: 2px;
+vertical-align: middle;
+}
+.login input[type="submit"] {
+background: url("Images/bt_left_small1.png") no-repeat scroll right top #fff;
+border: medium none;
+color: #fff;
+font-family: "Open Sans",tahoma;
+font-size: 12px;
+font-weight: bold;
+height: 30px;
+margin: 0;
+padding: 5px 20px 15px 15px;
+display: inline-block;
+border-radius: 5px;
+}
+input[type="submit"] {
+-webkit-appearance: button;
+cursor: pointer;
+overflow: visible;
+}

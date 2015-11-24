@@ -1,0 +1,134 @@
+		<script type="text/javascript">
+		$(function(){
+    		$("#frm").kiemtra([
+	    		{
+	    			'name':'TENSP',
+	    			'trong':true
+	    		},
+	    		{
+	    			'name':'GIA-price',
+	    			'gia':true
+	    		},
+	    		{
+	    			'name':'BAOHANH-int',
+	    			'so':true
+	    		},
+	    		{
+	    			'name':'SOLUONG-int',
+	    			'so':true
+	    		}
+    		]);
+    	});
+		</script>	
+			<form method="post" action="" id="frm" role="form">
+				<table class="table">
+					<tr>
+						<td width="15%">
+							<b>Tên Sản Phẩm: </b><span class="red">*</span>
+						</td>
+						<td colspan="3">
+							<textarea class="form-control" name="TENSP"><?php echo $this->thongtin["TENSP"] ?></textarea>
+						</td>
+					</tr>
+					<tr class="bordertop">
+						<td valign="top">
+							<b>Giá Sản Phẩm: </b><span class="red">*</span>
+						</td>
+						<td>
+							<input class="form-control s1" type="text" name="GIA-price" value="<?php echo number_format($this->thongtin["GIA"],0,',','.') ?>" />
+							<p class="mota">
+								VD: giá là 1 triệu thì ghi: 1.000.000 hoặc<br /> 1 000 000 hoặc 1000000 hoặc 1-000-000. <br />Nếu <b>không có giá</b> thì điền 0
+							</p>
+						</td>
+						<td valign="top">
+							<b>Loại Sản Phẩm: </b><span class="red">*</span>
+						</td>
+						<td valign="top">
+							<select name="LOAISP-int" class="form-control">
+								<?php foreach ($this->lsp as $item) {
+									echo '<option value="'.$item["MALSP"].'" '.(($item['LSP_CHA']==0)?"style='background-color:#ccc'":"").'>'.$item["TEN_LOAI"].'</option>';
+								} ?>
+							</select>
+						</td>
+
+					</tr>
+					<tr class="bordertop">
+						<td>
+							<b>URL: </b>
+						</td>
+						<td>
+							<input type="text" class="form-control s1" name="URL" value="<?php echo $this->thongtin["URL"] ?>" />
+						</td>
+						<td>
+							<b>Tóm tắt sản phẩm: </b>
+						</td>
+						<td>
+							<textarea name="TOM_TAT_TS-br" class="form-control" rows="5"><?php echo str_replace("<br>", "\n", $this->thongtin["TOM_TAT_TS"]);  ?></textarea><br />
+							<p class="mota">Mô tả ngắn gọn về sản phẩm hoặc thông số sản phẩm.</p> 
+						</td>
+					</tr>
+					
+					<tr class="bordertop">
+						<td valign="top">
+							<br /><b>Linh kiện đi kèm: </b>
+						</td>
+						<td>
+							<textarea class="form-control s1" name="LINH_KIEN" rows="3"><?php echo $this->thongtin["LINH_KIEN"] ?></textarea>
+							<p class="mota">
+								Linh kiện đi kèm khi mua sản phẩm. VD sạc, pin, sách hướng dẫn,...
+							</p>
+						</td>
+						<td valign="top">
+							<br /><b>Từ khóa: </b>
+						</td>
+						<td>
+							<textarea class="form-control" name="TUKHOA" rows="3"><?php echo $this->thongtin["TUKHOA"] ?></textarea>
+							<p class="mota">
+								Từ khóa để tìm kiếm sản phẩm, hoặc để tìm kiếm tin tức.<br /> Mỗi từ khóa cách nhau bởi dấu ','
+							</p>
+						</td>
+					</tr>
+					<tr class="bordertop">
+						<td valign="top">
+							<b>Bảo Hành: </b><span class="red">*</span>
+						</td>
+						<td>
+							<input type="text" class="form-control s1" value="<?php echo $this->thongtin["BAOHANH"] ?>" name="BAOHANH-int" />
+							<p class="mota">
+								Thời gian bảo hành của sản phẩm. <br />VD: <b>12 tháng</b> thì điền là 12
+							</p>
+						</td>
+						<td valign="top">
+							<b>Số Lượng: </b><span class="red">*</span>
+						</td>
+						<td>
+							<input type="text" class="form-control" value="<?php echo $this->thongtin["SOLUONG"] ?>" name="SOLUONG-int" />
+							<p class="mota">
+								Số lượng hiện tại của sản phẩm.<br /> Nếu chưa có sản phẩm thì điền là 0
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+
+						</td>
+						<td colspan="3">
+							<input type="submit" class="btn btn-primary" value="Lưu lại" />
+							<input type="button" onclick="window.location.reload()" class="btn btn-default" value="Nhập lại" />
+						</td>
+					</tr>
+
+				</table>
+				<input type="hidden" name="action" value="1" />
+				<input type="hidden" name="id" value="<?php echo $_GET["id"] ?>" />
+				<input type="hidden" name="ngaycapnhat" value="<?php date_default_timezone_set('Asia/Ho_Chi_Minh'); $now=getdate(); echo $now["year"].'/'.$now["mon"].'/'.$now["mday"].' '.$now["hours"].':'.$now["minutes"].':'.$now["seconds"] ?>" />
+			</form>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var lsp="<?php echo $this->thongtin['LOAISP'] ?>";
+
+		if(lsp!="0"){
+			$("select[name='LOAISP-int']").val(lsp);
+		}
+	});
+</script>

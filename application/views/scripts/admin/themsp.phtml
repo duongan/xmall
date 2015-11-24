@@ -1,0 +1,377 @@
+<script type="text/javascript" src="<?php echo $this->baseUrl() ?>/public/Scripts/nicEdit.js"></script>
+<script type="text/javascript">
+	$(".breadcrumb").html("<li><i class='fa fa-dashboard'></i> <a href='"+base_url+"/admin'>Trang Chủ</a></li> <li><i class='fa fa-cube'></i><a href='"+base_url+"/admin/sanpham'> Sản Phẩm</a></li> <li class='active'><i class='fa fa-plus'></i> Thêm sản phẩm mới</li>");
+	$("h1.page-header").text("Thêm Sản Phẩm Mới");
+
+	$(function(){
+		
+		$("#qlsanpham").parent().addClass("active").find("a").click();
+		$("#qlsanpham").find("li:eq(0)").addClass("active");
+	});
+	function removeFile(stt,th){
+		$("#removefile").val($("#removefile").val()+" "+stt);
+		$(th).parent().fadeOut('slow',function(){
+			$(this).remove();
+		});
+
+		var sl=$("#hinhanhkhac li.itemfiles").size();
+
+		if(sl==15){
+			$("#hinhanhkhac li.hidden").removeClass("hidden");
+		}
+	}
+
+	var indexstt=0;
+
+	function readURLAll(input) {
+       if (input.files && input.files[0]) {
+       		$(input).parent().hide();
+       		var sl=$("#hinhanhkhac li.itemfiles").size();
+       		var size=input.files.length;
+       		var max=size;
+       		if(sl+size>15){
+       			max=15-sl;
+       		}
+       		sl+=max;
+       		for(var i=0;i<max;i++){
+	        	if(isImage(input.files[i].name)){
+		            var reader = new FileReader();
+		            reader.onload = function (e) {
+		                $("#hinhanhkhac").prepend("<li class='itemfiles'><img src='"+e.target.result+"' /><i onclick='removeFile("+(indexstt++)+",this);'></i></li>");
+		            }
+		            reader.readAsDataURL(input.files[i]);
+	            }
+        	}
+        	if(sl<15){
+        	 $("#hinhanhkhac").append('<li><div class="asimg imguploadhover" onclick="$(this).parent().find(\'input.none\').click();"><img src="<?php echo $this->baseUrl() ?>/public/admin/Images/uploadimg.png" /></div><input type="file" name="hinhanhkhac[]" class="none" onchange="readURLAll(this);" multiple=\'multiple\' /></li>');
+        	}else{
+        		$("#hinhanhkhac").append('<li class="hidden"><div class="asimg imguploadhover" onclick="$(this).parent().find(\'input.none\').click();"><img src="<?php echo $this->baseUrl() ?>/public/admin/Images/uploadimg.png" /></div><input type="file" name="hinhanhkhac[]" class="none" onchange="readURLAll(this);" multiple=\'multiple\' /></li>');
+        	}
+        	
+        }
+        else {
+            $(input).parent().find(".asimg img").attr("src",  $(input).val());
+        }
+    }
+
+    $(function(){
+    	$("form").kiemtra([
+    		{
+    			'name':'tensp',
+    			'trong':true
+    		},
+    		{
+    			'name':'giasp',
+    			'gia':true
+    		}
+    		,
+    		{
+    			'name':'hinhanh',
+    			'file':true,
+    			'typefile':'image'
+    		},
+    		{
+    			'name':'baohanh',
+    			'so':true
+    		}
+    		,
+    		{
+    			'name':'soluong',
+    			'so':true
+    		}
+    	]);
+    	var objkm;
+    	var objkm1;
+    	var kmtop=$("#bekm").offset().top-50;
+
+    	var objbv;
+    	var objbv1;
+    	var bvtop=$("#bebv").offset().top-50;
+
+    	var wintop;
+    	var bottomkm;
+
+    	setTimeout(function(){
+    		objkm=$("#bekm .nicEdit-panelContain");
+    		objkm1=$("#bekm .nicEdit-main");
+
+    		objbv=$("#bebv .nicEdit-panelContain");
+    		objbv1=$("#bebv .nicEdit-main");
+
+    		$(window).scroll(function(){
+    			wintop=$(this).scrollTop();
+    			bottomkm=(kmtop+objkm1.height())-50;
+    			if(objkm1.height()>200 && wintop>kmtop && wintop<bottomkm){
+    				objkm.addClass("on");
+    			}else{
+    				objkm.removeClass("on");
+    			}
+
+    			if(wintop>bottomkm+100 && objbv1.height()>200 && wintop>bvtop && wintop<(objbv1.height()+bvtop)-50){
+    				objbv.addClass("on");
+    			}else{
+    				objbv.removeClass("on");
+    			}
+
+    		});
+
+
+    	},1000);
+    });
+
+</script>
+<style type="text/css">
+	#hinhanhkhac li{
+		display: block;
+		float: left;
+		width: 111px;
+		height: 111px;
+		margin-right: 5px;
+		position: relative;
+		border:1px solid #ddd;
+		margin-bottom: 5px;
+	}
+	#hinhanhkhac li img{
+		width: 108px;
+		height: 108px;
+	}
+	#hinhanhkhac li i{
+		display: block;
+		position: absolute;
+		width: 16px;
+		height: 16px;
+		top:4px;
+		right: 4px;
+		background-image: url("<?php echo $this->baseUrl() ?>/public/admin/Images/delete.png");
+		cursor: pointer;
+	}
+	.hidden{
+		display: none !important;
+	}
+	.nicEdit-panelContain.on{
+		position: fixed;
+		top: 51px;
+		z-index: 9999;
+		width: 832px !important;
+	}
+</style>
+<?php if($this->message!=null){ ?>
+	<div class="message">
+		<?php echo $this->message ?>
+	</div>
+<?php } ?>
+<form method="post" action="" id="frm" enctype="multipart/form-data" role="form">
+<div class="table-responsive">
+	<table class="table table-hover">
+		<tr>
+			<td width="15%">
+				<b>Tên Sản Phẩm: </b><span class="red">*</span>
+			</td>
+			<td colspan="3">
+				<textarea class="form-control" name="tensp"><?php if(isset($_POST['tensp'])) echo $_POST['tensp']; ?></textarea>
+			</td>
+		</tr>
+		<tr class="bordertop">
+			<td valign="top">
+				<b>Giá Sản Phẩm: </b><span class="red">*</span>
+			</td>
+			<td>
+				<input class="form-control s1" type="text" name="giasp" value="<?php if(isset($_POST['giasp'])) echo $_POST['giasp']; ?>" />
+				<p class="mota">
+					VD: giá là 1 triệu thì ghi: 1.000.000 hoặc<br /> 1 000 000 hoặc 1000000 hoặc 1-000-000. <br />Nếu <b>không có giá</b> thì điền 0
+				</p>
+			</td>
+			<td valign="top">
+				<b>Loại Sản Phẩm: </b><span class="red">*</span>
+			</td>
+			<td valign="top">
+				<select name="loaisp" class="form-control">
+					<?php foreach ($this->lsp as $item) {
+						echo '<option value="'.$item["MALSP"].'" '.(($item['LSP_CHA']==0)?"style='background-color:#ccc'":"").'>'.$item["TEN_LOAI"].'</option>';
+					} ?>
+				</select>
+			</td>
+
+		</tr>
+		<tr class="bordertop">
+			<td>
+				<b>Hình Ảnh: </b><span class="red">*</span>
+			</td>
+			<td>
+				<div class="asimg imguploadhover" onclick="$(this).parent().find('input.none').click();">
+                        <img src="<?php echo $this->baseUrl() ?>/public/admin/Images/uploadimg.png" />
+                    </div>
+                    <input type="file" name="hinhanh" class="none"  onchange="readURL(this);" />
+			</td>
+			<td>
+				<b>Tóm tắt sản phẩm: </b>
+			</td>
+			<td>
+				<textarea name="tomtat" class="form-control" rows="5"><?php if(isset($_POST['tomtat'])) echo $_POST['tomtat']; ?></textarea>
+				<p class="mota">Mô tả ngắn gọn về sản phẩm hoặc thông số sản phẩm.</p> 
+			</td>
+		</tr>
+		<tr class="bordertop">
+			<td>
+				<b>Hình Ảnh Khác: </b>
+			</td>
+			<td colspan="3">
+					<div id="hinhanhkhac" class="clearfix">
+						<li>
+							<div class="asimg imguploadhover" onclick="$(this).parent().find('input.none').click();">
+			                        <img src="<?php echo $this->baseUrl() ?>/public/admin/Images/uploadimg.png" />
+			                </div>
+			                    <input type="file" name="hinhanhkhac[]" class="none"  onchange="readURLAll(this);" multiple='multiple' />
+		                 </li>
+	                 </div>
+                     <br />
+	                    <p class="mota">
+	                    	Cách hình ảnh khác của sản phẩm. 
+	                    	Tối đa 15 ảnh.
+	                    </p>
+			</td>
+		</tr>
+		<tr class="bordertop">
+			<td valign="top">
+				<br /><b>Linh kiện đi kèm: </b>
+			</td>
+			<td>
+				<textarea class="form-control s1" name="linhkien" rows="3"><?php if(isset($_POST['linhkien'])) echo $_POST['linhkien']; ?></textarea>
+				<p class="mota">
+					Linh kiện đi kèm khi mua sản phẩm. VD sạc, pin, sách hướng dẫn,...
+				</p>
+			</td>
+			<td valign="top">
+				<br /><b>Từ khóa: </b>
+			</td>
+			<td>
+				<textarea class="form-control" name="tukhoa" rows="3"><?php if(isset($_POST['tukhoa'])) echo $_POST['tukhoa']; ?></textarea>
+				<p class="mota">
+					Từ khóa để tìm kiếm sản phẩm, hoặc để tìm kiếm tin tức.<br /> Mỗi từ khóa cách nhau bởi dấu ','
+				</p>
+			</td>
+		</tr>
+		<tr class="bordertop">
+			<td>
+				<b>Icon: </b>
+			</td>
+			<td>
+				<div class="form-group">
+					<select name="trangthai" class="form-control s1">
+						<option value="moi">Mới</option>
+						<option value="km">Khuyến mãi</option>
+						<option value="hot">Hot</option>
+						<option value="">Không Có</option>
+					</select>
+				</div>
+			</td>
+			<td>
+				<b>Trạng Thái: </b>
+			</td>
+			<td>
+				<select name="tentrangthai" class="form-control">
+					<option value="0">Còn hàng</option>
+					<option value="1">Sắp hết hàng</option>
+					<option value="2">Sắp ra mắt</option>
+					<option value="3">Đang sả hàng</option>
+					<option value="4">Hết hàng</option>
+					<option value="5">Không kinh doanh</option>
+					<option value="6">Bán chạy</option>
+				</select>
+			</td>
+		</tr>
+		<tr class="bordertop">
+			<td>
+				<b>Khuyến Mãi: </b>
+			</td>
+			<td colspan="3">
+				<div id="bekm">
+					<textarea id="khuyenmai" style="width:100%;height:200px" name="khuyenmai"><?php if(isset($_POST['khuyenmai'])) echo $_POST['khuyenmai']; ?></textarea>
+				</div>
+			</td>
+			
+		</tr>
+		<tr class="bordertop">
+			<td>
+				<b>Bài Viết: </b>
+			</td>
+			<td colspan="3">
+				<div id="bebv">
+					<textarea id="baiviet" style="width:100%;height:200px" name="baiviet"><?php if(isset($_POST['baiviet'])) echo $_POST['baiviet']; ?></textarea>
+				</div>
+			</td>
+		</tr>
+		<tr class="bordertop">
+			<td valign="top">
+				<b>Bảo Hành: </b><span class="red">*</span>
+			</td>
+			<td>
+				<input type="text" class="form-control s1" value="<?php if(isset($_POST['baohanh'])) echo $_POST['baohanh']; else echo '12' ?>" name="baohanh" />
+				<p class="mota">
+					Thời gian bảo hành của sản phẩm. <br />VD: <b>12 tháng</b> thì điền là 12
+				</p>
+			</td>
+			<td valign="top">
+				<b>Số Lượng: </b><span class="red">*</span>
+			</td>
+			<td>
+				<input type="text" class="form-control" value="<?php if(isset($_POST['soluong'])) echo $_POST['soluong']; ?>" name="soluong" />
+				<p class="mota">
+					Số lượng hiện tại của sản phẩm.<br /> Nếu chưa có sản phẩm thì điền là 0
+				</p>
+			</td>
+		</tr>
+		<tr class="bordertop">
+			<td>
+				<b>Hiển Thị: </b>
+			</td>
+			<td>
+				<input type="checkbox" checked="true" name="hienthi" />
+			</td>
+			<td>
+				<b>Hiển Thị Trang Chủ: </b>
+			</td>
+			<td>
+				<input type="checkbox" checked="true" name="hienthitrangchu" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+
+			</td>
+			<td colspan="3">
+				<input type="submit" class="btn btn-success btn-sm" value="Thêm mới" />
+				<input type="reset" class="btn btn-default btn-sm" value="Nhập lại" />
+			</td>
+		</tr>
+
+	</table>
+</div>
+	<input type="hidden" value="" name="removefile" id="removefile"/>
+</form>
+<script type="text/javascript"> 
+	$(function() {	 
+		 bkLib.onDomLoaded(function () {
+        	new nicEditor({ fullPanel: true }).panelInstance("baiviet");
+        	new nicEditor({ fullPanel: true }).panelInstance("khuyenmai");
+    	});
+
+		var lsp="<?php if(isset($_POST['loaisp'])) echo $_POST['loaisp']; else echo 0 ?>";
+
+		if(lsp!="0"){
+			$("select[name='loaisp']").val(lsp);
+		}
+
+		var trangthai="<?php if(isset($_POST['trangthai'])) echo $_POST['trangthai']; else echo 0 ?>";
+
+		if(trangthai!="0"){
+			$("select[name='trangthai']").val(trangthai);
+		}
+
+		var tentrangthai="<?php if(isset($_POST['tentrangthai'])) echo $_POST['tentrangthai']; else echo 0 ?>";
+
+		if(tentrangthai!="0"){
+			$("select[name='tentrangthai']").val(tentrangthai);
+		}
+	}); 
+</script> 

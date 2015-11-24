@@ -1,0 +1,316 @@
+ <script type="text/javascript" src="<?php echo $this->baseUrl() ?>/public/Scripts/dialog.js"></script>
+ <link href="<?php echo $this->baseUrl() ?>/public/Contents/dialog.css" rel="stylesheet" />
+<script type="text/javascript">
+	$(".breadcrumb").html("<li><i class='fa fa-dashboard'></i> <a href='"+base_url+"/admin'>Trang Chủ</a></li> <li class='active'><i class='fa fa-asterisk'></i> Loại Sản Phẩm</li>");
+	$("h1.page-header").text("Loại Sản Phẩm");
+	$(function(){
+		$("#qlsanpham").parent().addClass("active").find("a").click();
+		$("#qlsanpham").find("li:eq(3)").addClass("active");
+	});
+	var arrcheck=[];
+	var dialogxoa=null;
+	$(function(){
+		$("#selectall").change(function () {
+            var thp=this;
+            $(".checkboxitem").each(function(){
+            	if($(this).parent().parent().is(":visible"))
+            	$(this).prop('checked', thp.checked);
+            });
+         });
+		$("input:checkbox.r").change(function(){
+			var th=$(this);
+			var id=th.attr("name")+"_"+th.val();
+			
+			sua(th,id,th.attr("name"),th.val(),th.is(":checked"));
+		});
+
+		$("input:radio").change(function(){
+			var th=$(this);
+			var id=th.attr("name");
+			sua(th,id,id.split("_")[0].replace(/-/g,"_"),id.split("_")[1],(th.val()==1)?true:false);
+		});
+
+		dialogxoa=new dialog($("#dialog"),{
+			"width":500,
+			"height":240
+		});
+		dialogxoa.init();
+	});
+
+	function sua(th,id,name,idd,check){
+		if(arrcheck[id]==null)
+				arrcheck[id]=th.is(":checked");
+
+			setTimeout(function(){
+				if(arrcheck[id]==th.is(":checked")){
+					LoadJson(base_url+"/ajax/suahienthilsp",{"loai":name,"id":idd,"check":check},function(result){
+						if(result=="-1"){
+							alert("Có lỗi");
+							th.prop('checked',!th.is(":checked"));
+						}
+					});
+				}
+				delete arrcheck[id];
+			},1000);
+	}
+
+	function rutGon(cl){
+		var obj=$('.'+cl);
+
+		if(obj.size()>2){
+			obj.hide();
+			obj.eq(0).show();
+			obj.eq(1).show();
+			$("<div class='morechild'><span>Xem thêm "+(obj.size()-2)+" hãng..</span></div>").appendTo(obj.eq(1).find("td:eq(3)"));
+			obj.eq(1).find(".morechild").click(function(){
+				obj.fadeIn(500);
+				$(this).hide();
+			});
+		}
+	}
+
+	function dqXoa(list,index,length){
+		if(index<length){
+			var lspname=$(list[index]).parent().parent().find("td:eq(3)").text();
+			if(confirm("bạn có chắc muốn xóa loại sản phẩm "+lspname+"?")){
+				LoadJson(base_url+"/ajax/xoalsp",{"id":$(list[index]).val()},function(kq){
+					switch(kq){
+						case 0:
+							alert("error post");
+							break;
+						case 1:
+							alert("xóa thành công lsp "+lspname);
+							LoadJson(base_url+"/ajax/insertls",{'message':'Xóa loại sản phẩm '+lspname.trim()},function(){
+
+							});
+							$(list[index]).parent().parent().fadeOut('slow',function(){
+									$(list[index]).parent().parent().remove();
+							});
+							break;
+						case 2:
+							alert("Xóa thất bại. Loại sp "+lspname+" đã có sản phẩm hoặc đã có lsp con.");
+							break;
+						case 3:
+							alert("xóa thất bại. Loại sp "+lspname+" đã có các hãng sản xuất");
+					}
+					dqXoa(list,index+1,length);
+				});
+			}else
+				dqXoa(list,index+1,length);
+		}
+	}
+
+	function xoa(){
+		var list=$(".checkboxitem:checked");
+		if(list.size()==0){
+			alert("vui lòng chọn ít nhất 1 loại sản phẩm để xóa.");
+			return false;
+		}
+		dialogxoa.show();
+		
+		return false;
+	}
+
+	function xoalsps(th){
+		LoadJson(base_url+"/ajax/kiemtraxoa",{"mk2":th.find(".mk2").val(),"ma":th.find(".ma").val()},function(result){
+			switch(result){
+				case 0:
+					$("#dialog .ms").html('Mật khẩu cấp 2 sai.').css("color","red");
+					break;
+				case 2:
+					$("#dialog .ms").html('Mã bảo vệ sai').css("color","red");
+					$("#dialog img").attr("src",base_url+"/captcha");
+					break;
+				case 1:
+				
+                    th.find(".mk2").val("");
+                    th.find(".ma").val("");
+					var list=$(".checkboxitem:checked");
+					dialogxoa.hide();
+					dqXoa(list,0,list.size());
+					break;
+			}
+		});
+		
+		return false;
+	}
+
+</script>
+
+<div id="dialog">
+	<div class='header'>
+		XÁC NHẬN XÓA LOẠI SẢN PHẨM
+	</div>
+	<div class='ct'>
+		<p>Vui lòng nhập mật khẩu cấp 2 để tiếp tục xóa.</p>
+		<div class='ms' style="margin-top:-10px;text-align:center"></div>
+			<br />
+		<form action="" method="post" role="form" onsubmit="return xoalsps($(this));">
+			<div class='row'>
+				<div class='col-lg-4' style="margin-top:7px"><b>Mật Khẩu Cấp 2:</b> </div>
+				<div class='col-lg-6'>
+					<input type="password" class="form-control mk2" />
+				</div>
+			</div>
+			<br />
+			<div class='row'>
+				<div class='col-lg-4' style="margin-top:7px"><b>Mã Xác Nhận:</b> </div>
+				<div class='col-lg-6'>
+					<input size="18" type="text" class="ma" />
+					<img src="<?php echo $this->baseUrl() ?>/captcha" style="padding-left:7px" />
+				</div>
+			</div>
+			<br />
+			<div class='row'>
+				<div class='col-lg-4' style="margin-top:7px"></div>
+				<div class='col-lg-6'>
+					<input type="submit" class="btn btn-success btn-sm" value="Tiếp tục xóa" />
+					<input type="button" onclick="dialogxoa.hide();" class="btn btn-default btn-sm" value="Hủy bỏ" />
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<?php if($this->message!=null){ ?>
+	<div class="message">
+		<?php echo $this->message ?>
+	</div>
+<?php } ?>
+	<?php if($this->quyen["THEMLSP"]==1 || $this->quyen["XOALSP"]==1){ ?>
+	<?php if($this->quyen["THEMLSP"]==1){ ?>
+	<a href="<?php echo $this->baseUrl() ?>/admin/themloaisp" class="btn btn-default btn-sm"><i class="fa fa-plus"></i> Thêm loại sản phẩm cha</a>
+	<?php } ?>
+	<?php if($this->quyen["XOALSP"]==1){ ?>
+	<a href="#" onclick="return xoa();" class="btn btn-default btn-sm"><i class="fa fa-remove" style="margin-left:-3px"></i> Xóa</a>
+	<?php } ?>
+	<br /><br />
+	<?php } ?>
+<div class="clearfix">
+	<div class="l">
+		<?php echo $this->partial('admin/phan_trang.phtml',array('arr_page'=>$this->arr_page)); ?>
+	</div>
+	<div class="r">
+		<form method="get" action="">
+			<div class="frmsearch clearfix">
+				<input type="text" class="textboxsearch" placeholder="Nhập tên loại sản phẩm..." value="<?php if(isset($_GET['q'])) echo $_GET['q']; ?>" name="q" />
+				<input type="submit" class="buttonsearch" value="" />
+			</div>
+		</form>
+	</div>
+</div>
+<div class="table-responsive">
+	<table class="table table-bordered table-hover table-vm">
+		<tr>
+			<?php if($this->quyen["XOALSP"]==1){ ?>
+			<th><input type="checkbox" id="selectall" /></th>
+			<?php } ?>
+			<?php if($this->quyen["SUALSP"]==1){ ?>
+			<th>SX Menu</th>
+			<th>SX Banner</th>
+			<?php } ?>
+			<th>Tên LSP</th>
+			<th>Icon Nhỏ</th>
+			<th>Icon Lớn</th>
+			<th>Hiển Thị</th>
+			<th>Khác</th>
+			<th></th>
+		</tr>
+		<?php
+			foreach ($this->data as $item) {
+				echo '<tr>';
+				if($this->quyen["XOALSP"]==1){
+				echo '<td align="center"><input type="checkbox" class="checkboxitem" value="'.$item['MALSP'].'" name="arrxoa[]" /></td>';
+				}
+				if($this->quyen["SUALSP"]==1){
+				echo '<td align="center">';
+				if($item["SAP_XEP_TC"]>1){
+					echo '<a class="len" href="'.$this->baseUrl().'/admin/sort?id='.$item['MALSP'].'&redirect=loaisp&a=1&l=up" title="Chuyển lên"><img src="'.$this->baseUrl().'/public/admin/Images/len.png" /></a><br />';
+				}
+				if($item["SAP_XEP_TC"]!=$this->max)
+				echo '<a  title="Chuyển xuống" class="xuong" href="'.$this->baseUrl().'/admin/sort?id='.$item['MALSP'].'&redirect=loaisp&a=1&l=down"><img src="'.$this->baseUrl().'/public/admin/Images/xuong.png" /></a>';
+				echo "</td>";
+
+				echo '<td align="center">';
+				if($item["SAP_XEP_BANNER"]>1){
+					echo '<a class="len" href="'.$this->baseUrl().'/admin/sort?id='.$item['MALSP'].'&redirect=loaisp&a=2&l=up" title="Chuyển lên"><img src="'.$this->baseUrl().'/public/admin/Images/len.png" /></a><br />';
+				}
+				if($item["SAP_XEP_BANNER"]!=$this->maxbanner)
+				echo '<a  title="Chuyển xuống" class="xuong" href="'.$this->baseUrl().'/admin/sort?id='.$item['MALSP'].'&redirect=loaisp&a=2&l=down"><img src="'.$this->baseUrl().'/public/admin/Images/xuong.png" /></a>';
+				echo "</td>";
+				}
+				echo '<td><img src="'.$this->baseUrl().'/public/admin/Images/parent.png" /> '.$item['TEN_LOAI'].'</td>';
+				echo '<td align="center"><img src="'.$this->baseUrl().'/uploads/images/loaisp/'.$item["ICON_NHO"].'" /> </td>';
+				echo '<td align="center" bgcolor="#eee"><img src="'.$this->baseUrl().'/uploads/images/loaisp/'.$item["ICON_LON"].'" /> </td>';
+				echo '<td width="170"><label class="w150">Hiển Thị Chung: <input '.(($item["HIEN_THI"])?"checked='checked'":"").' class="r" value="'.$item["MALSP"].'" type="checkbox" name="hien_thi" /></label><br />
+					<label class="w150">Hiển Thị Menu: <input '.(($item["HIEN_THI_MENU"])?"checked='checked'":"").' class="r" type="checkbox" name="hien_thi_menu" value="'.$item["MALSP"].'" /></label><br />
+					<label class="w150">Hiển Thị Trang Chủ: <input '.(($item["HIEN_THI_TC"])?"checked='checked'":"").' class="r" type="checkbox" name="hien_thi_tc" value="'.$item["MALSP"].'" /></label><br />
+					<label class="w150">Hiển Thị Banner: <input class="r" '.(($item["HIEN_THI_BANNER"])?"checked='checked'":"").'  type="checkbox" name="hien_thi_banner" value="'.$item["MALSP"].'" /></label></td>';
+				echo '<td width="270"><span class="w250">Kiểu Banner: <label class="r">Nhỏ <input '.((!$item["LOAI_BANNER"])?"checked='checked'":"").' value="0" type="radio" name="loai-banner_'.$item["MALSP"].'" /></label><label class="r">Lớn <input '.(($item["LOAI_BANNER"])?"checked='checked'":"").' type="radio" value="1"  name="loai-banner_'.$item["MALSP"].'" /></label></span><br />
+					<span class="w250">Thông số sản phẩm: <label class="r">Không <input '.((!$item["THONG_SO"])?"checked='checked'":"").' value="0" type="radio" name="thong-so_'.$item["MALSP"].'" /></label><label class="r">Có <input '.(($item["THONG_SO"])?"checked='checked'":"").' value="1" type="radio" name="thong-so_'.$item["MALSP"].'" /></label></span><br />
+					<span class="w250">Video sản phẩm: <label class="r">Không <input '.((!$item["VIDEO"])?"checked='checked'":"").' type="radio" value="0" name="video_'.$item["MALSP"].'" /></label><label class="r">Có <input '.(($item["VIDEO"])?"checked='checked'":"").' value="1" type="radio" name="video_'.$item["MALSP"].'" /></label></span><br />
+					<span class="w250">Tin tức: <label class="r">Không <input '.((!$item["TIN_TUC"])?"checked='checked'":"").' type="radio" value="0" name="tin-tuc_'.$item["MALSP"].'" /></label><label class="r">Có <input '.(($item["TIN_TUC"])?"checked='checked'":"").' type="radio" name="tin-tuc_'.$item["MALSP"].'" value="1" /></label> </span></td>';
+					echo '<td align="center">';
+					if($this->quyen['SUALSP']==1){
+				echo '<a title="Sửa" href="'.$this->baseUrl().'/admin/sualsp?id='.$item["MALSP"].'"><img src="'.$this->baseUrl().'/public/admin/Images/edit.png" /></a> ';
+					}
+					if($this->quyen['THEMLSP']==1){
+				echo '<a title="Thêm LSP con" href="'.$this->baseUrl().'/admin/themhangsp?id='.$item["MALSP"].'"><img src="'.$this->baseUrl().'/public/admin/Images/add.png" /></a>';
+				}
+				echo '</td>';
+				echo '</tr>';
+				foreach ($this->datachild as $itemc) {
+					if($itemc['LSP_CHA']==$item['MALSP']){
+						echo '<tr class="childer_'.$item["MALSP"].'">';
+						if($this->quyen["XOALSP"]==1){
+						echo '<td align="center"><input type="checkbox" class="checkboxitem" value="'.$itemc['MALSP'].'" name="arrxoa[]" /></td>';
+						}
+						if($this->quyen["SUALSP"]==1){
+						echo '<td></td>';
+
+						echo '<td align="center">';
+						if($itemc["SAP_XEP_BANNER"]>1){
+							echo '<a class="len" href="'.$this->baseUrl().'/admin/sort?id='.$itemc['MALSP'].'&redirect=loaisp&a=2&l=up" title="Chuyển lên"><img src="'.$this->baseUrl().'/public/admin/Images/len.png" /></a><br />';
+						}
+						if($itemc["SAP_XEP_BANNER"]!=$this->maxbanner)
+						echo '<a  title="Chuyển xuống" class="xuong" href="'.$this->baseUrl().'/admin/sort?id='.$itemc['MALSP'].'&redirect=loaisp&a=2&l=down"><img src="'.$this->baseUrl().'/public/admin/Images/xuong.png" /></a>';
+						echo "</td>";
+						}
+
+						echo '<td><img src="'.$this->baseUrl().'/public/admin/Images/indent_middle.gif" /><img src="'.$this->baseUrl().'/public/admin/Images/child.png" />  '.$itemc['TEN_LOAI'].'</td>';
+						if($itemc["ICON_NHO"]!="")
+						echo '<td align="center"><img src="'.$this->baseUrl().'/uploads/images/loaisp/'.$itemc["ICON_NHO"].'" /> </td>';
+						else echo "<td></td>";
+						if($itemc["ICON_LON"]!="")
+						echo '<td align="center" bgcolor="#eee"><img src="'.$this->baseUrl().'/uploads/images/loaisp/'.$itemc["ICON_LON"].'" /> </td>';
+						else echo "<td></td>";
+						echo '<td><label class="w150">Hiển Thị Chung: <input value="'.$itemc["MALSP"].'" '.(($itemc["HIEN_THI"])?"checked='checked'":"").' class="r" type="checkbox" name="hien_thi" /></label><br />
+					<label class="w150">Hiển Thị Menu: <input value="'.$itemc["MALSP"].'" class="r" '.(($itemc["HIEN_THI_MENU"])?"checked='checked'":"").' type="checkbox" name="hien_thi_menu" /></label><br />
+					<label class="w150">Hiển Thị Trang Chủ: <input value="'.$itemc["MALSP"].'" class="r" '.(($itemc["HIEN_THI_TC"])?"checked='checked'":"").' type="checkbox" name="hien_thi_tc" /></label><br />
+					<label class="w150">Hiển Thị Banner: <input value="'.$itemc["MALSP"].'" class="r" '.(($itemc["HIEN_THI_BANNER"])?"checked='checked'":"").' type="checkbox" name="hien_thi_banner" /></label></td>';
+				echo '<td><span class="w250">Kiểu Banner: <label class="r">Nhỏ <input '.((!$itemc["LOAI_BANNER"])?"checked='checked'":"").' value="0" type="radio" name="loai-banner_'.$itemc["MALSP"].'" /></label><label class="r">Lớn <input type="radio" '.(($itemc["LOAI_BANNER"])?"checked='checked'":"").' value="1" name="loai-banner_'.$itemc["MALSP"].'" /></label></span></td>';
+				if($this->quyen['SUALSP']==1){
+						echo '<td align="center"><a title="Sửa" href="'.$this->baseUrl().'/admin/sualsp?id='.$itemc["MALSP"].'"><img src="'.$this->baseUrl().'/public/admin/Images/edit.png" /></a></td>';
+					}
+						echo '</tr>';
+					}
+				}
+
+				echo '<script type="text/javascript">rutGon("childer_'.$item["MALSP"].'")</script>';
+				
+			}
+		?>
+	</table>
+
+</div>
+<?php echo $this->partial('admin/phan_trang.phtml',array('arr_page'=>$this->arr_page)); ?>
+
+<?php if($this->quyen["SUALSP"]==0){ ?>
+<script type="text/javascript">
+	$(function(){
+		$("input:checkbox.r").attr("disabled","disabled");
+
+		$("input:radio").attr("disabled","disabled");
+	});
+</script>
+	<?php } ?>

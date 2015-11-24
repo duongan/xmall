@@ -1,0 +1,46 @@
+<script type="text/javascript">
+	$(".breadcrumb").html("<li><i class='fa fa-dashboard'></i> <a href='"+base_url+"/admin'>Trang Chủ</a></li> <li><i class='fa fa-life-saver'></i><a href='"+base_url+"/admin/website'> Website</a></li> <li class='active'><i class='fa fa-refresh'></i> Sao Lưu Khôi Phục</li>");
+	$("h1.page-header").text("Sao Lưu Khôi Phục Dữ Liệu");
+$(function(){
+		
+	$("#qlwebsite").parent().addClass("active").find("a").click();
+	$("#qlwebsite").find("li:eq(7)").addClass("active");
+});
+</script>
+
+<?php $this->headTitle("Sao Lưu Khôi Phục Dữ Liệu - Admin Control Panel"); ?>
+
+<div class="row">
+	<div class="col-lg-6 text-center" style="padding:10px;vertical-align: middle;">
+		
+			<form method="post" action="" onsubmit="return confirm('Bạn có chắc muốn sao lưu dữ liệu hiện tại?');">
+			<div class="btn btn-default" onclick="$(this).parent().submit();">
+				<i class="fa fa-fw fa-save"></i> Sao Lưu Dữ Liệu
+				</div>
+				<input type="hidden" name="l" value="1" />
+			</form>
+		
+	</div>
+	<div class="col-lg-6" style="border-left:1px solid #ddd;">
+		<table class="table table-bordered table-hover table-vm">
+			<tr>
+				<th>STT</th>
+				<th>Thời Gian Sao Lưu</th>
+				<th></th>
+			</tr>
+			<tr>
+				<td align="center">
+					1
+				</td>
+				<td>
+					10/02/1994
+				</td>
+				<td align="center">
+					<form method="post" action="" onsubmit="return kiemtraxoanhom(this);">
+						<input type="submit" value="Khôi Phục" style="background-color:transparent;cursor:pointer;border:0;color:blue" />
+					</form>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>

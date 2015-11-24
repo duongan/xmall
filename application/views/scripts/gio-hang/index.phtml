@@ -1,0 +1,552 @@
+<script type="text/javascript" src="<?php echo $this->baseUrl() ?>/public/Scripts/validate.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#frmdathang,#frmnganluong").kiemtra([
+			{
+				'name':'tennm',
+				'string':true,
+				'message':'Họ Tên Không Hợp Lệ'
+			},
+			{
+				'name':'diachinm',
+				'trong':true,
+				'message':'Địa Chỉ Không Được Bỏ Trống'
+			},
+			{
+				'name':'dienthoainm',
+				'sodt':true				
+			},
+			{
+				'name':'emailnm',
+				'email':true
+			},
+			{
+				'name':'tennn',
+				'string':true
+			},
+			{
+				'name':'diachinn',
+				'trong':true
+			}
+			,
+			{
+				'name':'captcha',
+				'trong':true
+			}
+		]);
+	});
+</script>
+<section class="layout_center">
+	<div id="iconeventleft"></div>
+	<div id="iconeventright"></div>
+
+	<nav id="breadcrumb-global">
+		<ul class="clearfix">
+			<li><a href="/">Trang chủ</a><span style="margin-left:5px;">»</span></li><li><h1>Giỏ hàng</h1></li>
+		</ul>
+	</nav>
+	<div class="clearleft"></div>
+	
+    <?php if($this->cart!=null && count($this->cart)>0){ 
+        if($this->success==null){
+    ?>
+    <div style="position:relative">	
+<div class="left" style="width:39%;margin-top:10px">
+    <?php if($this->message!=null){ ?>
+    <div class="message">
+        <?php echo $this->message ?>
+    </div>
+<?php } ?>
+   <!---->
+   <div id="dimb"></div>
+<form method="post" action="" id="frmdathang">
+        <div class="box boxborder boxgiohang boxgh2 boxktgh22">
+            <div class="headerbox">
+               1. ĐỊA CHỈ THANH TOÁN
+            </div>
+            <div class="boxcontent">
+          
+                    <table border="0" cellpadding="10" width="100%">
+                        <tbody><tr>
+                            <td width="30%">Họ Và Tên: <span class="red">(*)</span></td>
+                            <td>
+                                <input type="text" name="tennm" class="input <?php if(isset($this->info) && !isset($this->nodis)) echo 'disabled'; ?>" value="<?php if(isset($this->info)) echo $this->info["TENKH"]; else{if(isset($_POST['tennm'])) echo $_POST['tennm'];} ?>" <?php if(isset($this->info) && !isset($this->nodis)) echo 'disabled="disabled"'; ?>>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Địa Chỉ: <span class="red">(*)</span></td>
+                            <td>
+                                <textarea class="input <?php if(isset($this->info) && !isset($this->nodis)) echo 'disabled'; ?>" rows="3" name="diachinm" <?php if(isset($this->info) && !isset($this->nodis)) echo 'disabled="disabled"'; ?>><?php if(isset($this->info)) echo $this->info["DIACHI"]; else{if(isset($_POST['diachinm'])) echo $_POST['diachinm'];} ?></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Điện Thoại: <span class="red">(*)</span></td>
+                            <td>
+                                <input type="tel" name="dienthoainm" <?php if(isset($this->info) && !isset($this->nodis)) echo 'disabled="disabled"'; ?> class="input <?php if(isset($this->info) && !isset($this->nodis)) echo 'disabled'; ?>" value="<?php if(isset($this->info)) echo $this->info["DIENTHOAI"]; else{if(isset($_POST['dienthoainm'])) echo $_POST['dienthoainm'];} ?>">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Email: <span class="red">(*)</span></td>
+                            <td>
+                                <input type="email" <?php if(isset($this->info) && !isset($this->nodis)) echo 'disabled="disabled"'; ?> name="emailnm" class="input <?php if(isset($this->info) && !isset($this->nodis)) echo 'disabled'; ?>" value="<?php if(isset($this->info)) echo $this->info["EMAIL"]; else{if(isset($_POST['emailnm'])) echo $_POST['emailnm'];} ?>">
+                            </td>
+                        </tr>
+                    </tbody></table>
+            </div>
+        </div>
+        <div class="box boxborder boxgiohang boxgh2">
+        <div class="headerbox">
+           2. ĐỊA CHỈ NHẬN HÀNG
+        </div>
+        <div class="boxcontent">
+                <table border="0" cellpadding="10" width="100%">
+                    <tbody><tr>
+                        <td colspan="2" align="center">
+                            <label><input type="radio" name="a" value="1" <?php  if($this->info==null) echo 'checked="checked"'; else if(isset($this->info['a']) && $this->info['a']==1) echo 'checked="checked"'; else echo 'checked="checked"' ?> id="a1"> Giống địa chỉ thanh toán</label>
+                            <label><input type="radio" name="a" <?php  if($this->info!=null && isset($this->info['a']) && $this->info['a']==2) echo 'checked="checked"'; ?>  value="2" id="a2"> Khác địa chỉ thanh toán</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <hr>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="30%">Họ Và Tên: <span class="red">(*)</span></td>
+                        <td>
+                            <input type="text" name="tennn" class="input disabled zzoo" value="<?php if(isset($this->info)) echo $this->info["TENNN"]; else{if(isset($_POST['tennn'])) echo $_POST['tennn'];} ?>" disabled="disabled">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Địa Chỉ: <span class="red">(*)</span></td>
+                        <td>
+                            <textarea class="input disabled zzoo" rows="3" name="diachinn" disabled="disabled"><?php if(isset($this->info)) echo $this->info["DIACHINN"]; else{if(isset($_POST['diachinn'])) echo $_POST['diachinn'];} ?></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Điện Thoại: </td>
+                        <td>
+                            <input type="tel" name="dienthoainn" class="input disabled zzoo" value="<?php if(isset($this->info)) echo $this->info["DIENTHOAINN"]; else{if(isset($_POST['dienthoainn'])) echo $_POST['dienthoainn'];} ?>" disabled="disabled">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Email: </td>
+                        <td>
+                            <input type="email" name="emailnn" class="input disabled zzoo" value="" disabled="disabled">
+                        </td>
+                    </tr>
+                </tbody></table>
+        </div>
+    </div>
+
+    <div style="width:100%" class="boxinfo1">
+        <div class="box boxborder boxgiohang boxgh2 left" style="width:49%">
+            <div class="headerbox">
+                3. HÌNH THỨC GIAO HÀNG
+            </div>
+            <div class="boxcontent">
+                    <p><label><input type="radio" name="htgh" value="0" <?php  if($this->info==null) echo 'checked="checked"'; else if(isset($this->info['GHTN']) && !$this->info['GHTN']) echo 'checked="checked"'; else echo 'checked="checked"' ?> /> Tại Cửa Hàng (Tại vienthonga)</label></p>
+                    <p><label><input type="radio" name="htgh" value="1" <?php  if($this->info!=null && isset($this->info['GHTN']) && $this->info['GHTN']) echo 'checked="checked"'; ?> /> Giao Hàng Tận Nơi (Miễn Phí Toàn Quốc)</label></p>
+            </div>
+        </div>
+        <div class="box boxborder boxgiohang boxgh2 left" style="width:49%;margin-left:1%">
+            <div class="headerbox">
+               4. HÌNH THỨC THANH TOÁN
+            </div>
+            <div class="boxcontent">
+                    <p><label><input type="radio" name="chttt" value="0" <?php  if($this->info==null) echo 'checked="checked"'; else if(isset($this->info['TTTT']) && !$this->info['TTTT']) echo 'checked="checked"'; else echo 'checked="checked"' ?> /> Tiền Mặt (Trả tiền khi nhận hàng)</label></p>
+                    <p><label><input type="radio" name="chttt" <?php  if($this->info!=null && isset($this->info['TTTT']) && $this->info['TTTT']) echo 'checked="checked"'; ?> value="1" /> Thanh Toán Trực Tuyến (Qua <a href="http://nganluong.vn">nganluong.vn</a>)</label></p>
+            </div>
+        </div>
+    </div>
+    <div id="chieudai"></div>
+
+    <div class="box boxborder boxgiohang boxgh2 boxinfo">
+        <div class="headerbox">
+           5. XÁC NHẬN THÔNG TIN
+        </div>
+        <div class="boxcontent">
+                 <table border="0" cellpadding="10" width="100%">
+                    <tbody><tr>
+                       <td width="30%">  Ghi Chú:</td>
+                       <td> <textarea class="input" name="ghichu" rows="5"><?php if(isset($_POST['ghichu'])) echo $_POST['ghichu']; else if($this->info!=null && isset($this->info['GHICHU'])) echo $this->info['GHICHU'] ?></textarea></td>
+                    </tr>
+                    <tr>
+                       <td width="30%">  Mã Xác Nhận:</td>
+                       <td>
+                            <img class="left" style="display:block;margin-right:5px" src="<?php echo $this->baseUrl() ?>/captcha" />
+                            <input type="text" name="captcha" class="left" style="display:block;padding:1px 3px" />
+                            <div class="clearleft"></div>
+                       </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                          <input type="button" value="Đặt Hàng" id="dathang" class="button s1" >
+                          <input type="reset" value="Nhập Lại" class="button s2" >
+                        </td>
+                    </tr>
+
+                    </tbody></table>
+             
+        </div>
+    </div>
+    <input type="hidden" id="httt" name="httt" value="<?php if($this->info!=null && isset($this->info['TTTT']) && $this->info['TTTT']) echo "1"; else echo "0"; ?>" />
+    </form>
+<!---->
+	
+
+</div>
+<div class="right" style="width:60%;margin-left:1%;">
+    <form method="post" action="" onsubmit="return confirm('Bạn có chắc?');">
+    <table class="table">
+        <tbody><tr>
+            <th>
+                <input type="checkbox" id="selectall">
+            </th>
+            <th>
+                Tên SP
+            </th>
+            <th class="stt">
+                Hình Ảnh
+            </th>
+            <th>
+                Số Lượng
+            </th>
+            <th>
+                Đơn Giá
+            </th>
+            <th>
+                Thành Tiền
+            </th>
+        </tr>
+        <?php foreach ($this->cart as $item) { ?>
+        <tr>
+            <td align="center">
+                <input type="checkbox" name="sp[]" class="chon" value="<?php echo $item["MASP"] ?>">
+            </td>
+            <td>
+                <a href="<?php echo $this->baseUrl().'/'.$item["URL"].'_'.$item["MASP"] ?>.html" target="_blank">
+                    <?php echo $item["TENSP"] ?></a>
+            </td>
+            <td align="center" class="stt">
+                <img src="<?php echo $this->baseUrl().'/uploads/images/sp/'.$item["HINHANH"] ?>" alt="<?php echo $item["TENSP"] ?>" width="70" height="60">
+            </td>
+            <td align="center">
+                <input type="number" style="width:50px;text-align:center;" data-id='{"id":<?php echo $item["MASP"] ?>,"max":<?php echo $item["SLCON"] ?>}' value="<?php echo $item["SL"] ?>" class="quantity">
+            </td>
+            <td align="center">
+                <?php echo number_format($item["DG"],0,',','.') ?> VNĐ
+            </td>
+            <td class="tt" align="center">
+                <?php echo number_format($item["TT"],0,',','.') ?> VNĐ
+            </td>
+        </tr>
+        <?php } ?>
+    </tbody></table>
+        <div class="left" >
+            <div class="left" style="margin-left: -3px">
+                <input type="submit" class="button left s2" value="Xóa Sản Phẩm Được Chọn" style="margin-right:5px"  name="remove" />
+        </div>
+        
+            <input type="submit" value="Xóa Giỏ Hàng" class="button s2" name="removeall" />
+            <input type="button" value="Tiếp Tục Mua Hàng" class="button s2" onclick="window.location.href='<?php echo $_SERVER["HTTP_REFERER"] ?>'" />
+     </div>
+     <div class="right" >
+        Tổng Tiền: <strong class="tongtiengh"><?php echo number_format($this->sum,0,',','.') ?> VNĐ</strong>
+     </div>
+     <div class="clear"></div>
+     <input type="hidden" name="re" value="<?php echo $_SERVER["HTTP_REFERER"] ?>" />
+      </form>
+<br /><br />
+<div id="kbdtg"></div>
+</div>
+<div class="clear"></div>
+</div>
+
+<script type="text/javascript">
+        var timerf = null;
+        $(function () {
+            $("#selectall").change(function () {
+                $(".chon").prop('checked', this.checked);
+            });
+            $("#a1").change(function () {
+                $(".zzoo").attr("disabled", "disabled");
+            });
+            $("#a2").change(function () {
+                $(".zzoo").removeAttr("disabled");
+            });
+
+            $(".quantity").change(function () {
+                $(this).addClass("change");
+                ChangeQuantity(this);
+            }).blur(function () {
+
+            }).keyup(function (e) {
+                var key = getKeyEvent(e);
+                if (key >= 48 && key <= 57 || key == 8) {
+                    $(this).addClass("change");
+                    ChangeQuantity(this);
+                    return true;
+                }
+                return false;
+            });
+            $(".boxinfo1").css({"position":"absolute","right":"0px","width":"710px","top":$("#kbdtg").offset().top-190});
+
+            $(".boxinfo").css({"position":"absolute","right":"0px","width":"710px","top":$(".boxinfo1").offset().top-20});
+
+            var slsp=$(".right form .table tr").size();
+            if(slsp>3)
+            {
+                $("#chieudai").css("height",(slsp-3)*80);
+                
+            }
+            if(slsp>=5){
+                $("#chieudai").css("height",(slsp-4)*80);
+                $(".boxinfo1").css({"position":"inherit","width":"463px"});
+                $(".boxinfo").css({"top":"-=150"});
+            }
+            $("#frmdathang input[name='chttt']").change(function(){
+
+                $("#httt").val($(this).val());
+            });
+            $("#dathang").click(function(){
+                if(!$(this).hasClass("autoclick")){
+                    if($("#httt").val()==0){
+                       $("#frmdathang").submit();
+                    }else{
+                        $("#frmdathang").attr("action",info.base_url+"/gio-hang/nl").submit();
+                    }
+                }else{
+                     $("#frmdathang").submit();
+                }
+            });
+
+            var p="<?php if(isset($_GET['autosubmit'])) echo 1; else echo 0; ?>";
+
+            if(p=="1"){
+                $("#dimb").show();
+                setTimeout(function(){
+                    LoadJson(info.base_url+"/ajax/getcaptcha",{},function(result){
+                        $("#frmdathang input[name='captcha']").val(result);
+                        $("#dimb").hide();
+                        
+                        if($("#frmdathang input[name='a']").val()==2){
+                            $("#frmdathang .disabled").removeAttr('disabled');
+                        }else{
+                            $("#frmdathang .boxktgh22 .disabled").removeAttr('disabled');
+                        }
+                        $("#dathang").addClass("autoclick").click();
+                    });
+                 },1000);
+              
+            }
+        });
+        function getKeyEvent(e) {
+            if (window.event) {
+                return window.event.keyCode;
+            }
+            else {
+                return e.which;
+            }
+            return 0;
+        }
+        function ChangeQuantity(th) {
+            clearTimeout(timerf);
+            timerf = setTimeout(function () {
+                if ($(th).hasClass("change")) {
+                    if ($(th).val() != "" && !isNaN($(th).val())) {
+                        var id = jQuery.parseJSON($(th).attr("data-id"));
+                        if(parseInt($(th).val())>0){
+                            LoadJson(info.base_url+"/ajax/changecart", { "id": id.id, "sl": parseInt($(th).val()) }, function (data) {
+                               if(!data.SUCCESS){
+                                     alert("Sản phẩm chỉ còn "+id.max+". Mong bạn thông cảm.");
+                                    $(th).val(id.max);   
+                                }
+                                $(th).parent().parent().find(".tt").html(data.TT+" VNĐ");
+                                   $(".tongtiengh").html(data.SUM+" VNĐ");
+                            });
+                        }else{
+                            $(th).val("1");
+                        }
+                    }
+                }
+                $(th).removeClass("change");
+            }, 1000);
+            
+        }
+    </script>
+
+<?php }
+    else{ ?>
+    <div class="message">
+    Đặt hàng thành công. Trong vòng 1 tiếng sẽ có nhân viên của chúng tôi gọi cho bạn để xác nhận thông tin lần cuối.
+    <?php if($this->taokh!=null){ ?>
+    <div style="text-align:left;margin-left: 180px;">
+    <br />Chúng tôi đã tạo cho bạn 1 tài khoản website, lần sau khi bạn mua hàng vui lòng dùng tài khoản này để tích lũy điểm.<br />
+    Tài Khoản: <b><?php echo $_POST["emailnm"] ?></b><br />
+    Mật Khẩu: <b>123456</b>
+    </div>
+    <?php } ?><br /><br />
+    <input type="button" class="button s1" onclick="window.location.href='<?php echo $this->baseUrl() ?>'" value="Tiếp tục mua hàng" />
+    <input type="button" class="button s2" onclick="window.print();" value="In đơn hàng" />
+    </div>
+    <style type="text/css" media="print">
+        footer,header,#breadcrumb-global,.message{
+            display: none;
+        }
+        .tableprint{
+            width: 90% !important;
+            margin: 5px auto;
+        }
+        @page 
+        {
+            size: auto;   /* auto is the initial value */
+            margin: 3mm 1mm;  /* this affects the margin in the printer settings */
+        }
+        .printshow{
+            display: block;
+        }
+        h1{
+            font-size:20px;
+            font-weight: 600;
+        }
+        h3{
+            font-weight: normal;
+        }
+        h3 i{
+            font-style: italic;
+        }
+        hr{
+            width: 90%;
+            margin: 5px auto;
+        }
+        .ctprint{
+             width: 90%;
+             font-size: 15px;
+             margin:0px auto;
+        }
+        .ctprint b{
+            font-size: 17px;
+        }
+    </style>
+        <div class="printshow" style="text-align:center;position:relative;margin-bottom:15px">
+            <h1>HÓA ĐƠN MUA HÀNG</h1>
+            <h3>Số Hóa Đơn: <?php echo $this->mahd ?></h3>
+            <h3><i>Ngày</i> <?php date_default_timezone_set('Asia/Ho_Chi_Minh');
+
+        $now=getdate(); echo $now["mday"]?> <i>Tháng</i> <?php echo $now["mon"] ?> <i>Năm</i> <?php echo $now["year"] ?></h3>
+        </div>
+        <hr class="printshow" />
+        <div class="ctprint printshow">
+           <p> Đơn Vị Bán Hàng: <b>SIÊU THỊ VIỄN THÔNG A</b></p>
+            <p> Điện Thoại: <b><?php echo $this->layout()->hotline ?></b></p>
+            <p> Địa Chỉ: <b>Biên Hòa, Đồng Nai</b></p>
+        </div>
+        <hr class="printshow" />
+        <div class="ctprint printshow">
+            <p> Họ Tên Khách Hàng: <b><?php echo $this->kh["TENKH"] ?></b></p>
+            <p> Điện Thoại: <b><?php echo $this->kh["DIENTHOAI"] ?></b></p>
+            <p> Địa Chỉ: <b><?php echo $this->kh["DIACHI"] ?></b></p>
+        </div>
+        <table class="table tableprint" style="width:80%">
+        <tbody><tr>
+            <th>STT</th>
+            <th>
+                Tên Sản Phẩm
+            </th>
+            <th class="stt">
+                Hình Ảnh
+            </th>
+            <th>
+                Số Lượng
+            </th>
+            <th>
+                Đơn Giá
+            </th>
+            <th>
+                Thành Tiền
+            </th>
+        </tr>
+        <?php $count=0; foreach ($this->cart as $item) { ?>
+        <tr>
+            <td align="center">
+                <?php echo ++$count; ?>
+            </td>
+            <td>
+                <a href="<?php echo $this->baseUrl().'/'.$item["URL"].'_'.$item["MASP"] ?>.html" target="_blank">
+                    <?php echo $item["TENSP"] ?></a>
+            </td>
+            <td align="center" class="stt">
+                <img src="<?php echo $this->baseUrl().'/uploads/images/sp/'.$item["HINHANH"] ?>" alt="<?php echo $item["TENSP"] ?>" width="70" height="60">
+            </td>
+            <td align="center">
+                <?php echo $item["SL"] ?>
+            </td>
+            <td align="center">
+                <?php echo number_format($item["DG"],0,',','.') ?> VNĐ
+            </td>
+            <td class="tt" align="center">
+                <?php echo number_format($item["TT"],0,',','.') ?> VNĐ
+            </td>
+        </tr>
+        <?php } ?>
+        <tr>
+        <td colspan="4" style="border:0 !important">
+            </td>
+            <td style="border:0 !important">
+                Tổng Tiền:
+            </td>
+            <td align="right" style="border:0 !important"> <b><?php echo number_format($this->sum,0,',','.') ?> VNĐ</b></td>
+        </tr>
+         <tr>
+         <td colspan="4" style="border-right:0 !important;border-left:0 !important">
+            </td>
+            <td style="border-right:0 !important;border-left:0 !important">
+                Tiền Thuế (VAT):
+            </td>
+            <td align="right" style="border-right:0 !important;border-left:0 !important"> <b>0 VNĐ</b></td>
+        </tr>
+        <tr>
+            <td colspan="4" style="border-right:0 !important;border-left:0 !important">
+            </td>
+            <td style="border-right:0 !important;border-left:0 !important">
+                Tổng Tiền Thanh Toán:
+            </td>
+            <td align="right" style="border-right:0 !important;border-left:0 !important"> <b><?php echo number_format($this->sum,0,',','.') ?> VNĐ</b></td>
+        </tr>
+    </tbody></table>
+    <div class="ctprint printshow">
+        <div class="left">
+            <div><b>Người bán hàng</b></div>
+            
+            <div style="text-align:center"><i style="font-style:italic">(Ghi rõ họ tên)</i></div>
+            <p style="text-align:center">
+                Viễn Thông A
+            </p>
+        </div>
+        <div class="right">
+            <div><b>Người mua hàng</b></div>
+            
+            <div style="text-align:center"><i style="font-style:italic">(Ghi rõ họ tên)</i></div>
+            <p style="text-align:center">
+            <?php echo $this->kh["TENKH"] ?>
+            </p>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    
+
+    <?php } ?>
+    <?php
+}else echo "<div class='red' style='padding:20px;text-align:center;font-size:15px'>Không có sản phẩm nào trong giỏ hàng.<br /> Nếu bạn chưa biết cách mua hàng vui lòng <a href='".$this->baseUrl()."/huong-dan.html'>click vào đây</a> để xem hướng dẫn.<br /><br /><button class='button s1' onclick='window.location.href=\"".$_SERVER['HTTP_REFERER']."\"'>Tiếp tục mua hàng</button><button class='button s1' onclick='window.location.href=\"".$this->baseUrl()."\"'>Trở Về Trang Chủ</button></div>" ?>
+</section>
+<?php if(isset($_POST['a']) && $_POST['a']==2){ ?>
+    <script type="text/javascript">
+    $(function(){
+        $(".zzoo").removeAttr("disabled");
+        $("#a2").click();
+    });
+    </script>
+<?php } ?>

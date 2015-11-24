@@ -1,0 +1,86 @@
+.subheader, .subheader-first-item {
+	color: #2d2e2e;
+	background: url('Images/subheader_bg.gif') repeat-x bottom;
+	padding: 10px 0 5px 0;
+	font: bold 108% Arial, Helvetica, sans-serif;
+}
+.contentboxdk{
+	margin-left: 50px;
+}
+.form-field {
+margin: 6px 0;
+vertical-align: middle;
+}
+.form-field, .form-field * {
+text-align: left;
+}
+.form-field {
+clear: both;
+}
+.form-field label.cm-required {
+margin-right: 5px;
+width: 165px;
+}
+.form-field label.cm-required {
+background: url('Images/required_mark.gif') no-repeat right 6px;
+}
+.form-field label {
+float: left;
+clear: left;
+text-align: left;
+width: 170px;
+padding-top: 1px;
+margin-left: 0px;
+}
+.form-field label {
+font: normal 92% Tahoma;
+}
+.form-field input {
+border: 1px solid #cdcdcd;
+}
+.input-text {
+width: 200px;
+}
+.input-text, .input-text-auto, .input-text-large, .input-text-medium, .input-text-short, .input-text-100, .input-textarea, .input-textarea-long, select {
+background-color: #FFFFFF;
+color: #2D2D2D;
+padding: 2px;
+vertical-align: middle;
+}
+button[disabled], html input[disabled] {
+cursor: default;
+}
+.disabled, select.disabled {
+background-color: #E0DFE3;
+}
+.title-extra a, .title-extra a:visited, .title-extra a:hover, .title-extra a:active {
+color: #7C8E8E;
+font: 75% Arial;
+}
+.center {
+text-align: center;
+}
+.buttons-container {
+padding: 5px 0 1px 0;
+}
+.buttons-container input[type="submit"] {
+background-color: #075ccd;
+height: 30px;
+padding: 18px 25px;
+margin-left: 3px;
+margin-top: 3px;
+font-size: 12px;
+text-align: center;
+border: 3px solid #fff;
+text-transform: uppercase;
+cursor: pointer;
+color: #fff;
+line-height: 0px;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px;
+font-weight: bold;
+}
+.form-field input[type='submit']:hover,.form-field input[type='reset']:hover{
+	background-color: #ddd;
+}

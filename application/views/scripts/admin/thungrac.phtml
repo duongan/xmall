@@ -1,0 +1,144 @@
+ <script type="text/javascript" src="<?php echo $this->baseUrl() ?>/public/Scripts/dialog.js"></script>
+ <link href="<?php echo $this->baseUrl() ?>/public/Contents/dialog.css" rel="stylesheet" />
+<script type="text/javascript">
+	$(".breadcrumb").html("<li><i class='fa fa-dashboard'></i> <a href='"+base_url+"/admin'>Trang Chủ</a></li> <li><i class='fa fa-cube'></i><a href='"+base_url+"/admin/sanpham'> Sản Phẩm</a></li> <li class='active'><i class='fa fa-trash'></i> Thùng rác</li>");
+	$("h1.page-header").text("Thùng Rác");
+
+	var dialogxoa=null;
+	var frmdx=null;
+	$(function(){
+		
+		$("#qlsanpham").parent().addClass("active").find("a").click();
+		$("#qlsanpham").find("li:eq(4)").addClass("active");
+
+		dialogxoa=new dialog($("#dialog"),{
+			"width":500,
+			"height":240
+		});
+		dialogxoa.init();
+
+	});
+
+
+	
+	function xoasp(th){
+		if(!th.hasClass("success")){
+			if(confirm("Bạn có chắc muốn xóa vĩnh viễn sản phẩm này?. Một khi xóa bạn sẽ không thể phục hồi lại được")){
+				dialogxoa.show();
+				frmdx=th;
+			}
+			return false;
+		}else{
+			return true;
+		}
+	}
+
+	function ajaxXoa(th){
+
+		LoadJson(base_url+"/ajax/kiemtraxoa",{"mk2":th.find(".mk2").val(),"ma":th.find(".ma").val()},function(result){
+			switch(result){
+				case 0:
+					$("#dialog .ms").html('Mật khẩu cấp 2 sai.').css("color","red");
+					break;
+				case 2:
+					$("#dialog .ms").html('Mã bảo vệ sai').css("color","red");
+					$("#dialog img").attr("src",base_url+"/captcha");
+					break;
+				case 1:
+					frmdx.addClass("success").submit();
+			}
+		});
+		
+		return false;
+	}
+	
+</script>
+
+<?php if($this->message!=null){ ?>
+	<div class="message">
+		<?php echo $this->message ?>
+	</div>
+<?php } ?>
+
+<div id="dialog">
+	<div class='header'>
+		XÁC NHẬN XÓA SẢN PHẨM
+	</div>
+	<div class='ct'>
+		<p>Vui lòng nhập mật khẩu cấp 2 để tiếp tục xóa.</p>
+		<div class='ms' style="margin-top:-10px;text-align:center"></div>
+			<br />
+		<form action="" method="post" role="form" onsubmit="return ajaxXoa($(this));">
+			<div class='row'>
+				<div class='col-lg-4 col-sm-4 col-xs-4' style="margin-top:7px"><b>Mật Khẩu Cấp 2:</b> </div>
+				<div class='col-lg-6 col-sm-6 col-xs-6'>
+					<input type="password" class="form-control mk2" />
+				</div>
+			</div>
+			<br />
+			<div class='row'>
+				<div class='col-lg-4 col-sm-4 col-xs-4' style="margin-top:7px"><b>Mã Xác Nhận:</b> </div>
+				<div class='col-lg-8 col-sm-8 col-xs-8'>
+					<input size="18" type="text" class="ma" />
+					<img src="<?php echo $this->baseUrl() ?>/captcha" style="padding-left:7px" />
+				</div>
+			</div>
+			<br />
+			<div class='row'>
+				<div class='col-lg-4 col-sm-4 col-xs-4' style="margin-top:7px"></div>
+				<div class='col-lg-6 col-sm-6 col-xs-6'>
+					<input type="submit" class="btn btn-success btn-sm" value="Tiếp tục xóa" />
+					<input type="button" onclick="dialogxoa.hide();" class="btn btn-default btn-sm" value="Hủy bỏ" />
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+	
+	<div class="clearfix">
+		<div class="l">
+			<?php echo $this->partial('admin/phan_trang.phtml',array('arr_page'=>$this->arr_page)); ?>
+		</div>
+		<div class="r">
+			<form method="get" action="">
+				<div class="frmsearch clearfix">
+					<input type="text" class="textboxsearch" value="<?php if(isset($_GET['q'])) echo $_GET['q']; ?>"  placeholder="Nhập tên sản phẩm..." name="q" />
+					<input type="submit" class="buttonsearch" value="" />
+				</div>
+			</form>
+		</div>
+	</div>
+<div class="table-responsive">
+	<table class="table table-bordered table-vm">
+		<tr>
+			<th>Tên</th>
+			<th>LSP</th>
+			<th>Hình Ảnh</th>
+			<th>Giá</th>
+			<th>Giảm Giá</th>
+			<th>NG</th>
+			<th>SL</th>
+			<th>SL bán</th>
+			<th>Xem</th>
+			<th></th>
+		</tr>
+		<?php 
+			foreach ($this->data as $item) {
+				echo '<tr>';
+				
+					echo '<td>'.$item["TENSP"].'</td>';
+					echo '<td>'.$item["TEN_LOAI"].'</td>';
+					echo '<td align="center"><img width="100px" src="'.$this->baseUrl().'/uploads/images/sp/'.$item["HINHANH"].'" /></td>';
+					echo '<td>'.number_format($item["GIA"],0,',','.').'</td>';
+					echo '<td align="center">'.$item["GIAM_GIA"].'%</td>';
+					echo '<td>'.$item["HOTEN"].'</td>';
+					echo '<td align="center">'.$item["SOLUONG"].'</td>';
+					echo '<td align="center">'.$item["SOLUONGBANDUOC"].'</td>';
+					echo '<td align="center">'.$item["XEM"].'</td>';
+					echo '<td align="center"><a href="'.$this->baseUrl().'/admin/thungrac?id='.$item["MASP"].'" title="Phục hồi"><img src="'.$this->baseUrl().'/public/admin/Images/refresh.png" /></a><br /><br /><form method="post" title="Xóa vĩnh viễn" action="" onsubmit="return xoasp($(this));"><input type="submit" value="" style="background-image:url('.$this->baseUrl().'/public/admin/Images/delete.png);width:15px;border:0;cursor:pointer;height:15px" /><input type="hidden" name="hinhanh" value="'.$item["HINHANH"].'" /><input type="hidden" name="hinhanhkhac" value="'.$item["HINH_ANH_KHAC"].'" /><input type="hidden" name="idx" value="'.$item["MASP"].'" /><input type="hidden" name="namex" value="'.$item["TENSP"].'" /></form></td>';
+				echo '</tr>';
+			}
+		?>
+	</table>
+</div>

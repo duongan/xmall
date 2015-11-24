@@ -1,0 +1,78 @@
+﻿/*Icon Event Bên Phải Và Traí*/
+/*#content #iconeventleft,#content #iconeventright{
+	position:absolute;
+	background-repeat:no-repeat;
+	height:358px;
+	z-index: 2000;
+	width:201px;
+}*/
+/*Icon Event Bên Trái*/
+/*#content #iconeventleft{
+	background-image:url("Images/event/lunar-new-year-right_01.png");
+	left:-150px;
+	top:-111px;
+}*/
+/*Icon Event Bên Phải*/
+/*#content #iconeventright{
+	background-image:url("Images/event/lunar-new-year-left_01.png");
+	right:-38px;
+	top:-110px;
+	width:50px;
+	overflow: hidden;
+}*/
+/*Icon Event Dưới Menu Top*/
+/*#eventbgmenu{
+	position:absolute;
+	background-image:url("Images/event/bg-snow-main-menu.png");
+	background-repeat:repeat-x;
+	width:100%;
+	height:14px;
+	left: 46px;
+	bottom: -12px;
+}*/
+/*Icon Event Trên Menu Danh Mục Sản Phẩm*/
+/*#danhmuc span.eventdanhmuc{
+	position:absolute;
+	width:229px;
+	top:-4px;
+	height:30px;
+	left:0px;
+	z-index:1002;
+	background-image:url("Images/event/snow-btn-danhmuc.png");
+}*/
+/*Icon Event Bên Cạnh Logo*/
+/*#header #navtop_header #logo #logo_event{
+	position:absolute;
+	background-image:url("Images/event/snowman-logo.png");
+	background-repeat:no-repeat;
+	width:60px;
+	height:68px;
+	top: -8px;
+	right: -55px;
+}
+#nav_intro li a.itembig .iconevent2{
+	background-image: url("Images/event/snow-w190.png");
+	width:190px;
+}
+#nav_intro li a.itemsmall div.iconevent2{
+	background-image: url("Images/event/snow-w93-1.png");
+	width:93px;
+}*/
+/*#iconeventbottomweb{
+	width: 1105px;
+	height: 50px;
+	background-image: url("Images/event/top.png");
+	position: fixed;
+	bottom:0px;
+	z-index: 2000;
+	margin: 0px auto;
+}*/
+/*#iconeventtopweb{
+	width: 1105px;
+	height: 50px;
+	background-image: url("Images/event/top.png");
+	position: fixed;
+	bottom:0px;
+	z-index: 2000;
+	margin: 0px auto;
+}*/

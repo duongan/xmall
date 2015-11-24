@@ -1,0 +1,219 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<meta name="author" content="Administrator" />
+
+<title>Trang chủ - 247mall</title>
+<link href="<?php echo $this->baseUrl() ?>/public/home/css/style.css"
+	rel="stylesheet" />
+<script type="text/javascript"
+	src="<?php echo $this->baseUrl() ?>/public/home/js/jquery.1.7.2.js"></script>
+<script type="text/javascript"
+	src="<?php echo $this->baseUrl() ?>/public/home/js/jquery.cycle.all.js"></script>
+<script type="text/javascript"
+	src="<?php echo $this->baseUrl() ?>/public/home/js/preloadify.js"></script>
+<script type="text/javascript"
+	src="<?php echo $this->baseUrl() ?>/public/home/js/action.js"></script>
+<script type="text/javascript"
+	src="<?php echo $this->baseUrl() ?>/public/home/js/skype-uri.js"></script>
+
+<script>
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/vi_VN/all.js#xfbml=1";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+        
+        function addItemToCart(proid)
+        {
+            var odata={
+                proid:proid,
+                ajax:1
+            };
+            jQuery.ajax({
+                type:"POST", 
+                data:odata, 
+                dataType:"text", 
+                url:"<?php echo $this->baseUrl() ?>/cart/add_cart_item", 
+                success: function (data){
+                    //isrunning=false;
+                    var r = JSON.parse(data);console.log(r);
+                    if(r.result=='true')
+                    {
+                        alert('Đã thêm vào giỏ hàng.');
+                        $("div.amount").html('<span>'+r.total+'</span>');
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError){
+                    //isrunning=false;
+                    alert("Hệ thống đang bận hoăc bảo trì.\nVui lòng thử lại sau ít phút.");
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+	<div id="gotop" onclick="$('html,body').animate({scrollTop:0},800)"></div>
+	<div id="web_top">
+		<div class="content_top">
+			<div class="welcome">
+				<a href="#">Giới thiệu <span>247Mall.vn</span></a> <a href="#">Nhận
+					giá tốt</a> <a href="#">Trợ giúp</a>
+			</div>
+			<div class="wrap_login">
+				<div class="fb">
+					<div class="fblike_icon"></div>
+					<div class="fblike">
+						<div class="fb-like"
+							data-href="https://www.facebook.com/pages/Check/144468995704745?ref=tn_tnmn"
+							data-send="false" data-layout="button_count" data-width="50"
+							data-show-faces="false"></div>
+					</div>
+				</div>
+				<!-- <a style="color: blue; font-weight: bold;">abc</a>
+				| <a href="<?php echo $this->baseUrl() ?>dang-xuat"> Thoát</a> -->
+				<a href="<?php echo $this->baseUrl() ?>tai-khoan">Đăng nhập</a> | <a
+					href="<?php echo $this->baseUrl() ?>tai-khoan">Đăng ký</a>
+			</div>
+		</div>
+	</div>
+	<div id="wrapper">
+		<div id="header">
+			<div class="logo">
+				<a href="<?php echo $this->baseUrl();?>"></a>
+			</div>
+			<div class="cart_top">
+				<a href="<?php echo $this->baseUrl();?>/gio-hang">
+					<div class="icon_cart"></div>
+					<div class="amount">
+						<span>10</span>
+					</div>
+				</a>
+				<div class="text">
+					<a href="#">Thanh toán</a>
+				</div>
+			</div>
+			<div class="support_top">
+				<div>
+					HOTLINE: <span>1900 456 789</span>
+				</div>
+				<div>
+					<a href="ymsgr:SendIM?bien.duongvan" title="Click"><img
+						src="http://opi.yahoo.com/online?u=bien.duongvan&amp;m=g&amp;t=5"
+						border="0" />riochow</a>
+				</div>
+				<div>
+					<a href="ymsgr:SendIM?bien.duongvan" title="Click"><img
+						src="http://opi.yahoo.com/online?u=bien.duongvan&amp;m=g&amp;t=5"
+						border="0" />riochow</a>
+				</div>
+				<div>
+					<div id="SkypeButton_Chat_duongan1202_1">
+						<script type="text/javascript">
+                    Skype.ui({
+                        "name": "chat",
+                        "element": "SkypeButton_Chat_duongan1202_1",
+                        "participants": ["duongan1202"],
+                        "imageSize":16
+                    });
+                </script>
+					</div>
+				</div>
+				<div>
+					<div id="SkypeButton_Chat_trinhminhphung_1">
+						<script type="text/javascript">
+                    Skype.ui({
+                        "name": "chat",
+                        "element": "SkypeButton_Chat_trinhminhphung_1",
+                        "participants": ["trinhminhphung"],
+                        "imageSize":16
+                    });
+                </script>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="navigation">
+			<div id="wrap_menu">
+				<ul id="parents">
+					<li class="menu_1"><a href="#">Hàng mới</a></li>
+					<li class="menu_2"><a href="#">Bán chạy</a></li>
+					<li class="menu_3"><a href="#">Trang sức bạc</a>
+						<ul class="children children_3">
+							<li><a href="#">Trang suc 1</a></li>
+							<li><a href="#">Trang suc 2</a></li>
+							<li><a href="#">Trang suc 3</a></li>
+						</ul></li>
+					<li class="menu_4"><a href="#">Túi xách - Phụ kiện</a>
+						<ul class="children children_4">
+							<li><a href="#">Tui xach-phu kien 1</a></li>
+							<li><a href="#">Tui xach-phu kien 2</a></li>
+							<li><a href="#">Tui xach-phu kien 3</a></li>
+						</ul></li>
+					<li class="menu_5"><a href="#">Nội thất - Trang trí</a>
+						<ul class="children children_5">
+							<li><a href="#">Noi that-trang tri 1</a></li>
+							<li><a href="#">Noi that-trang tri 2</a></li>
+							<li><a href="#">Noi that-trang tri 3</a></li>
+						</ul></li>
+					<li class="menu_6"><a href="#">Mẹ & Bé</a>
+						<ul class="children children_6">
+							<li><a href="#">Me & Be 1</a></li>
+							<li><a href="#">Me & Be 2</a></li>
+							<li><a href="#">Me & Be 3</a></li>
+						</ul></li>
+				</ul>
+			</div>
+			<!-- /wrap_menu -->
+			<div class="box_search">
+				<form action="#" method="post" name="frm_search">
+					<input type="text" name="keyword" id="search" /> <input
+						onclick="document.frm_search.submit();" type="image"
+						src="<?php echo $this->baseUrl();?>/public/home/images/icon_s.jpg"
+						value="" />
+				</form>
+			</div>
+		</div>
+		<!-- /Navigation-->
+		<div id="wrap_content">
+			<div id="slide_panel">
+				<div id="slide">
+					<div>
+						<a href="#"><img
+							src="{{$item->new_image|base_url}}" alt="" /></a>
+						<div class="pinfo">
+							<h1>San pham a</h1>
+							<p>Day la thong tin san pham a</p>
+							<div class="price">
+								<span>10.000 VNĐ</span>9.900 VNĐ
+							</div>
+							<a href="#"><img
+								src="data/templates/frontend/home/images/detail.jpg"
+								alt="Xem chi tiết" /></a>
+						</div>
+						<div class="sale">
+							<span>Giảm <abbr>{{saleprice old_price=$item->old_price
+									new_price=$item->new_price}}%</abbr></span>
+						</div>
+					</div>
+				</div>
+				<div id="slide-nav"></div>
+			</div>
+			<!-- /Slider-->
+			<div class="box">
+				<h2 class="title_box line_2px">Hàng Bán Chạy</h2>
+				{{include file='../../frontend/subs/best_selling_slide.tpl'}}
+			</div>
+			<div class="line_2px"></div>
+			<div class="box wrap_pro" id="list-product">{{include
+				file='../../frontend/subs/list_product.tpl'}}</div>
+
+			<div class="line_2px line_color clr margin_top"></div>
+			{{include file='../../frontend/subs/viewed_product.tpl'}} {{/if}}
+			{{include file='template/frontend/includes/footer.tpl'}}
+
+</body>
+</html>

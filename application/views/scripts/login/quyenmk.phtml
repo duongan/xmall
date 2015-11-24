@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+    <title>Quyên mật khẩu</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="<?php echo $this->baseUrl() ?>/public/admin/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="<?php echo $this->baseUrl() ?>/public/admin/css/sb-admin.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="<?php echo $this->baseUrl() ?>/public/admin/css/plugins/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="<?php echo $this->baseUrl() ?>/public/admin/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- jQuery -->
+    <script src="<?php echo $this->baseUrl() ?>/public/admin/js/jquery.js"></script>
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Admin Control Panel</a>
+            </div>
+           
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li id="homepage">
+                        <a href="<?php echo $this->baseUrl() ?>/"><i class="fa fa-fw fa-home"></i> Website</a>
+                    </li>
+
+                     <li id="dangnhap">
+                        <a href="<?php echo $this->baseUrl() ?>/login"><i class="fa fa-fw fa-unlock"></i> Đăng nhâp</a>
+                    </li>
+                   
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            Quyên mật khẩu
+                        </h1>
+                       
+                    </div>
+                </div>
+                <?php if($this->message!=null){ ?>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="alert alert-danger">
+                            <i class="fa fa-info-circle"></i>  <?php echo $this->message ?>
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
+                <form method="post" action="" role="form">
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-3 col-xs-3" style="padding-top:3px">
+                            Tài Khoản:
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-xs-6">
+                            <input type="text" name="taikhoan" class="form-control" required />
+                          
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-3 col-xs-3" style="padding-top:3px">
+                            Mật Khẩu Cấp 2:
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-xs-6">
+                            <input type="password" name="mk2" class="form-control" required />
+                          
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-3 col-xs-3" style="padding-top:3px">
+                            Mật Khẩu Mới:
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-xs-6">
+                            <input type="password" name="matkhau" class="form-control" required />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-3 col-xs-3" style="padding-top:3px">
+                            Nhập Lại Mật Khẩu Mới:
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-xs-6">
+                            <input type="password" name="rematkhau" class="form-control" required />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-3 col-xs-3" style="padding-top:3px">
+                           
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-xs-6">
+                            <input type="submit" value="Đăng Nhập" class="btn btn-success" />
+                            <input type="reset" value="Nhập Lại" class="btn btn-default" />
+                        </div>
+                    </div>
+                </form>
+                <br />
+                <div class="row" style="color:#999;font-size:12px">
+                    <div class="col-lg-12" style="text-align:right">
+                        Bootstrap v3.3.2 Copyright 2011-2015 Twitter, Inc.<br />
+                        Admin Control Panel Copyright 2015 by Trần Văn Thỏa, Trần Công Tuấn
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?php echo $this->baseUrl() ?>/public/admin/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

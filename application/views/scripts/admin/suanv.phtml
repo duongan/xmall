@@ -1,0 +1,82 @@
+<script type="text/javascript">
+	$(".breadcrumb").html("<li><i class='fa fa-dashboard'></i> <a href='"+base_url+"/admin'>Trang Chủ</a></li> <li><i class='fa fa-male'></i><a href='"+base_url+"/admin/nhanvien'> Nhân Viên</a></li> <li><i class='fa fa-edit'></i> <?php if(isset($_GET['id'])) echo 'Sửa Nhân Viên'; else echo 'Sửa Thông Tin'; ?></li> <li class='active'><i class='fa fa-bookmark'></i> <?php echo $this->info['HOTEN'] ?></li>");
+	$("h1.page-header").text("<?php if(isset($_GET['id'])) echo 'Sửa Nhân Viên'; else echo 'Thông Tin Cá Nhân'; ?>");
+
+$(function(){
+	$("#qlnhanvien").parent().addClass("active").find("a").click();
+	$("form").kiemtra([
+		{
+			'name':'HOTEN',
+			'string':true,
+			'message':'họ tên không hợp lệ'
+		},
+		{
+			'name':'TAIKHOAN',
+			'trong':true
+		},
+		{
+			'name':'DIENTHOAI',
+			'sodt':true
+		},
+		{
+			'name':'EMAIL',
+			'email':true
+		}
+	]);
+});
+</script>
+<?php if($this->message!=null){ ?>
+	<div class="message">
+		<?php echo $this->message ?>
+	</div>
+<?php } ?>
+<form method="post" action="" role="form">
+	<table class="table">
+		<tr>
+			<td width="30%">
+				<b>Họ Tên NV: </b>
+				<span class="red">*</span>
+			</td>
+			<td>
+				<input type="text" class="form-control s1" value="<?php echo $this->info['HOTEN'] ?>" name="HOTEN" />
+			</td>
+		</tr>
+		<tr  class="bordertop">
+			<td>
+				<b>Giới Tính: </b>
+				<span class="red">*</span>
+			</td>
+			<td>
+				<label>Nam: <input <?php if($this->info['GIOITINH']==1) echo "checked='checked'"; ?>  type="radio" name="GIOITINH-boolean" value="1" /></label>
+				<label style="padding-left:10px">Nữ: <input <?php if($this->info['GIOITINH']==0) echo "checked='checked'"; ?> type="radio" name="GIOITINH-boolean" value="0" /></label>
+			</td>
+		</tr>
+		<tr  class="bordertop">
+			<td>
+				<b>Số Điện Thoại: </b>
+				<span class="red">*</span>
+			</td>
+			<td>
+				<input type="text" class="form-control s1" value="<?php echo $this->info['DIENTHOAI'] ?>" name="DIENTHOAI" />
+			</td>
+		</tr>
+		<tr  class="bordertop">
+			<td>
+				<b>Email: </b>
+				<span class="red">*</span>
+			</td>
+			<td>
+				<input type="email" class="form-control s1" value="<?php echo $this->info['EMAIL'] ?>" name="EMAIL" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+
+			</td>
+			<td>
+				<input type="submit" class="btn-primary btn" value="Lưu lại" />
+				<input type="reset" class="btn-default btn" value="Nhập lại" />
+			</td>
+		</tr>
+	</table>
+</form>

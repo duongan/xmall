@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <?php echo $this->headTitle() ?>
+
+    <link href="<?php echo $this->baseUrl() ?>/public/admin/style.css" rel="stylesheet" type="text/css" />
+
+    <link href="<?php echo $this->baseUrl() ?>/public/admin/page.css" rel="stylesheet" type="text/css" />
+
+     <link href="<?php echo $this->baseUrl() ?>/public/admin/inputstyle.css" rel="stylesheet" type="text/css" />
+    <?php echo $this->headLink() ?> 
+
+    <!-- Bootstrap Core CSS -->
+    <link href="<?php echo $this->baseUrl() ?>/public/admin/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="<?php echo $this->baseUrl() ?>/public/admin/css/sb-admin.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="<?php echo $this->baseUrl() ?>/public/admin/css/plugins/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="<?php echo $this->baseUrl() ?>/public/admin/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- jQuery -->
+    <script src="<?php echo $this->baseUrl() ?>/public/admin/js/jquery.js"></script>
+
+     <script type="text/javascript" src="<?php echo $this->baseUrl() ?>/public/Scripts/validate.js"></script>
+     <script type="text/javascript" src="<?php echo $this->baseUrl() ?>/public/Scripts/jsadmin.js"></script>
+     <?php echo $this->headScript() ?>
+
+     
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?php echo $this->baseUrl() ?>/public/admin/js/bootstrap.min.js"></script>
+
+     <script type="text/javascript">
+        var base_url="<?php echo $this->baseUrl() ?>";
+        var start=0;
+        function LoadJson(url,dt,callback) {
+            $.ajax({
+                    type: "POST",
+                    url: url,
+                    dataType: 'json',
+                    data:dt,
+                    beforeSend: function(){
+                    },
+                    success: callback,
+                    error: function (e, e2, e3) {
+                    }
+            });
+        }
+        $(function(){
+            enResize($(window));
+            $(window).resize(function(){
+                enResize($(this));
+            });
+
+            $(".dropdown-ms").click(function(){
+                if(!$(this).hasClass("success")){
+                    $(".top-nav .dropdown .message-dropdown .message-footer").click();
+                    $(this).addClass("success");
+                }
+            });
+
+            $(".top-nav .dropdown .message-dropdown .message-footer").click(function(){
+                var ttt=$(this);
+                setTimeout(function(){
+                    ttt.parent().parent().addClass("open").find("a.dropdown-toggle").attr("aria-expanded","true");
+                },0);
+                LoadJson(base_url+"/ajax/loadls",{"start":start},function(result){
+                    start+=5;
+                    if(result.length<5){
+                        ttt.hide();
+                    }
+                    for(var i=0;i<result.length;i++){
+                        $(".top-nav .dropdown .message-dropdown .message-footer").before('<li class="message-preview"><a href="#"><div class="media"><span class="pull-left"></span><div class="media-body"><h5 class="media-heading"><strong>'+result[i].HOTEN+'</strong></h5><p class="small text-muted"><i class="fa fa-clock-o"></i> '+result[i].THOIGIAN+'</p><p>'+result[i].NOIDUNG+'</p></div></div></a></li>');
+
+                    }
+                   
+                });
+                
+            });
+
+            // setTimeout(function(){
+            //     $(".nicEdit-main").css({"overflow":"auto","height":$(".nicEdit-main").css("min-height")});
+            // },1000);
+        });
+        function enResize(win){
+            $(".side-nav").css("height",win.height()-35);
+        }
+    </script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="<?php echo $this->baseUrl() ?>/public/admin/js/html5shiv.js"></script>
+        <script src="<?php echo $this->baseUrl() ?>/public/admin/js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="<?php echo $this->baseUrl() ?>/admin">Admin Control Panel</a>
+            </div>
+            <!-- Top Menu Items -->
+            <ul class="nav navbar-right top-nav">
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle dropdown-ms" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
+                    <ul class="dropdown-menu message-dropdown">
+                        <li class="message-footer text-center" style="cursor:pointer">
+                            Xem Thêm
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $this->user; ?> <b class="caret"></b></a>
+                    <ul class="dropdown-menu" style="min-width: 195px;">
+                        <li>
+                            <a href="<?php echo $this->baseUrl() ?>/admin/suanv"><i class="fa fa-fw fa-info-circle"></i> Thông Tin Cá Nhân</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="<?php echo $this->baseUrl() ?>/admin/doimatkhau"><i class="fa fa-fw fa-edit"></i> Đổi Mật Khẩu</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo $this->baseUrl() ?>/admin/doimatkhau?cap2=true"><i class="fa fa-fw fa-edit"></i> Đổi Mật Khẩu Cấp 2</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="<?php echo $this->baseUrl() ?>/login/logout"><i class="fa fa-fw fa-power-off"></i> Đăng Xuất</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="<?php echo $this->baseUrl() ?>/" target="_black"><i class="fa fa-fw fa-home"></i> Goto Website</a>
+                </li>
+            </ul>
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li id="homepage">
+                        <a href="<?php echo $this->baseUrl() ?>/admin"><i class="fa fa-fw fa-dashboard"></i> Trang Chủ</a>
+                    </li>
+                    <!--San Pham-->
+                    <?php if($this->quyen["XEMDSSP"]==1 ||  $this->quyen["THEMSP"]==1 || $this->quyen["SUASP"]==1 || $this->quyen["XOASP"]==1 || $this->quyen["XEMDSLSP"]==1 || $this->quyen["THEMLSP"]==1 || $this->quyen["XOALSP"]==1 || $this->quyen["SUALSP"]==1){ ?>
+                    <li >
+                        <a href="javascript:;" data-toggle="collapse" data-target="#qlsanpham"><i class="fa fa-fw fa-cube"></i> Quản Lý Sản Phẩm <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="qlsanpham" class="collapse">
+                            <?php if($this->quyen["THEMSP"]==1){ ?>
+                                <li>
+                                    <a href="<?php echo $this->baseUrl() ?>/admin/themsp"><i class="fa fa-fw fa-plus"></i> Thêm Sản Phẩm Mới</a>
+                                </li>
+                            <?php } ?>
+                            <?php if($this->quyen["XEMDSSP"]==1){ ?>
+                                <li>
+                                    <a href="<?php echo $this->baseUrl() ?>/admin/sanpham"><i class="fa fa-fw fa-list-alt"></i> Danh Sách Sản Phẩm</a>
+                                </li>
+                            <?php } ?>
+                            <?php if($this->quyen["XEMDSNX"]==1){ ?>
+                                <li><a href="<?php echo $this->baseUrl() ?>/admin/nhanxet" title=""><i class="fa fa-fw fa-comment-o"></i> Nhận Xét</a></li>
+                            <?php } ?>
+                            <?php if($this->quyen["XEMDSLSP"]==1){ ?>
+                                <li><a href="<?php echo $this->baseUrl() ?>/admin/loaisp"><i class="fa fa-fw fa-asterisk"></i> Loại Sản Phẩm</a></li>
+                            <?php } ?>
+                            <?php if($this->quyen["SUASP"]==1){ ?>
+                                <li><a href="<?php echo $this->baseUrl() ?>/admin/thungrac"><i class="fa fa-fw fa-trash"></i> Thùng Rác</a></li>
+                            <?php } ?>
+                        </ul>
+                    </li>
+                    <?php } ?>
+                    <!--Hoa Don-->
+                    <?php if($this->quyen["XEMDSDH"]==1 ||  $this->quyen["XOADH"]==1 || $this->quyen["XEMDSKH"]==1 || $this->quyen["XOAKH"]==1){ ?>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#qlhoadon"><i class="fa fa-fw fa-shopping-cart"></i> Quản Lý Đơn Hàng <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="qlhoadon" class="collapse">
+                            <?php if($this->quyen["XEMDSDH"]==1){ ?>
+                                <li><a href="<?php echo $this->baseUrl() ?>/admin/hoadon?cg=1"><i class="fa fa-fw fa-car"></i> Đơn Hàng Chưa Giao</a></li>
+                                <li><a href="<?php echo $this->baseUrl() ?>/admin/hoadon?nt=1"><i class="fa fa-fw fa-tag"></i> Đơn Hàng Còn Nợ Tiền</a></li>
+                                <li><a href="<?php echo $this->baseUrl() ?>/admin/hoadon"><i class="fa fa-fw fa-list-alt"></i> Danh Sách Đơn Hàng</a></li>
+                            <?php } ?>
+                            <?php if($this->quyen["XEMDSKH"]==1){ ?>
+                                <li><a href="<?php echo $this->baseUrl() ?>/admin/khachhang"><i class="fa fa-fw fa-group"></i> Khách Hàng</a></li>
+                            <?php } ?>
+                        </ul>
+                    </li>
+                    <?php } ?>
+                    <!--Website-->
+                     <?php if($this->quyen["MANHOM"]==1){ ?>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#qlwebsite"><i class="fa fa-fw fa-life-saver"></i> Quản Lý Website <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="qlwebsite" class="collapse">
+                            <li><a href="<?php echo $this->baseUrl() ?>/admin/website?a=chung" title=""><i class="fa fa-fw fa-cog"></i> Cấu Hình Website</a></li>
+                            <li><a href="<?php echo $this->baseUrl() ?>/admin/website?a=logo" title=""><i class="fa fa-fw fa-vine"></i> Logo</a></li>
+                            <li><a href="<?php echo $this->baseUrl() ?>/admin/website?a=menutop" title=""><i class="fa fa-fw fa-list"></i> Menu Top</a></li>
+                            <li><a href="<?php echo $this->baseUrl() ?>/admin/website?a=css" title=""><i class="fa fa-fw fa-css3"></i> Css</a></li>
+                            <li><a href="<?php echo $this->baseUrl() ?>/admin/website?a=tuyendung" title=""><i class="fa fa-fw fa-random"></i> Tuyển Dụng</a></li>
+                            <li><a href="<?php echo $this->baseUrl() ?>/admin/website?a=baohanh" title=""><i class="fa fa-fw fa-ticket"></i> Bảo Hành</a></li>
+                            <li><a href="<?php echo $this->baseUrl() ?>/admin/website?a=huongdan" title=""><i class="fa fa-fw fa-credit-card"></i> Hướng Dẫn Mua Hàng</a></li>
+                            <li><a href="<?php echo $this->baseUrl() ?>/admin/website?a=baotri" title=""><i class="fa fa-fw fa-lock"></i> Bảo Trì</a></li>
+                        </ul>
+                    </li>
+                    <?php } ?>
+                    <!--Tin Tuc-->
+                      <?php if($this->quyen["XEMDSTT"]==1 ||  $this->quyen["THEMTT"]==1 || $this->quyen["XOATT"]==1 || $this->quyen["SUATT"]==1){ ?>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#qltintuc"><i class="fa fa-fw fa-globe"></i> Quản Lý Tin Tức - KM <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="qltintuc" class="collapse">
+                        <?php if($this->quyen["XEMDSTT"]==1){ ?>
+                          <li><a href="<?php echo $this->baseUrl() ?>/admin/tintuc" title=""><i class="fa fa-fw fa-list-alt"></i> Danh Sách Tin Tức</a></li>
+                          <?php } ?>
+                          <?php if($this->quyen["THEMTT"]==1){ ?>
+                            <li><a href="<?php echo $this->baseUrl() ?>/admin/themtt" title=""><i class="fa fa-fw fa-plus"></i> Thêm Tin Tức Mới</a></li>
+                            <?php } ?>
+                        </ul>
+                    </li>
+                    <?php } ?>
+                     <!--Nhom-->
+                      <?php if($this->quyen["XEMDSN"]==1 ||  $this->quyen["THEMNHOM"]==1 || $this->quyen["XOANHOM"]==1 || $this->quyen["SUANHOM"]==1){ ?>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#qlnhom"><i class="fa fa-fw fa-star"></i> Quản Lý Nhóm <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="qlnhom" class="collapse">
+                         <?php if($this->quyen["XEMDSN"]==1){ ?>
+                           <li><a href="<?php echo $this->baseUrl() ?>/admin/nhom" title=""><i class="fa fa-fw fa-list-alt"></i> Danh Sách Nhóm</a></li>
+                           <?php } ?>
+                            <?php if($this->quyen["THEMNHOM"]==1){ ?>
+                            <li><a href="<?php echo $this->baseUrl() ?>/admin/themnhom" title=""><i class="fa fa-fw fa-plus"></i> Thêm Nhóm Mới</a></li>
+                            <?php } ?>
+                        </ul>
+                    </li>
+                    <?php } ?>
+                     <!--Nhan Viên-->
+                     <?php if($this->quyen["XEMDSNV"]==1 ||  $this->quyen["THEMNV"]==1 || $this->quyen["XOANV"]==1 || $this->quyen["KHOANV"]==1){ ?>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#qlnhanvien"><i class="fa fa-fw fa-male"></i> Quản Lý Nhân Viên <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="qlnhanvien" class="collapse">
+                         <?php if($this->quyen["XEMDSNV"]==1){ ?>
+                          <li><a href="<?php echo $this->baseUrl() ?>/admin/nhanvien" title=""><i class="fa fa-fw fa-list-alt"></i> Danh Sách Nhân Viên</a></li>
+                          <?php } ?>
+                           <?php if($this->quyen["THEMNV"]==1){ ?>
+                            <li><a href="<?php echo $this->baseUrl() ?>/admin/themnhanvien" title=""><i class="fa fa-fw fa-plus"></i> Thêm Nhân Viên Mới</a></li>
+                            <?php } ?>
+                        </ul>
+                    </li>
+                    <?php } ?>
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            Quản Lý Website
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li class="active">
+                                <i class="fa fa-dashboard"></i> Trang Chủ Admin
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <?php echo $this->layout()->content; ?>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+   
+</body>
+
+</html>

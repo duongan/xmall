@@ -1,0 +1,185 @@
+<script type="text/javascript">
+	$(function(){
+		$(".breadcrumb").html("<li><i class='fa fa-dashboard'></i> <a href='"+base_url+"/admin'>Trang Chủ</a></li> <li class='active'><i class='fa fa-cube'></i> Sản Phẩm</li>");
+	$("h1.page-header").text("Danh Sách Sản Phẩm");
+		$("#qlsanpham").parent().addClass("active").find("a").click();
+		$("#qlsanpham").find("li:eq(1)").addClass("active");
+		$("#selectall").change(function () {
+	        $(".checkboxitem").prop('checked', this.checked);
+	    });
+	    $("input[name='hien_thi'],input[name='hien_thi_tc']").change(function(){
+	    	var th=$(this);
+	    	LoadJson(base_url+'/ajax/hienthisp',{"name":th.attr("name"),"l":th.is(":checked"),"id":th.parent().parent().attr("data-id")},function(result){
+	    		if(result<1){
+	    			alert("Có lỗi");
+					th.prop('checked',!th.is(":checked"));
+	    		}
+	    	});
+	    });
+	});
+
+	function xoa(){
+		var list=$(".checkboxitem:checked");
+		if(list.size()==0){
+			alert("vui lòng chọn ít nhất 1 sản phẩm để xóa.");
+			return false;
+		}
+
+		if(confirm("Bạn có chắc di chuyển "+list.size()+" sản phẩm được chọn?")){
+			var arr=[];
+
+			list.each(function(){
+				arr.push($(this).val());
+			});
+
+			LoadJson(base_url+"/ajax/xoasp",{"arr":arr},function(result){
+				alert("Đã di chuyển thành công "+list.size()+" sản phẩm vào thùng rác.");
+				list.each(function(){
+					$(this).parent().parent().fadeOut(100);
+				});
+			});
+		}
+
+		return false;
+	}
+	
+</script>
+
+<?php if($this->message!=null){ ?>
+	<div class="message">
+		<?php echo $this->message ?>
+	</div>
+<?php } ?>
+<?php if($this->quyen["THEMSP"]==1 || $this->quyen["XOASP"]==1){ ?>
+<?php if($this->quyen["THEMSP"]==1){ ?>
+<a href="<?php echo $this->baseUrl() ?>/admin/themsp" class="btn btn-default btn-sm"><i class="fa fa-plus"></i> Thêm sản phẩm mới</a>
+<?php } ?>
+<?php if($this->quyen["XOASP"]==1){ ?>
+<a href="#" onclick="return xoa();" class="btn btn-default btn-sm"><i class="fa fa-trash" style="margin-left:-3px"></i> Chuyển vào thùng rác</a>
+<?php } ?>
+<br /><br />
+	<?php } ?>
+	<div class="clearfix">
+		
+		<div class="l">
+			<?php echo $this->partial('admin/phan_trang.phtml',array('arr_page'=>$this->arr_page)); ?>
+		</div>
+		<div class="r">
+			<div class="l">
+				<form method="get" action="">
+					<div class="frmsearch clearfix">
+						<input title="tên sản phẩm hoặc tên người gửi hoặc ngày gửi" type="text" class="textboxsearch" value="<?php if(isset($_GET['q'])) echo $_GET['q']; ?>"  placeholder="Nhập nội dung tìm kiếm..." name="q" />
+						<input type="submit" class="buttonsearch" value="" />
+					</div>
+					<?php if(isset($_GET["sort"])){ ?>
+						<input type="hidden" name="sort" value="<?php echo $_GET["sort"] ?>" />
+					<?php } ?>
+				</form>
+			</div>
+			<div class="l" style="margin-left:10px">
+				<form method="get" action="">
+					<select onchange="$(this).parent().submit();" name="sort" style="height:25px">
+						<option value="masp-desc">Mới nhất</option>
+						<option value="masp">Cũ nhất</option>
+						<option value="gia">Giá tăng dần</option>
+						<option value="gia-desc">Giá giảm dần</option>
+						<option value="xem-desc">Lượt xem</option>
+						<option value="soluong-desc">Số Lượng</option>
+						<option value="soluongbanduoc-desc">Số Lượng Bán</option>
+						<option value="giam_gia-desc">Giảm Giá</option>
+						<option value="masp">------- Filter --------</option>
+						<option value="f-chuaban">Chưa bán được</option>
+						<option value="f-hh">Sắp hết hàng</option>
+						<option value="f-sapramat">Sắp ra mắt</option>
+						<option value="f-thongso">Chưa có thông số</option>
+						<option value="f-khuyenmai">Chưa có khuyến mãi</option>
+						<option value="f-baiviet">Chưa có bài viết</option>
+						<option value="f-video">Chưa có video</option>
+						<option value="f-hide">Đang ẩn</option>
+					</select>
+					<?php if(isset($_GET["q"])){ ?>
+						<input type="hidden" name="q" value="<?php echo $_GET["q"] ?>" />
+					<?php } ?>
+				</form>
+			</div>
+		</div>
+	</div>
+<div class="table-responsive">
+	<table class="table table-bordered table-hover table-vm">
+		<tr>
+			<th><input type="checkbox" id="selectall" /></th>
+			<th>Tên</th>
+			<th>LSP</th>
+			<th>Hình Ảnh</th>
+			<th>Cập Nhật</th>
+			<th>Giá</th>
+			<th>GG</th>
+			<th>NG</th>
+			<th>SL</th>
+			<th>SL bán</th>
+			<th>Xem</th>
+			<th>Hiển Thị</th>
+			<?php if($this->quyen["SUASP"]==1){ ?>
+			<th></th>
+			<?php } ?>
+		</tr>
+		<?php 
+			date_default_timezone_set('Asia/Ho_Chi_Minh');
+			$now=getdate();
+			$second = strtotime($now["year"].'/'.$now["mon"].'/'.$now["mday"]); 
+			foreach ($this->data as $item) {
+				echo '<tr>';
+					echo '<td align="center"><input type="checkbox" class="checkboxitem" value="'.$item['MASP'].'" name="arrxoa[]" /></td>';
+					echo '<td width="180px"><a href="'.$this->baseUrl().'/'.$item["URL"].'_'.$item["MASP"].'.html" target="_black">'.$item["TENSP"].'</a></td>';
+					echo '<td width="100px">'.$item["TEN_LOAI"].'</td>';
+					echo '<td align="center"><img width="100px" src="'.$this->baseUrl().'/uploads/images/sp/'.$item["HINHANH"].'" /></td>';
+					$first = strtotime(date('Y/m/d',strtotime($item['NGAYCAPNHAT'])));
+					$tg=round(abs($first-$second)/(60*60*24));
+					if($tg==0)
+						$tg="Hôm nay";
+					else{
+						if($tg==1){
+							$tg= "Hôm qua";
+						}else{
+							$tg=$tg." ngày trước";
+						}
+					}
+					echo '<td width="70px" title="'.(date('d/m/Y H:i:s',strtotime($item['NGAYCAPNHAT']))).'">'.$tg.'</td>';
+					echo '<td>'.number_format($item["GIA"],0,',','.').'</td>';
+					echo '<td align="center">'.$item["GIAM_GIA"].'%</td>';
+					echo '<td width="80px">'.$item["HOTEN"].'</td>';
+					echo '<td align="center">'.$item["SOLUONG"].'</td>';
+					echo '<td align="center">'.$item["SOLUONGBANDUOC"].'</td>';
+					echo '<td align="center">'.$item["XEM"].'</td>';
+					echo '<td data-id="'.$item["MASP"].'"><label>Hiển Thị: <input type="checkbox" '.(($item['HIEN_THI'])?"checked='checked'":"").' name="hien_thi" /></label><br /><label>Hiển Thị TC: <input type="checkbox" '.(($item['HIEN_THI_TC'])?"checked='checked'":"").' name="hien_thi_tc" /></label></td>';
+					if($this->quyen["SUASP"]==1){
+					echo '<td align="center"><a title="Sửa" href="'.$this->baseUrl().'/admin/capnhatsp?id='.$item["MASP"].'"><img src="'.$this->baseUrl().'/public/admin/Images/edit.png" /></a></td>';
+				}
+				echo '</tr>';
+			}
+		?>
+	</table>
+</div>
+<?php echo $this->partial('admin/phan_trang.phtml',array('arr_page'=>$this->arr_page)); ?>
+	<script type="text/javascript">
+		var sort="<?php if(isset($_GET['sort'])) echo $_GET['sort']; else echo 'masp-desc' ?>";
+
+		if(sort!="manv-desc"){
+			$("select[name='sort']").val(sort);
+		}
+</script>
+
+<?php if($this->quyen["XOASP"]==0){ ?>
+<script type="text/javascript">
+	$(function(){
+		$(".checkboxitem,#selectall").attr("disabled","disabled");
+	});
+</script>
+	<?php } ?>
+	<?php if($this->quyen["SUASP"]==0){ ?>
+<script type="text/javascript">
+	$(function(){
+		$(".table td input:checkbox").attr("disabled","disabled");
+	});
+</script>
+	<?php } ?>

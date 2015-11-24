@@ -1,0 +1,116 @@
+<script type="text/javascript">
+	$(".breadcrumb").html("<li><i class='fa fa-dashboard'></i> <a href='"+base_url+"/admin'>Trang Chủ</a></li> <li><i class='fa fa-asterisk'></i><a href='"+base_url+"/admin/loaisp'> Loại Sản Phẩm</a></li> <li class='active'><i class='fa fa-edit'></i> Sửa Loại Sản Phẩm</li>");
+	$("h1.page-header").text("<?php echo $this->data["TEN_LOAI"] ?>");
+$(function(){
+		
+	$("#qlsanpham").parent().addClass("active").find("a").click();
+	});
+$(document).ready(function(){
+	$("#frm").kiemtra([
+		{
+			'name':'ten_loai',
+			'max':70,
+			'min':1,			
+			'message':'tên loại sản phẩm phải lớn hơn 0 và nhỏ hơn 70'
+		},
+		{
+			'name':'url',
+			'max':70,
+			'min':1,
+			'message':'url phải lớn hơn 0 và nhỏ hơn 70'
+		}
+	]);
+});
+</script>
+<style type="text/css">
+	.asimg{
+		width: 75px;
+		height: 75px;
+	}
+	.asimg img{
+		width: 70px;
+		height: 70px;
+	}
+</style>
+
+<?php if($this->message!=null){ ?>
+	<div class="message">
+		<?php echo $this->message ?>
+	</div>
+<?php } ?>
+
+<form method="post" action="" id="frm" enctype="multipart/form-data" role="form">
+<div class="table-responsive">
+	<table class="table">
+		<tr>
+			<td>
+				<b>Tên Loại SP: </b><span class="red">*</span>
+			</td>
+			<td colspan="3">
+				<input class="form-control" value="<?php echo ($this->data)?$this->data['TEN_LOAI']:'' ?>" type="text" name="ten_loai" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<b>Url: </b><span class="red">*</span>
+			</td>
+			<td colspan="3">
+				<input class="form-control" value="<?php echo ($this->data)?$this->data['URL']:'' ?>" type="text" name="url" />
+			</td>
+		</tr>
+		<tr class="bordertop">
+			<td  width="200">
+				<b>Icon Lớn(Banner):</b>
+			</td>
+			<td width="200">
+				<div class="inputmr">
+					 <div class="asimg imguploadhover" onclick="$(this).parent().find('input.none').click();">
+                        <img src="<?php if($this->data["ICON_LON"]=="")echo $this->baseUrl()."/public/admin/Images/uploadimg.png";else echo $this->baseUrl()."/uploads/images/loaisp/".$this->data["ICON_LON"] ?>" />
+                    </div>
+                    <input type="file" name="iconlon" class="none"  onchange="readURL(this);" />
+				</div>
+			</td>
+			<td width="120">
+				<b>Icon Nhỏ(Menu):</b>
+			</td>
+			<td>
+					 <div class="asimg imguploadhover" onclick="$(this).parent().find('input.none').click();">
+                       <img src="<?php if($this->data["ICON_NHO"]=="")echo $this->baseUrl()."/public/admin/Images/uploadimg.png";else echo $this->baseUrl()."/uploads/images/loaisp/".$this->data["ICON_NHO"] ?>" />
+                    </div>
+                    <input type="file" name="iconnho" class="none"  onchange="readURL(this);" />
+			</td>
+		</tr>
+		<?php if($this->listloaisp!=null){ ?>
+			<tr>
+				<td><b>Cha:</b> </td>
+				<td>
+					<select style="width:250px" name="lsp_cha">
+					<?php foreach ($this->listloaisp as $item) {
+						if($item["MALSP"]!=$this->data["LSP_CHA"])
+							echo '<option value="'.$item["MALSP"].'">'.$item["TEN_LOAI"].'</option>';
+						else
+							echo '<option selected="true" value="'.$item["MALSP"].'">'.$item["TEN_LOAI"].'</option>';
+					} ?>
+					</select>
+				</td>
+			
+			</tr>
+		<?php }else{ echo "<input type='hidden' name='lsp_cha' value='0' />";} ?>
+
+		<tr>
+			<td>
+
+			</td>
+			<td colspan="3">
+				<div class="inputmr">
+					<input type="submit" class="btn btn-success btn-sm" value="Lưu lại" />
+					<input type="reset" class="btn btn-default btn-sm" value="Nhập lại" />
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>
+	<input type="hidden" name="iconn" value="<?php echo $this->data["ICON_NHO"] ?>" />
+	<input type="hidden" name="iconl" value="<?php echo $this->data["ICON_LON"] ?>" />
+	<input type="hidden" name="id" value="<?php echo $this->data["MALSP"] ?>" />
+</form>

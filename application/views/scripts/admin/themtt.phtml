@@ -1,0 +1,127 @@
+<script type="text/javascript" src="<?php echo $this->baseUrl() ?>/public/Scripts/nicEdit.js"></script>
+<script type="text/javascript">
+	$(".breadcrumb").html("<li><i class='fa fa-dashboard'></i> <a href='"+base_url+"/admin'>Trang Chủ</a></li> <li><i class='fa fa-globe'></i><a href='"+base_url+"/admin/tintuc'> Tin Tức</a></li> <li class='active'><i class='fa fa-plus'></i> Thêm Tin Tức</li>");
+	$("h1.page-header").text("Thêm Tin Tức");
+$(function(){
+		
+		$("#qltintuc").parent().addClass("active").find("a").click();
+		$("#qltintuc").find("li:eq(1)").addClass("active");
+	});
+$(document).ready(function(){
+	bkLib.onDomLoaded(function () {
+        	new nicEditor({ fullPanel: true }).panelInstance("noidung");
+    });
+    $("form").kiemtra([
+    	{
+    		'name':'TIEUDE',
+    		'trong':true
+    	},
+    	{
+    		'name':'MOTA',
+    		'trong':true
+    	},
+    	{
+    		'name':'hinhanh',
+    		'file':true,
+    		'typefile':'image'
+    	},
+    	{
+    		'name':'tukhoa',
+    		'trong':true
+    	}
+    ]);
+});
+</script>
+<?php if($this->message!=null){ ?>
+	<div class="message">
+		<?php echo $this->message ?>
+	</div>
+<?php } ?>
+<form method="post" action="" enctype="multipart/form-data" role="form">
+<div class="table-responsive">
+	<table class="table">
+		<tr>
+			<td>
+				<b>Tiêu đề: </b>
+				<span class="red">*</span>
+			</td>
+			<td colspan="3">
+				<textarea name="TIEUDE" class="form-control"><?php if(isset($_POST['TIEUDE'])) echo $_POST['TIEUDE']; ?></textarea>
+			</td>
+		</tr>
+		<tr class="bordertop">
+			<td>
+				<b>Mô tả: </b>
+				<span class="red">*</span>
+			</td>
+			<td colspan="3">
+				<textarea name="MOTA" rows="5" class="form-control"><?php if(isset($_POST['MOTA'])) echo $_POST['MOTA']; ?></textarea>
+				<p class="mota">
+					Tóm tắt nội dung tin tức.
+				</p>
+			</td>
+		</tr>
+		<tr class="bordertop">
+			<td>
+				<b>Hình ảnh: </b>
+				<span class="red">*</span>
+			</td>
+			<td>
+				<div class="asimg imguploadhover" onclick="$(this).parent().find('input.none').click();">
+                        <img src="<?php echo $this->baseUrl() ?>/public/admin/Images/uploadimg.png" />
+                    </div>
+                    <input type="file" name="hinhanh" class="none"  onchange="readURL(this);" />
+                     <p class="mota">Hình ảnh hiển thị của tin tức.<br /> Kích thước </p>
+			</td>
+			<td>
+				<b>Hình ảnh slide: </b>
+			</td>
+			<td>
+				<div class="asimg imguploadhover" onclick="$(this).parent().find('input.none').click();">
+                        <img src="<?php echo $this->baseUrl() ?>/public/admin/Images/uploadimg.png" />
+                    </div>
+                    <input type="file" name="hinhanhslide" class="none"  onchange="readURL(this);" />
+                    <p class="mota">
+					hình ảnh hiển thị lên slide. <br />Nếu tin tức này cho hiển thị lên slide. Kích thước 600x285
+				</p>
+			</td>
+		</tr>
+		<tr class="bordertop">
+			<td>
+				<b>Hiển Thị Slide: </b>
+			</td>
+			<td>
+				<input type="checkbox" name="SLIDESHOW" /> 
+			</td>
+			<td>
+				<b>Từ Khóa: </b>
+				<span class="red">*</span>
+			</td>
+			<td>
+				<textarea name="tukhoa" class="form-control"><?php if(isset($_POST['tukhoa'])) echo $_POST['tukhoa']; ?></textarea>
+				<p class="mota">
+					Từ khóa liên quan đến tin tức. Mỗi từ khóa cách nhau bởi dấu ','
+				</p>
+			</td>
+		</tr>
+		<tr class="bordertop">
+			<td>
+				<b>Nội dung: </b>
+				<span class="red">*</span>
+			</td>
+			<td colspan="3">
+				<textarea name="NOIDUNG" style="width:90%;height:300px" id="noidung"><?php if(isset($_POST['NOIDUNG'])) echo $_POST['NOIDUNG']; ?></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td>
+
+			</td>
+			<td colspan="3">
+				<input type="submit" class="btn btn-primary" value="Thêm mới" />
+				<input type="reset" class="btn btn-default" value="Nhập lại" />
+			</td>
+		</tr>
+	</table>
+</div>
+</form>

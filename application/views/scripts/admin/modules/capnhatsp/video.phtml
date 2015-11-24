@@ -1,0 +1,11 @@
+<form action="" method="post" role="form">
+<div class="clearfix">
+	<div class="l" style="margin-right:10px">Link Video Youtube: </div> <input type="text" class="form-control s2 l dblock" value="<?php echo $this->data ?>" name="video" /></div>
+	<div style="margin-top:10px;margin-left:135px">
+		<input type="submit" class="btn btn-primary" value="Lưu lại" />
+		<input type="button" onclick="window.location.reload()" class="btn btn-default" value="Nhập lại" />
+		<input type="hidden" name="action" value="6" />
+		<input type="hidden" name="id" value="<?php echo $_GET["id"] ?>" />
+		<input type="hidden" name="ngaycapnhat" value="<?php date_default_timezone_set('Asia/Ho_Chi_Minh'); $now=getdate(); echo $now["year"].'/'.$now["mon"].'/'.$now["mday"].' '.$now["hours"].':'.$now["minutes"].':'.$now["seconds"] ?>" />
+	</div>
+</form>

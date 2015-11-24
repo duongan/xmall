@@ -1,0 +1,138 @@
+<section class="layout_center">
+	<div id="iconeventleft"></div>
+	<div id="iconeventright"></div>
+
+	<nav id="breadcrumb-global">
+		<ul class="clearfix">
+			<li><a href="/">Trang chủ</a><span style="margin-left:5px;">»</span></li><li><h1>Hóa đơn của bạn</h1></li>
+		</ul>
+	</nav>
+	<div class="clearleft"></div>
+	
+
+	<table class="table" style="width:90%;">
+		<tr>
+			<caption>
+				<h4 class="left">Có tất cả <?php echo count($this->hoadon) ?> đơn hàng</h4>
+				<h4 class="right">Điểm tích lũy: <?php echo $this->diemtl ?></h4>
+				<div class="clear"></div>
+			</caption>
+		</tr>
+		<tr>
+			<th></th>
+			<th>STT</th>
+			<th>Mã Đơn Hàng</th>
+			<th>Ngày Lập</th>
+			<th>Số Lượng Sản Phẩm</th>
+			<th>Tổng Tiền</th>
+			<th>Số Tiền Nợ</th>
+			<th>Ghi Chú</th>
+			<th>Đã Giao Hàng</th>
+		</tr>
+
+		<?php $count=0; foreach ($this->hoadon as $item) { ?>
+			<tr class="hover">
+				<td align="center">
+					<div class="icon"></div>
+				</td>
+				<td align="center">
+					<?php echo ++$count ?>
+				</td>
+				<td align="center">
+					<?php echo $item["MADH"] ?>
+				</td>
+				<td align="center">
+					<?php echo date("d/m/Y",strtotime($item["NGAYLAP"])) ?>
+				</td>
+				<td align="center">
+					<?php echo $item["sl"] ?>
+				</td>
+				<td align="center">
+					<?php echo number_format($item["sum"],0,',','.') ?> VNĐ
+				</td>
+				<td align="center">
+					<?php echo number_format($item["SOTIENNO"],0,',','.') ?> VNĐ
+				</td>
+				<td>
+					<?php echo $item["GHICHU"] ?>
+				</td>
+				<td align="center">
+					<?php if($item["HOANTHANH"]==1) echo "<img src='".$this->baseUrl()."/public/Contents/Images/bullet-3.png' />" ?> 
+				</td>
+			</tr>
+			<tr class="sub">
+				<td colspan="9">
+					<table class="table">
+						<tr>
+							<th>STT</th>
+							<th width="30%">Tên SP</th>
+							<th>Hình Ảnh</th>
+							<th>Số Lượng</th>
+							<th>Đơn Giá</th>
+							<th>Thành Tiền</th>
+						</tr>
+						<?php $c=0; foreach ($this->cthd as $ict) {
+							if($ict["MADH"]==$item["MADH"]){
+							?>
+							<tr>
+							<td align="center"><?php echo ++$c ?></td>
+							<td>
+								<a href='<?php echo $this->baseUrl()."/".$ict["URL"]."_".$ict["MASP"] ?>.html' target="_black"><?php echo $ict["TENSP"] ?></a>
+							</td>
+							<td align="center">
+								<img src="<?php echo $this->baseUrl() ?>/uploads/images/sp/<?php echo $ict["HINHANH"] ?>" width="70" height="60" />
+							</td>
+							<td align="center">
+								<?php echo $ict["SOLUONG"] ?>
+							</td>
+							<td align="center">
+								<?php echo number_format($ict["GIA"],0,',','.') ?> VNĐ
+							</td>
+							<td align="center">
+								<?php echo number_format($ict["GIA"]*$ict["SOLUONG"],0,',','.') ?> VNĐ
+							</td>
+							</tr>
+							<?php }} ?>
+					</table>
+				</td>
+			</tr>
+		<?php } ?>
+
+	</table>
+
+</section>
+<style type="text/css">
+	.table tr.hover:hover{
+		cursor: pointer;
+		background-color: #eee;
+	}
+
+	.table tr.sub{
+		display: none;
+	}
+	.table tr.sub table th{
+		background-image: none;
+		border-top:0;
+	}
+	.table tr.sub table th,.table tr.sub table td{
+		border-left: 0;
+		border-right:0;
+	}
+	.table tr.sub table{
+		border:0;
+	}
+	.table tr.sub table tr:last-child td{
+		border-bottom: 0;
+	}
+	.table tr.sub td{
+		padding: 0;
+	}
+</style>
+<script type="text/javascript">
+	$(function(){
+		$(".table .hover").click(function(){
+			$(this).next(".sub").fadeToggle();
+			$(this).find(".icon").toggleClass("show");
+		});
+	});
+</script>

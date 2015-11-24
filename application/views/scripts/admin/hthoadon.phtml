@@ -1,0 +1,91 @@
+<script type="text/javascript">
+	$(".breadcrumb").html("<li><i class='fa fa-dashboard'></i> <a href='"+base_url+"/admin'>Trang Chủ</a></li> <li><i class='fa fa-shopping-cart'></i><a href='"+base_url+"/admin/hoadon'> Đơn Hàng</a></li> <li class='active'><i class='fa fa-check-circle'></i> Hoàn Thành Đơn Hàng</li>");
+	$("h1.page-header").text("Hoàn Thành Đơn Hàng <?php echo $this->info["MADH"] ?>");
+
+	$(function(){
+		$("#qlhoadon").parent().addClass("active").find("a").click();
+		$(".trar").change(function(){
+			if($(this).val()==1){
+				$("#tientra").hide();
+			}else{
+				$("#tientra").show();
+			}
+		});
+		$("#frm").submit(function(){
+			if($("#tientra").css("display")=="block"){
+				var obj=$("#tientra");
+				if(!isPrice(obj)){
+						obj.addClass("error");
+						obj.attr('title','Giá không hợp lệ');
+						obj.on('keypress',function(){
+							$(this).off('keypress').removeClass('error').attr('title','');
+						});
+						return false;
+					}
+				return true;
+			}
+			return true;
+		});
+	});
+</script>
+<?php if($this->message!=null){ ?>
+	<div class="message">
+		<?php echo $this->message ?>
+	</div>
+<?php } ?>
+<form method="post" action="" role="form" id="frm">
+<div class="table-responsive">
+    <table class="table table-vm">
+    	<tr>
+    		<td width="20%">
+    			<b>Tổng Tiền:</b> 
+    		</td>
+    		<td>
+    			<?php echo number_format($this->info["sum"],0,',','.') ?> VNĐ
+    		</td>
+    	</tr>
+    	<tr>
+    		<td width="20%">
+    			<b>Đã Trả:</b> 
+    		</td>
+    		<td>
+    			<?php echo number_format($this->info["sum"]-$this->info["SOTIENNO"],0,',','.') ?> VNĐ
+    		</td>
+    	</tr>
+    	<tr>
+    		<td width="20%">
+    			<b>Số Tiền Nợ:</b> 
+    		</td>
+    		<td>
+    			<?php echo number_format($this->info["SOTIENNO"],0,',','.') ?> VNĐ
+    		</td>
+    	</tr>
+    	<tr>
+    		<td width="20%">
+    			<b>Số Tiền Trả:</b> 
+    		</td>
+    		<td>
+    			<label>
+    				Trả Hết <input type="radio" value="1" name="tra" checked="checked"  class="trar" />
+    			</label>
+    			<label>
+    				Còn Thiếu <input type="radio" value="2" name="tra" class="trar" />
+    			</label><br />
+    			<input type="text" name="tientra" value="" id="tientra" class="form-control" style="display:none;width:200px" placeholder="nhập số tiền trả" />
+    		</td>
+    	</tr>
+    	<tr>
+    		<td width="20%">
+    			
+    		</td>
+    		<td>
+    			<input type="submit" class="btn btn-primary btn-sm" value="Lưu Lại" />
+    			<input type="button" onclick="$('#tientra').val('');" class="btn btn-default btn-sm" value="Nhập Lại" />
+    		</td>
+    	</tr>
+    </table>
+</div>
+<input type="hidden" name="tienno" value="<?php echo $this->info['SOTIENNO'] ?>" />
+<input type="hidden" name="id" value="<?php echo $this->info['MADH'] ?>" />
+<input type="hidden" name="ht" value="<?php echo $this->info['HOANTHANH'] ?>" />
+</form>

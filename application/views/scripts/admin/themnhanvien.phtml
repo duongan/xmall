@@ -1,0 +1,128 @@
+<script type="text/javascript">
+	$(".breadcrumb").html("<li><i class='fa fa-dashboard'></i> <a href='"+base_url+"/admin'>Trang Chủ</a></li> <li><i class='fa fa-male'></i><a href='"+base_url+"/admin/nhanvien'> Nhân Viên</a></li> <li class='active'><i class='fa fa-plus'></i> Thêm Nhân Viên</li>");
+	$("h1.page-header").text("Thêm Nhân Viên Mới");
+
+$(function(){
+	$("#qlnhanvien").parent().addClass("active").find("a").click();
+	$("#qlnhanvien").find("li:eq(1)").addClass("active");
+	$("form").kiemtra([
+		{
+			'name':'HOTEN',
+			'string':true,
+			'message':'họ tên không hợp lệ'
+		},
+		{
+			'name':'TAIKHOAN',
+			'trong':true
+		}
+		,
+		{
+			'name':'DIENTHOAI',
+			'sodt':true
+		},
+		{
+			'name':'EMAIL',
+			'email':true
+		}
+	]);
+});
+</script>
+<?php if($this->message!=null){ ?>
+	<div class="message">
+		<?php echo $this->message ?>
+	</div>
+<?php } ?>
+<form method="post" action="" role="form">
+	<table class="table">
+		<tr>
+			<td width="30%">
+				<b>Họ Tên NV: </b>
+				<span class="red">*</span>
+			</td>
+			<td>
+				<input type="text" class="form-control s1" value="<?php if(isset($_POST['HOTEN'])) echo $_POST["HOTEN"] ?>" name="HOTEN" />
+			</td>
+		</tr>
+		<tr  class="bordertop">
+			<td>
+				<b>Giới Tính: </b>
+				<span class="red">*</span>
+			</td>
+			<td>
+				<label>Nam: <input checked="checked" type="radio" name="GIOITINH-boolean" value="1" /></label>
+				<label style="padding-left:10px">Nữ: <input type="radio" name="GIOITINH-boolean" value="0" /></label>
+			</td>
+		</tr>
+		<tr>
+			<td width="30%">
+				<b>Số Điện Thoại: </b>
+				<span class="red">*</span>
+			</td>
+			<td>
+				<input type="text" class="form-control s1" value="<?php if(isset($_POST['DIENTHOAI'])) echo $_POST["DIENTHOAI"] ?>" name="DIENTHOAI" />
+			</td>
+		</tr>
+		<tr  class="bordertop">
+			<td>
+				<b>Email: </b>
+				<span class="red">*</span>
+			</td>
+			<td>
+				<input type="text" class="form-control s1" name="EMAIL" value="<?php if(isset($_POST['EMAIL'])) echo $_POST["EMAIL"] ?>" />
+			</td>
+		</tr>
+		<tr  class="bordertop">
+			<td>
+				<b>Tên Đăng Nhập: </b>
+				<span class="red">*</span>
+			</td>
+			<td>
+				<input type="text" class="form-control s1" name="TAIKHOAN" value="<?php if(isset($_POST['TAIKHOAN'])) echo $_POST["TAIKHOAN"] ?>" />
+			</td>
+		</tr>
+		<tr  class="bordertop">
+			<td>
+				<b>Mật Khẩu: </b>
+				<span class="red">*</span>
+			</td>
+			<td>
+				<input type="text" class="form-control s1" disabled="disabled" value="123456" />
+				<input type="hidden" name="MATKHAU-md5" value="123456" />
+				
+			</td>
+		</tr>
+		<tr  class="bordertop">
+			<td>
+				<b>Mật Khẩu 2: </b>
+				<span class="red">*</span>
+			</td>
+			<td>
+				<input type="text" class="form-control s1" disabled="disabled" value="123456" />
+				<input type="hidden" name="MATKHAU2-md5" value="123456" />
+			</td>
+		</tr>
+		<tr class="bordertop">
+			<td>
+				<b>Nhóm: </b>
+				<span class="red">*</span>
+			</td>
+			<td>
+				<select class="form-control s2" name="MANHOM-int">
+					<?php foreach ($this->nhom as $item) {
+						echo '<option value="'.$item["MANHOM"].'">'.$item["TENNHOM"].'</option>';
+					} ?>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>
+
+			</td>
+			<td>
+				<input type="submit" class="btn-primary btn" value="Thêm mới" />
+				<input type="reset" class="btn-default btn" value="Nhập lại" />
+			</td>
+		</tr>
+	</table>
+	<input type="hidden" name="KHOA-boolean" value="0" />
+</form>

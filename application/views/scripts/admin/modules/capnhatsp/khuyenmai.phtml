@@ -1,0 +1,25 @@
+<script type="text/javascript">
+	$(function(){
+		$("#frmkm").kiemtra([
+			{
+				'name':'giam_gia',
+				'so':true
+			}
+		]);
+	});
+</script>
+<form action="" method="post" id="frmkm" role="form">
+	<h3>Khuyến Mãi:</h3>
+	<textarea id="khuyenmai" style="width:980px;height:200px" name="khuyenmai-decode"><?php echo html_entity_decode($this->data["km"]) ?></textarea>
+	<br />
+	<div class="clearfix">
+		<h3 class="l">Giảm Giá:</h3>
+		<input type="number" class="form-control s2 dblock l" style="margin-left:20px;margin-top:15px" name="giam_gia" value="<?php echo $this->data["gg"] ?>" /> <br />%
+	</div>
+	<br /><br />
+	<input type="submit" class="btn btn-primary" value="Lưu lại" />
+	<input type="button" onclick="window.location.reload()" class="btn btn-default" value="Nhập lại" />
+	<input type="hidden" name="action" value="4" />
+	<input type="hidden" name="id" value="<?php echo $_GET["id"] ?>" />
+	<input type="hidden" name="ngaycapnhat" value="<?php date_default_timezone_set('Asia/Ho_Chi_Minh'); $now=getdate(); echo $now["year"].'/'.$now["mon"].'/'.$now["mday"].' '.$now["hours"].':'.$now["minutes"].':'.$now["seconds"] ?>" />
+</form>

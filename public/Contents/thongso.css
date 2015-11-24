@@ -1,0 +1,27 @@
+.subheader{
+		
+		color: #3A3A3A;
+		font-size: 14px;
+		line-height: 1.2em;
+		padding: 10px 0 10px 26px;
+		width: 148px;
+		float: left;
+	}
+	.subheader, .subheader-first-item {
+		color: #2d2e2e;
+		background: url('images/subheader_bg.gif') repeat-x bottom;
+		padding: 10px 0 5px 0;
+		font: bold 108% Arial, Helvetica, sans-serif;
+	}
+	.product-feature-right {
+border-bottom: 1px solid #CDCDCD;
+border-right: 1px solid #CDCDCD;
+color: #3A3A3A;
+display: table-cell;
+font-size: 14px;
+line-height: 1.2em;
+margin: 0;
+padding: 10px 0 10px 26px;
+width: 581px;
+float: left;
+}

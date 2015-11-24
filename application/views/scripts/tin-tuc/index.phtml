@@ -1,0 +1,55 @@
+<section class="layout_center">
+
+	<div id="iconeventleft"></div>
+	<div id="iconeventright"></div>
+
+	<nav id="breadcrumb-global">
+		<ul class="clearfix">
+			<li><a href="/">Trang chủ</a><span style="margin-left:5px;">»</span></li><li><h1>Tin công nghệ</h1></li>
+		</ul>
+	</nav>
+	<div class="clearleft"></div>
+	<article>
+		<div class="boxtt left">
+			<?php foreach ($this->data as $item) { ?>
+			<div class="item">
+				<h2><a href="<?php echo $this->baseUrl()."/".$item["MATT"]."_".$item["URL"] ?>.html"><?php echo $item["TIEUDE"] ?></a></h2>
+				<p>Thêm ngày: <?php echo date("d/m/Y H:m:s",strtotime($item["THOIGIAN"])) ?></p>
+				<p style="text-align:center">
+					<a href="<?php echo $this->baseUrl()."/".$item["MATT"]."_".$item["URL"] ?>.html"><img src="<?php echo $this->baseUrl() ?>/uploads/images/tintuc/<?php echo $item["HINHANH"] ?>" width="500" /></a>
+				</p>
+				<p class="mt">
+					<?php echo $item["MOTA"] ?><br /><br />
+					Từ Khóa: <?php foreach (explode(",", $item["TUKHOA"]) as $itemtk) {
+						if($itemtk!=""){ echo "<a href='".$this->baseUrl()."/search?key=".trim($itemtk)."'>".trim($itemtk)."</a>";
+						}} ?>
+				</p>
+			</div>
+			<?php } ?>
+				<div class="right" style="margin-right: 35px;">
+				<?php echo $this->partial('admin/phan_trang.phtml',array('arr_page'=>$this->arr_page)); ?>
+			</div>
+		<div class="clearright"></div>
+		</div>
+		<aside class="left tinhot">
+			<h3>Tin Hot</h3>
+			<?php foreach ($this->tinhot as $item) {?>
+			<a href="<?php echo $this->baseUrl()."/".$item["MATT"]."_".$item["URL"] ?>.html"><?php echo $item["TIEUDE"] ?></a>
+			<?php } ?>
+		</aside>
+		<aside class="left tinhot">
+			<h3>Tin Khuyến Mãi</h3>
+			<?php foreach ($this->tinkm as $item) {?>
+			<a href="<?php echo $this->baseUrl()."/".$item["MATT"]."_".$item["URL"] ?>.html"><?php echo $item["TIEUDE"] ?></a>
+			<?php } ?>
+		</aside>
+		<div class="clearleft"></div>
+	</article>
+</section>
+<link href="<?php echo $this->baseUrl() ?>/public/admin/page.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+	.page .pagestart, .page .pageend, .page .pagenext, .page .pageprev{
+	width:10px !important;
+	height: 19px !important;
+}
+</style>

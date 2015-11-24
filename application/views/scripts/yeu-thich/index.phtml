@@ -1,0 +1,147 @@
+<section class="layout_center">
+
+	<div id="iconeventleft"></div>
+	<div id="iconeventright"></div>
+
+	<nav id="breadcrumb-global">
+		<ul class="clearfix">
+			<li><a href="/">Trang chủ</a><span style="margin-left:5px;">»</span></li><li><h1>Sản Phẩm Yêu Thích</h1></li>
+		</ul>
+	</nav>
+	<div class="clearleft"></div>
+
+	<br />
+	<form method="post" action="" id="frmxoa">
+		<input type="submit" class="button s2" value="Xóa Toàn Bộ Sản Phẩm" />
+		<input type="button" value="Tiếp Tục Mua Hàng" class="button s2" onclick="window.location.href='<?php echo $_SERVER["HTTP_REFERER"] ?>'" />
+	</form>
+	<div class="boxproduct boxproductbig">
+				<div class="headerbox">
+					<h3 class="left">SẢN PHẨM YÊU THÍCH</h3>
+					<div class="clear"></div>
+				</div>
+				<div class="contentbox" id="ctbox">
+						<div class="loader" style="height:100px"></div>
+				</div>
+			</div>
+	
+
+<style type="text/css">
+	.button{
+    display: inline-block;
+    height: 28px;
+    border: solid 1px transparent;
+    padding: 0 10px;
+    outline: 0;
+    font-weight: bold;
+    font-size: 11px;
+    text-decoration: none;
+    white-space: nowrap;
+    word-wrap: normal;
+    line-height: normal;
+    vertical-align: middle;
+    cursor: pointer;
+    border-radius: 2px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+}
+.button.s1{
+    border-color: #167ac6;
+    background-color: #167ac6;
+    color: #fff;
+}
+.button.s1:hover{
+    background-color: #126db3;
+}
+.button.s2{
+    border-color: #d3d3d3;
+    background-color: #f8f8f8;
+    color: #333
+}
+.button.s2:hover{
+    border-color: #c6c6c6;
+    background-color: #f0f0f0;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.10);
+}
+</style>
+
+	<script type="text/javascript">
+		$(function(){
+			LoadJson(info.base_url+"/ajax/getdatalike",{},function(result){
+				var obj=$("#ctbox");
+				if(result.length>0){
+					obj.html("");
+				for(var i=0;i<result.length;i++){
+						var html='<div class="item">';
+							html+='<a href="'+info.base_url+'/'+result[i].URL+'_'+result[i].MASP+'.html" class="noneunder">';
+							html+='<div class="beforhover">';
+							html+='<i class="iconstatus '+result[i].ICON_TRANGTHAI+'"></i>';
+							html+='<div class="product-image">';
+							html+='<img width="120" height="120x" src="'+info.base_url+'/uploads/images/sp/'+result[i].HINHANH+'" />';
+							html+='</div>';
+							html+='<div class="product-info">';
+							html+='<div class="product-name">'+result[i].TENSP+'</div>';
+							html+='<div class="product-price">';
+							html+=result[i].GIA;
+							html+='</div>';
+							html+='</div>';
+							html+='</div>';
+							html+='<div class="afterhover">';
+							html+='<div class="product-info">';
+							html+='<div class="product-name">'+result[i].TENSP+'</div>';
+							html+='<div class="product-price">';
+							html+=result[i].GIA;
+							html+='</div>';
+							html+='</div>';
+							html+='<div class="product-s">'
+							html+=result[i].TOM_TAT_TS;
+							html+='</div>';
+							html+='<div class="promo-info"><span class="icon icon-product-promo"></span>Khuyến mãi</div>';		
+							html+='<div class="product-o">';
+							html+='<a class="btn-buy btn-a" href="'+info.base_url+'/gio-hang?id='+result[i].MASP+'">';
+							html+='<i class="icon left"></i>';
+							html+='ĐĂT HÀNG';
+							html+='</a>';
+							html+='</div>';
+							html+='</div>';
+							html+='</a>';
+							html+='</div>';
+						obj.append(html);
+					}
+
+					obj.append("<div class='clearleft'></div>");
+					obj.css("border-left","1px solid #cccccc");
+
+					 $(".btn-buy,.adtocart").click(function(){
+				        var id=$(this).attr("href").split("?id=")[1].split("&")[0];
+				        LoadJson(info.base_url+"/ajax/addtocart",{"id":id},function(result){
+				            if(result==0){
+				                alert("Thêm vào giỏ hàng thất bại. Có thể sản phẩm đã hết hàng.");
+				            }else{
+				                $("#cart .total_item").html("("+result+")");
+				                 if(confirm("Thêm thành công sản phẩm vào giỏ hàng. Bạn có muốn vào giỏ hàng?")){
+				                    window.location.href=info.base_url+"/gio-hang";
+				                }
+				            }
+				        });
+				        return false;
+				    });
+				}else{
+					obj.html("Chưa có sản phẩm.").css("text-align","center").css("padding","20px").css("border-left","0");
+				}
+			});
+
+	$("#frmxoa").submit(function(){
+
+		if(confirm('Bạn có chắc muốn xóa tất cả sản phẩm?')){
+			LoadJson(info.base_url+"/ajax/xoalike",{},function(result){
+				$("#ctbox").html("Chưa có sản phẩm.").css("text-align","center").css("padding","20px").css("border-left","0");
+			});
+		}
+
+		return false;
+	});
+		});
+		
+	</script>
+
+</section>

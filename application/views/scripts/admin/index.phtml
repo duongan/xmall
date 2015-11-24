@@ -1,0 +1,526 @@
+<script type="text/javascript">
+    $(function(){
+        $("#homepage").addClass("active");
+    })
+</script>
+<style type="text/css">
+    .ahover:hover{
+        text-decoration: none;
+    }
+</style>
+<!-- /.row -->
+
+                <div class="row">
+                  <?php if($this->updatepass!=null){ ?>
+                    <div class="col-lg-12">
+                        <a class="ahover" href="<?php echo $this->baseUrl() ?>/admin/doimatkhau">
+                        <div class="alert alert-success">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i> Mật khẩu hiển tại của bạn không an toàn. Vui lòng cập nhật lại mật khẩu.
+                        </div>
+                        </a>
+                    </div>
+                    <?php } ?>
+                    <?php if($this->updatepass2!=null){ ?>
+                    <div class="col-lg-12">
+                        <a class="ahover" href="<?php echo $this->baseUrl() ?>/admin/doimatkhau?cap2=true">
+                        <div class="alert alert-success">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i> Mật khẩu cấp 2 hiển tại của bạn không an toàn. Vui lòng cập nhật lại mật khẩu.
+                        </div>
+                        </a>
+                    </div>
+                    <?php } ?>
+                    <?php if($this->hoadoncht>0){ ?>
+                    <div class="col-lg-12">
+                        <a class="ahover" href="<?php echo $this->baseUrl() ?>/admin/hoadon?cg=1">
+                            <div class="alert alert-success alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <i class="fa fa-info-circle"></i>  Có <?php echo $this->hoadoncht ?> Đơn Hàng Chưa Giao
+                            </div>
+                        </a>
+                    </div>
+                    <?php } ?>
+                    <?php if($this->hoadoncx>0){ ?>
+                    <div class="col-lg-12">
+                        <a class="ahover" href="<?php echo $this->baseUrl() ?>/admin/hoadon?new=true">
+                            <div class="alert alert-info alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <i class="fa fa-info-circle"></i>  Có <?php echo $this->hoadoncx ?> Đơn Hàng Mới
+                            </div>
+                        </a>
+                    </div>
+                    <?php } ?>
+                    <?php if($this->nxchuadoc>0){ ?>
+                    <div class="col-lg-12">
+                    <a  class="ahover" href="<?php echo $this->baseUrl() ?>/admin/nhanxet?new=true">
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i>  Có <?php echo $this->nxchuadoc ?> Nhận Xét Mới
+                        </div>
+                    </a>
+                    </div>
+                    <?php } ?>
+                  
+                </div>
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-cube fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge"><?php echo $this->count["SLSP"]; ?></div>
+                                        <div>Sản Phẩm!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="<?php echo $this->baseUrl() ?>/admin/sanpham">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-shopping-cart fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge"><?php echo $this->count["SLHD"]; ?></div>
+                                        <div>Đơn Hàng!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="<?php echo $this->baseUrl() ?>/admin/hoadon">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-comments fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge"><?php echo $this->count["SLNX"]; ?></div>
+                                        <div>Nhận Xét!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="<?php echo $this->baseUrl() ?>/admin/nhanxet">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-red">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-group fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge"><?php echo $this->count["SLKH"]; ?></div>
+                                        <div>Khách Hàng!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="<?php echo $this->baseUrl() ?>/admin/khachhang">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-globe fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge"><?php echo $this->count["SLTT"]; ?></div>
+                                        <div>Tin Tức!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="<?php echo $this->baseUrl() ?>/admin/tintuc">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-danger">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-asterisk fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge"><?php echo $this->count["SLLSP"]; ?></div>
+                                        <div>Loại Sản Phẩm!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="<?php echo $this->baseUrl() ?>/admin/loaisp">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-star fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge"><?php echo $this->count["SLN"]; ?></div>
+                                        <div>Nhóm!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="<?php echo $this->baseUrl() ?>/admin/nhom">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-male fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge"><?php echo $this->count["SLNV"]; ?></div>
+                                        <div>Nhân Viên!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="<?php echo $this->baseUrl() ?>/admin/nhanvien">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-money fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge" style="font-size:20px;margin-bottom:21px"><?php echo number_format($this->tienbanduoc,0,',','.'); ?></div>
+                                        <div>Tiền bán được!</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-red">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-pie-chart fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge"><?php echo $this->slbanduoc; ?></div>
+                                        <div>Sản phẩm bán được!</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-flag-o fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge"><?php echo $this->active; ?></div>
+                                        <div>Ngày hoạt động!</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-rss fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge"><?php $fil = fopen("online.txt", "r"); 
+            echo fread($fil, 8);  ?></div>
+                                        <div>Lượt truy cập!</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.row -->
+                <?php if(count($this->spganhet)>0){ ?>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-money fa-fw"></i> Sản Phẩm Gần Hết</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover table-striped table-vm">
+                                        <thead>
+                                            <tr>
+                                                <th>Tên SP</th>
+                                                <th>Hình Ảnh</th>
+                                                <th>Giá</th>
+                                                <th>SL Còn</th>
+                                                <th>Số ĐH</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($this->spganhet as $item) {
+                                                echo '<tr>';
+                                                echo '<td><a href="'.$this->baseUrl().'/'.$item["URL"].'_'.$item["MASP"].'.html" target="_black">'.$item["TENSP"].'</a></td>';
+                                                echo '<td align="center"><img width="100px" src="'.$this->baseUrl().'/uploads/images/sp/'.$item["HINHANH"].'" /></td>';
+                                                echo '<td>'.(($item["GIA"]>0)?number_format($item["GIA"],0,',','.'):"Liên Hệ").'</td>';
+                                                echo '<td align="center">'.$item["SLCON"].'</td>';
+                                                echo '<td align="center">'.((isset($item["SOHD"]))?$item["SOHD"]:"0").'</td>';
+                                                echo '<td align="center"><a href="'.$this->baseUrl().'/admin/capnhatsp?id='.$item["MASP"].'"><img src="'.$this->baseUrl().'/public/admin/Images/edit.png" /></a></td>';
+                                                echo '</tr>';
+                                            } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart fa-fw"></i> Sản Phẩm Xem Nhiều</h3>
+                            </div>
+                            <div class="panel-body">
+                                <?php
+                                    $arrmau=array("red","#f0ad4e","green","#d9534f","black");
+                                    foreach ($this->spxemnhieu as $item) {
+                                    echo "<a href='".$this->baseUrl().'/'.$item["URL"].'_'.$item["MASP"].".html' target='_black' style='font-size:15px;font-weight:bold;padding-right:15px;color:".$arrmau[rand(7,0)-2]."'>".$item["TENSP"]."</a><br />";
+                                } ?>
+                              </div>  
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
+
+                <?php if(count($this->sinhnhatkh)>0){ ?>
+            <div class="row">
+                <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-birthday"></i> Sinh Nhật Khách Hàng Hôm Nay</h3>
+                            </div>
+                            <div class="panel-body">
+                               
+                               <table class="table table-bordered">
+                                   <tr>
+                                        <th>Tên KH</th>
+                                        <th>Ngày Sinh</th>
+                                        <th>Địa Chỉ</th>
+                                        <th>Điện Thoại</th>
+                                        <th>Email</th>
+                                        <th></th>
+                                   </tr>
+                                   <?php foreach ($this->sinhnhatkh as $item) { ?>
+                                   <tr>
+                                        <td><?php echo $item["TENKH"] ?></td>
+                                        <td><?php echo date('d/m/Y',strtotime($item["NGAYSINH"])) ?></td>
+                                        <td><?php echo $item["DIACHI"] ?></td>
+                                        <td><?php echo $item["DIENTHOAI"] ?></td>
+                                        <td><?php echo $item["EMAIL"] ?></td>
+                                        <td>
+                                            <a href="mailto:<?php echo $item['EMAIL'] ?>">Gửi Email Chúc Mừng</a>
+                                        </td>
+                                   </tr>
+                                   <?php } ?>
+                                       
+                               </table>
+                               
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <?php } ?>
+
+            <div class="row">
+                <div class="col-lg-12">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Số Lượng Sản Phẩm Bán Được Theo Tháng</h3>
+                            </div>
+                            <div class="panel-body">
+                                
+                               <div class="flot-chart">
+                                    <div id="morris-area-chart"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Tiền Bán Được Theo Tháng</h3>
+                            </div>
+                            <div class="panel-body">
+                               <div id="morris-bar-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <?php if(count($this->nxvp)>0){ ?>
+             <div class="row">
+                <div class="col-lg-12">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-comment-o"></i> Nhận xét bị báo cáo vi phạm</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-vm">
+                                        <tr>
+                                            <th>Email</th>
+                                            <th>Tên</th>
+                                            <th>Thời gian gửi</th>
+                                            <th>Nội dung</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Vi Phạm</th>
+                                            <th></th>
+                                        </tr>
+                                        <?php foreach ($this->nxvp as $item) { ?>
+                                            <tr>
+                                                <td><?php echo $item["EMAIL"] ?></td>
+                                                <td><?php echo $item["HOTEN"] ?></td>
+                                                <td><?php echo date("d/m/Y",strtotime($item["NGAYDANG"])) ?></td>
+                                                <td width="20%;height:100px;overflow:auto"><?php echo $item["NOIDUNG"] ?></td>
+                                                <td><a href='<?php echo $this->baseUrl()."/".$item["URL"]."_".$item["MASP"] ?>.html' target="_black"><?php echo $item["TENSP"] ?></a></td>
+                                                <td align="center"><?php echo $item["VI_PHAM"] ?></td>
+                                                <td>
+                                                <div class="clearfix">
+                                                   <div class="l">
+                                                    <?php if($this->quyen["XOANX"]==1){ ?>
+                                    <form method="post" action="" onsubmit="return confirm('bạn có chắc rằng nhận xét này ko vi phạm?');">
+                                        <input type="submit" title="Không vi phạm" value="" style="background-image:url(<?php echo $this->baseUrl() ?>/public/Contents/Images/bullet-3.png);width:14px;height:14px;border:0;cursor:pointer;" />
+                                        <input type="hidden" name="id" value="<?php echo $item["MANX"] ?>" />
+                                    </form>
+                                    <?php } ?>
+                                    </div>
+                                    <div class="l" style="margin-left:5px">
+                                    <a href="<?php echo $this->baseUrl() ?>/admin/nhanxet?id=<?php echo $item["MANX"] ?>" title="xem chi tiết"><img src="<?php echo $this->baseUrl() ?>/public/admin/Images/icsearch.gif" /></a>
+                                    </div>
+                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <?php } ?>
+            <!-- Morris Charts JavaScript -->
+    <script src="<?php echo $this->baseUrl() ?>/public/admin/js/plugins/morris/raphael.min.js"></script>
+    <script src="<?php echo $this->baseUrl() ?>/public/admin/js/plugins/morris/morris.min.js"></script>
+   <script type="text/javascript">
+   $(function(){
+         Morris.Area({
+        element: 'morris-area-chart',
+        data: [
+        <?php foreach ($this->thongke as $itk) {?>
+        {
+            period: "<?php echo $itk["y"]."-".$itk["t"] ?>",
+            sp:<?php echo $itk["s"] ?>
+        },
+        <?php } ?>
+        ],
+        xkey: 'period',
+        ykeys: ['sp'],
+        labels: ['Số lượng bán'],
+        pointSize: 2,
+        hideHover: 'auto',
+        resize: true
+    });
+
+         Morris.Bar({
+        element: 'morris-bar-chart',
+        data: [
+        <?php foreach ($this->thongke2 as $itk) { ?>
+        {
+            date: '<?php echo $itk["t"]."-".$itk["y"] ?>',
+            sotien: <?php echo $itk["s"] ?>
+        },
+        <?php } ?>],
+        xkey: 'date',
+        ykeys: ['sotien'],
+        labels: ['Số Tiền'],
+        barRatio: 0.4,
+        xLabelAngle: 35,
+        hideHover: 'auto',
+        resize: true
+    });
+
+   });
+  
+
+   </script>

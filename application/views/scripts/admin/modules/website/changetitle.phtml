@@ -1,0 +1,42 @@
+<script type="text/javascript">
+	$(".breadcrumb").html("<li><i class='fa fa-dashboard'></i> <a href='"+base_url+"/admin'>Trang Chủ</a></li> <li><i class='fa fa-life-saver'></i><a href='"+base_url+"/admin/website'> Website</a></li> <li class='active'><i class='fa fa-cog'></i> Cấu Hình</li>");
+	$("h1.page-header").text("Cập Nhật Cấu Hình Website");
+$(function(){
+		
+	$("#qlwebsite").parent().addClass("active").find("a").click();
+	$("#qlwebsite").find("li:eq(0)").addClass("active");
+	});
+</script>
+
+<?php 
+        $this->headTitle("Cấu Hình Website"); ?>
+
+<form method="post" action="" role="form">
+<div class="table-responsive">
+	<table class="table table-hover">
+	<tr>
+		<td><b>Tiêu đề: </b> </td>
+		<td><textarea class="form-control" name="title"><?php echo $this->data["t"] ?></textarea></td>
+	</tr>
+	<tr>
+		<td><b>ĐT Hỗ Hợ: </b> </td>
+		<td><input class="form-control" name="hotro" type="text" value="<?php echo $this->data["h"] ?>" /></td>
+	</tr>
+	<tr>
+		<td><b>Meta Description: </b> </td>
+		<td><textarea class="form-control" name="metadescription"><?php echo $this->data["d"] ?></textarea></td>
+	</tr>
+	<tr>
+		<td><b>Meta Keyworks: </b> </td>
+		<td><textarea class="form-control" name="metakeyworks"><?php echo $this->data["k"] ?></textarea></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>
+			<input type="submit" class="btn btn-primary" value="Lưu Lại" />
+			<input type="button" class="btn btn-default" value="Hủy Bỏ" onclick="window.location.reload()" />
+		</td>
+	</tr>
+	</table>
+</div>
+</form>

@@ -1,0 +1,87 @@
+<section class="layout_center">
+
+	<div id="iconeventleft"></div>
+	<div id="iconeventright"></div>
+
+	<nav id="breadcrumb-global">
+		<ul class="clearfix">
+			<li><a href="/">Trang chủ</a><span style="margin-left:5px;">»</span></li><li><a href="<?php echo $this->baseUrl() ?>/tin-tuc.html">Tin Tức</a><span style="margin-left:5px;">»</span></li><li><h1><?php echo $this->info["TIEUDE"] ?></h1></li>
+		</ul>
+	</nav>
+	<div class="clearleft"></div>
+	
+	<article class="contenttt">
+		<div class="boxtt left">
+			<h2 style="color: #014ead;">
+				<?php echo $this->info["TIEUDE"] ?>
+			</h2>
+			<div style="margin-top:5px">
+				 <?php echo date("d/m/Y H:m:s",strtotime($this->info["THOIGIAN"])) ?> - <?php echo $this->info["XEM"] ?> view
+			</div>
+			<?php $currentUrl="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']; ?>
+				<div class="sharep">
+                    <div class="addthis_toolbox addthis_default_style printnone">    	
+                        <a class="addthis_button_facebook at300b" title="Facebook" href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $currentUrl ?>" target="_blank"><span class="at16nc at300bs at15nc at15t_facebook at16t_facebook"><span class="at_a11y"></span></span></a>
+                        <a class="addthis_button_twitter at300b" title="Tweet" href="https://twitter.com/intent/tweet?source=webclient&text=<?php echo $this->info["TENSP"] ?>&url=<?php echo $currentUrl ?>" target="_blank"><span class="at16nc at300bs at15nc at15t_twitter at16t_twitter"><span class="at_a11y"></span></span></a>      
+                        <a class="addthis_button_google at300b" href="https://plus.google.com/share?url=<?php echo $currentUrl ?>" target="_blank" title="Google"><span class="at16nc at300bs at15nc at15t_google at16t_google"><span class="at_a11y"></span></span></a>
+                        <a class="addthis_button_zingme at300b" href="http://link.apps.zing.vn/share?u=<?php echo $currentUrl ?>" target="_blank" title="ZingMe"><span class=" at300bs at16nc at15nc at15t_zingme"><span class="at_a11y"></span></span></a>  
+		                <a class="addthis_button_email at300b" target="_blank" title="Email" href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to&su=<?php echo $this->info["TENSP"] ?>&body=<?php echo $currentUrl ?>&ui=2&tf=1"><span class="at16nc at300bs at15nc at15t_email at16t_email"><span class="at_a11y"></span></span></a>
+                        <div class="addthis_toolbox addthis_default_style left">
+    	                    <a class="addthis_button_email printpage at300b" title="In Trang" href="#"><span class="at16nc at300bs at15nc at15t_print at16t_print" onclick="window.print()"><span class="at_a11y"></span></span></a>
+                        </div>
+                         <div class="clearleft"></div>
+                    </div>
+                </div>
+             <div id="tintuclq">
+				<?php foreach ($this->ttlienquan as $i) {
+					echo "<a href='".$this->baseUrl().'/'.$i["MATT"].'_'.$i["URL"].".html'>".$i["TIEUDE"]."</a>";
+				} ?>
+			</div>
+			<p>
+				<strong><?php echo $this->info["MOTA"] ?></strong>
+			</p>
+			
+			<p>
+				<?php echo html_entity_decode($this->info["NOIDUNG"]); ?>
+			</p>
+
+			<br /><br />
+			Từ Khóa: <?php foreach (explode(",", $this->info["TUKHOA"]) as $itemtk) {
+						if($itemtk!=""){ echo "<a style='color:blue;padding-right:10px' href='".$this->baseUrl()."/search?key=".trim($itemtk)."'>".trim($itemtk)."</a>";
+						}} ?>
+		</div>
+		<section class="left">
+			<aside class="tinhot">
+				<h3>Tin Hot</h3>
+				<?php foreach ($this->tinhot as $item) {?>
+				<a href="<?php echo $this->baseUrl()."/".$item["MATT"]."_".$item["URL"] ?>.html"><?php echo $item["TIEUDE"] ?></a>
+				<?php } ?>
+			</aside>
+			<aside class="tinhot">
+				<h3>Tin Mới</h3>
+				<?php foreach ($this->tinmoi as $item) {?>
+				<a href="<?php echo $this->baseUrl()."/".$item["MATT"]."_".$item["URL"] ?>.html"><?php echo $item["TIEUDE"] ?></a>
+				<?php } ?>
+			</aside>
+			<aside class="tinhot">
+				<h3>Tin Khuyến Mãi</h3>
+				<?php foreach ($this->tinkm as $item) {?>
+				<a href="<?php echo $this->baseUrl()."/".$item["MATT"]."_".$item["URL"] ?>.html"><?php echo $item["TIEUDE"] ?></a>
+				<?php } ?>
+			</aside>
+		</section>
+		<div class="clearleft"></div>
+	</article>
+
+</section>
+<script type="text/javascript">
+	$(function(){
+		$(".addthis_toolbox a.at300b").click(function () {
+	        if (!$(this).hasClass("printpage")) {
+	            window.open($(this).attr("href"), '_blank', "menubar=no,toolbar=no,resizable=no,scrollbars=no,height=450,width=710");
+
+	            return false;
+	        }
+	    });
+	});
+</script>
